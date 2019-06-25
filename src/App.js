@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {DateTime, Duration, Info, Interval, Settings} from 'luxon';
 import _ from 'lodash';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import {Grid, Button, Segment} from "semantic-ui-react";
+import {Grid, Button, Segment, Icon} from "semantic-ui-react";
 import 'semantic-ui-css/semantic.min.css';
 
 const App = () => {
@@ -24,12 +24,26 @@ const App = () => {
     }
 
     function createEvent(){
-        alert('create event function');
+        alert('create event function ' + curDate.year);
     }
 
     function dayWeek(i) {
         let mas = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье'];
         return mas[i];
+    }
+
+    function retCalendarGrid() {
+
+        return (
+            _.times(curDate.daysInMonth, i => (
+                <Grid.Column key={i} >
+                    <Button icon basic color='teal' labelPosition='right' fluid style={{marginTop: '10px'}} onClick={createEvent}>
+                        <Icon name='plus' />
+                        {dayMonth(i)}
+                    </Button>
+                </Grid.Column>
+            ))
+        )
     }
 
     return (
@@ -96,13 +110,7 @@ const App = () => {
                             <React.Fragment>
                                 <Grid columns={7} >
                                     <Grid.Row style={{marginTop: '20px'}}>
-                                        { _.times(curDate.daysInMonth, i => (
-                                            <Grid.Column key={i} >
-                                                <Button basic color='teal' size='mini' fluid style={{marginTop: '10px'}} onClick={createEvent}>
-                                                    {dayMonth(i)}
-                                                </Button>
-                                            </Grid.Column>
-                                        ))}
+                                        { retCalendarGrid() }
                                     </Grid.Row>
                                 </Grid>
                             </React.Fragment>
