@@ -6,17 +6,21 @@ import {Grid, Button, Segment} from "semantic-ui-react";
 import 'semantic-ui-css/semantic.min.css';
 
 const App = () => {
-    let curDate = DateTime.local();
+
+    function returnCurDate() {
+        let curDate = DateTime.local();
+        return curDate;
+    }
 
     function monthName() {
         let mas = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль',
             'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-        return mas[curDate.month - 1];
+        return mas[returnCurDate().month - 1];
     }
 
     function dayMonth(i) {
         let mas = [];
-        for( let j = 1; j <= curDate.daysInMonth; j++){
+        for( let j = 1; j <= returnCurDate().daysInMonth; j++){
             mas.push(j);
         }
         return mas[i];
@@ -32,14 +36,14 @@ const App = () => {
     }
 
     const changeMonth = () => {
-        curDate = curDate.minus({month: 1});
-        alert(curDate);
+        // curDate = returnCurDate.minus({month: 1});
+        alert(returnCurDate());
     };
 
     const BodyGridMonth = () => (
         <Grid columns={7} >
             <Grid.Row style={{marginTop: '20px'}}>
-                { _.times(curDate.daysInMonth, i => (
+                { _.times(returnCurDate().daysInMonth, i => (
                     <Grid.Column key={i} >
                         <Button basic color='teal' size='mini' fluid style={{marginTop: '10px'}} onClick={createEvent}>
                             {dayMonth(i)+ ' day'}
@@ -58,7 +62,7 @@ const App = () => {
                         <Grid.Column width={4}>
                             <Grid style={{ justifyContent: 'space-evenly'}}>
                                 <Grid.Column>
-                                    <h1>{curDate.day}</h1>
+                                    <h1>{returnCurDate().day}</h1>
                                 </Grid.Column>
 
                                 <Grid.Column>
@@ -66,7 +70,7 @@ const App = () => {
                                 </Grid.Column>
 
                                 <Grid.Column>
-                                    <h1>{curDate.year}</h1>
+                                    <h1>{returnCurDate().year}</h1>
                                 </Grid.Column>
                             </Grid>
                         </Grid.Column>
