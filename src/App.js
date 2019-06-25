@@ -9,10 +9,6 @@ const App = () => {
 
     const [curDate, setCurDate] = useState(DateTime.local());
 
-    function returnCurDate() {
-        return curDate;
-    }
-
     function monthName() {
         let mas = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль',
             'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
@@ -28,18 +24,13 @@ const App = () => {
     }
 
     function createEvent(){
-        alert('so its a createEvent function');
+        alert('create event function');
     }
 
     function dayWeek(i) {
         let mas = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье'];
         return mas[i];
     }
-
-    const changeMonth = () => {
-        // curDate = returnCurDate.minus({month: 1});
-        alert(curDate);
-    };
 
     return (
         <Grid columns={1} centered>
@@ -75,7 +66,7 @@ const App = () => {
                             <Grid style={{ justifyContent: 'space-evenly'}}>
                                 <Grid.Row>
                                     <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({month: 1}))}/>
-                                    <Segment color='grey' content='today'>{}</Segment>
+                                    <Button color='grey' content='today' onClick={() => setCurDate(DateTime.local())}>{}</Button>
                                     <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({month: 1}))}/>
                                 </Grid.Row>
                             </Grid>
