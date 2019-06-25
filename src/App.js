@@ -1,17 +1,19 @@
-import React from 'react';
+import React, {createContext, useContext } from 'react';
 import {DateTime, Duration, Info, Interval, Settings} from 'luxon';
 import _ from 'lodash';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {Grid, Button, Segment} from "semantic-ui-react";
 import 'semantic-ui-css/semantic.min.css';
 
+
+let curDate = DateTime.local();
 //////////
 //старт///
 //////////
 const App = () => (
     <Grid columns={1} centered>
       <Grid.Row>
-        <Head />
+          <Head/>
       </Grid.Row>
 
       <Grid.Row>
@@ -111,13 +113,13 @@ const BodyGridMonth = () => (
 //switcher////
 //////////////
 const Switcher = () => (
-    <Grid style={{ justifyContent: 'space-evenly'}}>
-      <Grid.Row>
-        <Button icon='angle double left' onClick={() => { alert('hey') }}/>
-        <Segment color='grey' content='today'></Segment>
-        <Button icon='angle double right' onClick={changeMonth}/>
-      </Grid.Row>
-    </Grid>
+        <Grid style={{ justifyContent: 'space-evenly'}}>
+          <Grid.Row>
+            <Button icon='angle double left' onClick={() => { alert('hey') }}/>
+            <Segment color='grey' content='today'>{}</Segment>
+            <Button icon='angle double right' onClick={changeMonth}/>
+          </Grid.Row>
+        </Grid>
 );
 
 ////////////////
@@ -176,7 +178,5 @@ const Weekdays = () => _.times(7, i => (
 const changeMonth = () => {
     alert('some');
 };
-
-let curDate = DateTime.local();
 
 export default App;
