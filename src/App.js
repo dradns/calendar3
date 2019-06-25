@@ -1,4 +1,4 @@
-import React, {createContext, useContext } from 'react';
+import React, { useState } from 'react';
 import {DateTime, Duration, Info, Interval, Settings} from 'luxon';
 import _ from 'lodash';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
@@ -7,9 +7,15 @@ import 'semantic-ui-css/semantic.min.css';
 
 const App = () => {
 
+    let curDate = DateTime.local();
+
     function returnCurDate() {
-        let curDate = DateTime.local();
         return curDate;
+    }
+
+    function minusOneMonth() {
+        console.log(curDate.minus({month: 1}).month);
+        curDate = curDate.minus({month: 1})
     }
 
     function monthName() {
@@ -87,7 +93,7 @@ const App = () => {
                         <Grid.Column width={4}>
                             <Grid style={{ justifyContent: 'space-evenly'}}>
                                 <Grid.Row>
-                                    <Button icon='angle double left' onClick={() => { alert('hey') }}/>
+                                    <Button icon='angle double left' onClick={minusOneMonth}/>
                                     <Segment color='grey' content='today'>{}</Segment>
                                     <Button icon='angle double right' onClick={changeMonth}/>
                                 </Grid.Row>
