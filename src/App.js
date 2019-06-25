@@ -76,7 +76,7 @@ const App = () => {
                                 <Grid.Row>
                                     <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({month: 1}))}/>
                                     <Segment color='grey' content='today'>{}</Segment>
-                                    <Button icon='angle double right' onClick={changeMonth}/>
+                                    <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({month: 1}))}/>
                                 </Grid.Row>
                             </Grid>
                         </Grid.Column>
@@ -108,7 +108,7 @@ const App = () => {
                                         { _.times(curDate.daysInMonth, i => (
                                             <Grid.Column key={i} >
                                                 <Button basic color='teal' size='mini' fluid style={{marginTop: '10px'}} onClick={createEvent}>
-                                                    {dayMonth(i)+ ' day'}
+                                                    {dayMonth(i)}
                                                 </Button>
                                             </Grid.Column>
                                         ))}
