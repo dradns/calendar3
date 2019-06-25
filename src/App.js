@@ -7,26 +7,21 @@ import 'semantic-ui-css/semantic.min.css';
 
 const App = () => {
 
-    let curDate = DateTime.local();
+    const [curDate, setCurDate] = useState(DateTime.local());
 
     function returnCurDate() {
         return curDate;
     }
 
-    function minusOneMonth() {
-        console.log(curDate.minus({month: 1}).month);
-        curDate = curDate.minus({month: 1})
-    }
-
     function monthName() {
         let mas = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль',
             'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-        return mas[returnCurDate().month - 1];
+        return mas[curDate.month - 1];
     }
 
     function dayMonth(i) {
         let mas = [];
-        for( let j = 1; j <= returnCurDate().daysInMonth; j++){
+        for( let j = 1; j <= curDate.daysInMonth; j++){
             mas.push(j);
         }
         return mas[i];
@@ -43,22 +38,8 @@ const App = () => {
 
     const changeMonth = () => {
         // curDate = returnCurDate.minus({month: 1});
-        alert(returnCurDate());
+        alert(curDate);
     };
-
-    const BodyGridMonth = () => (
-        <Grid columns={7} >
-            <Grid.Row style={{marginTop: '20px'}}>
-                { _.times(returnCurDate().daysInMonth, i => (
-                    <Grid.Column key={i} >
-                        <Button basic color='teal' size='mini' fluid style={{marginTop: '10px'}} onClick={createEvent}>
-                            {dayMonth(i)+ ' day'}
-                        </Button>
-                    </Grid.Column>
-                ))}
-            </Grid.Row>
-        </Grid>
-    );
 
     return (
         <Grid columns={1} centered>
@@ -68,7 +49,7 @@ const App = () => {
                         <Grid.Column width={4}>
                             <Grid style={{ justifyContent: 'space-evenly'}}>
                                 <Grid.Column>
-                                    <h1>{returnCurDate().day}</h1>
+                                    <h1>{curDate.day}</h1>
                                 </Grid.Column>
 
                                 <Grid.Column>
@@ -76,7 +57,7 @@ const App = () => {
                                 </Grid.Column>
 
                                 <Grid.Column>
-                                    <h1>{returnCurDate().year}</h1>
+                                    <h1>{curDate.year}</h1>
                                 </Grid.Column>
                             </Grid>
                         </Grid.Column>
@@ -93,7 +74,7 @@ const App = () => {
                         <Grid.Column width={4}>
                             <Grid style={{ justifyContent: 'space-evenly'}}>
                                 <Grid.Row>
-                                    <Button icon='angle double left' onClick={minusOneMonth}/>
+                                    <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({month: 1}))}/>
                                     <Segment color='grey' content='today'>{}</Segment>
                                     <Button icon='angle double right' onClick={changeMonth}/>
                                 </Grid.Row>
@@ -122,10 +103,17 @@ const App = () => {
                     <Grid.Row>
                         <Grid.Column width={16}>
                             <React.Fragment>
-                                {/*<Route  path={'/day'} component={BodyGridDay} />*/}
-                                {/*<Route  path={'/week'} component={BodyGridWeek} />*/}
-                                <Route  path={'/month'} component={BodyGridMonth} />
-                                {/*<Route  path={'/year'} component={BodyGridYear} />*/}
+                                <Grid columns={7} >
+                                    <Grid.Row style={{marginTop: '20px'}}>
+                                        { _.times(curDate.daysInMonth, i => (
+                                            <Grid.Column key={i} >
+                                                <Button basic color='teal' size='mini' fluid style={{marginTop: '10px'}} onClick={createEvent}>
+                                                    {dayMonth(i)+ ' day'}
+                                                </Button>
+                                            </Grid.Column>
+                                        ))}
+                                    </Grid.Row>
+                                </Grid>
                             </React.Fragment>
                         </Grid.Column>
                     </Grid.Row>
