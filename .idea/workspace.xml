@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a90433f2-8534-4d66-a7b3-ecab3c35a9a6" name="Default Changelist" comment="1">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,8 +20,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="416">
-              <caret line="47" column="117" lean-forward="true" selection-start-line="47" selection-start-column="117" selection-end-line="47" selection-end-column="117" />
+            <state relative-caret-position="286">
+              <caret line="64" column="53" selection-start-line="64" selection-start-column="53" selection-end-line="64" selection-end-column="53" />
               <folding>
                 <element signature="e#0#56#0" expanded="true" />
               </folding>
@@ -156,16 +155,15 @@
       <option name="presentableId" value="Default" />
       <updated>1561355703225</updated>
       <workItem from="1561355704653" duration="376000" />
-      <workItem from="1561356245905" duration="26614000" />
+      <workItem from="1561356245905" duration="27123000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26990000" />
+    <option name="totallyTimeSpent" value="27499000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="3600" y="23" width="1920" height="1057" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2513312" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -223,8 +221,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="47" column="117" lean-forward="true" selection-start-line="47" selection-start-column="117" selection-end-line="47" selection-end-column="117" />
+        <state relative-caret-position="286">
+          <caret line="64" column="53" selection-start-line="64" selection-start-column="53" selection-end-line="64" selection-end-column="53" />
           <folding>
             <element signature="e#0#56#0" expanded="true" />
           </folding>

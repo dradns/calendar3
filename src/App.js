@@ -45,7 +45,7 @@ const App = () => {
             <React.Fragment>
                 {_.times(firstMonthDay(), i => (
                     <Grid.Column key={i} >
-                        <Button icon basic color='white'  content='' fluid style={{marginTop: '10px' , visibility: 'hidden' }} onClick={createEvent}/>
+                        <Button icon basic color='white'  content='' fluid style={{marginTop: '10px' , visibility : 'hidden' }}/>
                     </Grid.Column>
                 ))}
                 {_.times(curDate.daysInMonth, i => (
@@ -62,7 +62,7 @@ const App = () => {
     }
 
     return (
-        <Grid columns={1} centered>
+        <Grid columns={1} centered style={{margin: '10px'}}>
             <Grid.Row>
                 <Grid celled>
                     <Grid.Row >
