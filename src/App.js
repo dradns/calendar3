@@ -27,22 +27,37 @@ const App = () => {
         alert('create event function ' + curDate.year);
     }
 
+    function firstMonthDay(){
+        let zz = curDate;//текущая дата
+        let ss = zz.daysInMonth;//ко-во дней в данном месяце
+        let mm = zz.day;
+        let nn = zz.minus({days: mm - 1 }).weekday;
+        return nn - 1;
+    }
+
     function dayWeek(i) {
         let mas = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье'];
         return mas[i];
     }
 
     function retCalendarGrid() {
-
         return (
-            _.times(curDate.daysInMonth, i => (
-                <Grid.Column key={i} >
-                    <Button icon basic color='teal' labelPosition='right' fluid style={{marginTop: '10px'}} onClick={createEvent}>
-                        <Icon name='plus' />
-                        {dayMonth(i)}
-                    </Button>
-                </Grid.Column>
-            ))
+            <React.Fragment>
+                {_.times(firstMonthDay(), i => (
+                    <Grid.Column key={i} >
+                        <Button icon basic color='white'  content={DateTime.local().weekday} fluid style={{marginTop: '10px'}} onClick={createEvent}/>
+                    </Grid.Column>
+                ))}
+                {_.times(curDate.daysInMonth, i => (
+                    <Grid.Column key={i} >
+                        <Button icon basic color='teal' labelPosition='right' fluid style={{marginTop: '10px'}} onClick={createEvent}>
+                            <Icon name='plus' />
+                            {dayMonth(i)}
+                        </Button>
+                    </Grid.Column>
+
+                ))}
+            </React.Fragment>
         )
     }
 
