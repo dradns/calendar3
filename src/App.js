@@ -23,7 +23,7 @@ const App = () => {
                     <Button color='red' onClick={() => changeModal(modal === true ? false : true)}>
                         <Icon name='remove' /> Закрыть окно
                     </Button>
-                    <Button color='green'>
+                    <Button color='green' onClick={()=>alert('some')}>
                         <Icon name='checkmark' /> Создать событие
                     </Button>
                 </Modal.Actions>
@@ -77,8 +77,10 @@ const App = () => {
                             {dayMonth(i)}
                         </Button>
                     </Grid.Column>
-
                 ))}
+                {
+                    modal&&<ModalExampleCloseIcon />
+                }
             </React.Fragment>
         )
     }
@@ -136,9 +138,6 @@ const App = () => {
                                         <Grid.Column key={i} >
                                             <Segment color='orange' textAlign='center'>{dayWeek(i)}</Segment>
                                         </Grid.Column>))
-                                    }
-                                    {
-                                        modal&&<ModalExampleCloseIcon />
                                     }
                                 </Grid.Row>
                             </Grid>
