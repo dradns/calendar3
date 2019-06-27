@@ -117,7 +117,7 @@ const App = () => {
                             <Grid style={{ justifyContent: 'space-evenly'}}>
                                 <Grid.Row>
                                     <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({month: 1}))}/>
-                                    <Button color='grey' content='Сегодня' onClick={() => setCurDate(DateTime.local())}></Button>////////////sudapisatblet
+                                    <Button color='grey' content='Сегодня' onClick={() => setCurDate(DateTime.local())}></Button>
                                     <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({month: 1}))}/>
                                 </Grid.Row>
                             </Grid>
