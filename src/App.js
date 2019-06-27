@@ -2,22 +2,28 @@ import React, { useState } from 'react';
 import {DateTime, Duration, Info, Interval, Settings} from 'luxon';
 import _ from 'lodash';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import {Grid, Button, Segment, Icon, Modal, Header} from "semantic-ui-react";
+import {Grid, Button, Segment, Icon, Modal, Header, Form} from "semantic-ui-react";
 import 'semantic-ui-css/semantic.min.css';
 
 const App = () => {
 
     const [curDate, setCurDate] = useState(DateTime.local());
-    const [modal, changeModal] = useState(false);
+    const [modal, changeModal] = useState(true);
 
     function ModalExampleCloseIcon(props){
         return (
-            <Modal open={modal} >
-                <Header icon='archive' content='Archive Old Messages' />
+            <Modal open={modal} size='fullscreen'>
+                <Header icon='plane' content='    Создать новое событие' />
                 <Modal.Content>
-                    <p>
-                        Your {props.value} is getting full, would?
-                    </p>
+                    <Form >
+                        <Form.Group>
+                            <Form.Input placeholder='Название события' name='title'  />
+                            <Form.Input placeholder='Место события' name='place'  />
+                            <Form.Input placeholder='Дата и время' name='date'  />
+                            <Form.Input placeholder='Добавить участников' name='members'  />
+                            <Form.Input placeholder='Добавить вложения' name='members'  />
+                        </Form.Group>
+                    </Form>
                 </Modal.Content>
                 <Modal.Actions>
                     <Button color='red' onClick={() => changeModal(modal === true ? false : true)}>
