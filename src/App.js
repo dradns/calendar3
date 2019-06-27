@@ -2,12 +2,34 @@ import React, { useState } from 'react';
 import {DateTime, Duration, Info, Interval, Settings} from 'luxon';
 import _ from 'lodash';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import {Grid, Button, Segment, Icon} from "semantic-ui-react";
+import {Grid, Button, Segment, Icon, Modal, Header} from "semantic-ui-react";
 import 'semantic-ui-css/semantic.min.css';
 
 const App = () => {
 
     const [curDate, setCurDate] = useState(DateTime.local());
+    const [modal, changeModal] = useState(true);
+
+    function ModalExampleCloseIcon(){
+        return (
+            <Modal>
+                <Header icon='archive' content='Archive Old Messages' />
+                <Modal.Content>
+                    <p>
+                        Your inbox is getting full, would you like us to enable automatic archiving of old messages?
+                    </p>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button color='red'>
+                        <Icon name='remove' /> No
+                    </Button>
+                    <Button color='green'>
+                        <Icon name='checkmark' /> Yes
+                    </Button>
+                </Modal.Actions>
+            </Modal>
+        )
+    };
 
     function monthName() {
         let mas = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль',
@@ -17,19 +39,19 @@ const App = () => {
 
     function dayMonth(i) {
         let mas = [];
-        for( let j = 1; j <= curDate.daysInMonth; j++){
+        for (let j = 1; j <= curDate.daysInMonth; j++){
             mas.push(j);
         }
         return mas[i];
     }
 
     function createEvent(){
-        alert('create event function ' + curDate.year);
+        alert(modal === true ? false : true);
+        // alert('create event function ' + curDate.year);
     }
 
     function firstMonthDay(){
         let zz = curDate;//текущая дата
-        let ss = zz.daysInMonth;//ко-во дней в данном месяце
         let mm = zz.day;
         let nn = zz.minus({days: mm - 1 }).weekday;
         return nn - 1;
@@ -50,7 +72,7 @@ const App = () => {
                 ))}
                 {_.times(curDate.daysInMonth, i => (
                     <Grid.Column key={i} >
-                        <Button icon basic color='teal' labelPosition='right' fluid style={{marginTop: '10px'}} onClick={createEvent}>
+                        <Button icon basic color='teal' labelPosition='right' fluid style={{marginTop: '10px'}} onClick={()=>changeModal(modal === true ? false : true)}>
                             <Icon name='plus' />
                             {dayMonth(i)}
                         </Button>
@@ -62,7 +84,7 @@ const App = () => {
     }
 
     return (
-        <Grid columns={1} centered style={{margin: '10px'}}>
+        <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
             <Grid.Row>
                 <Grid celled>
                     <Grid.Row >
@@ -95,7 +117,7 @@ const App = () => {
                             <Grid style={{ justifyContent: 'space-evenly'}}>
                                 <Grid.Row>
                                     <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({month: 1}))}/>
-                                    <Button color='grey' content='today' onClick={() => setCurDate(DateTime.local())}>{}</Button>
+                                    <Button color='grey' content='Сегодня' onClick={() => setCurDate(DateTime.local())}></Button>////////////sudapisatblet
                                     <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({month: 1}))}/>
                                 </Grid.Row>
                             </Grid>
@@ -115,6 +137,9 @@ const App = () => {
                                             <Segment color='orange' textAlign='center'>{dayWeek(i)}</Segment>
                                         </Grid.Column>))
                                     }
+                                    {
+                                        <ModalExampleCloseIcon />
+                                    }
                                 </Grid.Row>
                             </Grid>
                         </Grid.Column>
@@ -126,6 +151,8 @@ const App = () => {
                                 <Grid columns={7} >
                                     <Grid.Row style={{marginTop: '20px'}}>
                                         { retCalendarGrid() }
+                                        <Button color='grey' content='СегaModalChange' onClick={() => changeModal(modal === true ? false : true)}></Button>
+                                        <Button color='grey' content='СегaModalAlert' onClick={() => alert(modal)}></Button>
                                     </Grid.Row>
                                 </Grid>
                             </React.Fragment>
