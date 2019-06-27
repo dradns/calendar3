@@ -8,11 +8,11 @@ import 'semantic-ui-css/semantic.min.css';
 const App = () => {
 
     const [curDate, setCurDate] = useState(DateTime.local());
-    const [modal, changeModal] = useState(true);
+    const [modal, changeModal] = useState(false);
 
     function ModalExampleCloseIcon(){
         return (
-            <Modal open={modal} closeIcon>
+            <Modal open={modal} >
                 <Header icon='archive' content='Archive Old Messages' />
                 <Modal.Content>
                     <p>
@@ -20,11 +20,11 @@ const App = () => {
                     </p>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button color='red'>
-                        <Icon name='remove' /> No
+                    <Button color='red' onClick={() => changeModal(modal === true ? false : true)}>
+                        <Icon name='remove' /> Закрыть окно
                     </Button>
                     <Button color='green'>
-                        <Icon name='checkmark' /> Yes
+                        <Icon name='checkmark' /> Создать событие
                     </Button>
                 </Modal.Actions>
             </Modal>
@@ -72,7 +72,7 @@ const App = () => {
                 ))}
                 {_.times(curDate.daysInMonth, i => (
                     <Grid.Column key={i} >
-                        <Button icon basic color='teal' labelPosition='right' fluid style={{marginTop: '10px'}} onClick={()=>changeModal(modal === true ? false : true)}>
+                        <Button icon basic color='teal' labelPosition='right' fluid style={{marginTop: '10px'}} onClick={() => changeModal(modal === true ? false : true)}>
                             <Icon name='plus' />
                             {dayMonth(i)}
                         </Button>
@@ -151,8 +151,6 @@ const App = () => {
                                 <Grid columns={7} >
                                     <Grid.Row style={{marginTop: '20px'}}>
                                         { retCalendarGrid() }
-                                        <Button color='grey' content='СегaModalChange' onClick={() => changeModal(modal === true ? false : true)}></Button>
-                                        <Button color='grey' content='СегaModalAlert' onClick={() => alert(modal)}></Button>
                                     </Grid.Row>
                                 </Grid>
                             </React.Fragment>
