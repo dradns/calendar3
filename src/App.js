@@ -3,23 +3,55 @@ import {DateTime, Duration, Info, Interval, Settings} from 'luxon';
 import _ from 'lodash';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {Grid, Button, Segment, Icon, Modal, Header, Form} from "semantic-ui-react";
+import {DateInput, TimeInput, DateTimeInput, DatesRangeInput} from 'semantic-ui-calendar-react';
+
+
 import 'semantic-ui-css/semantic.min.css';
 
 const App = () => {
-
     const [curDate, setCurDate] = useState(DateTime.local());
     const [modal, changeModal] = useState(true);
 
     function ModalExampleCloseIcon(props){
+
+        const handleChange = (e, {name, value }) => {
+            setEvent({...event, [name]: value });
+        };
+
+        const [event, setEvent] = useState({
+            title: '',
+            description: '',
+            date_exe: '',
+            user_id: '',
+            hour: 0,
+            minutes: 0,
+            duration: 0
+        });
+
+        const handleSubmit = (e) => {
+            e.preventDefault();
+            const formdata = new FormData(e.target);
+            console.log((event.hour + event.minutes));
+
+            setEvent({...event, duration: event.hour + event.minutes});
+        }
+
         return (
             <Modal open={modal} size='fullscreen'>
                 <Header icon='plane' content='    Создать новое событие' />
                 <Modal.Content>
-                    <Form >
+                    <Form onSubmit={e => {handleSubmit(e)}}>
                         <Form.Group>
                             <Form.Input placeholder='Название события' name='title'  />
                             <Form.Input placeholder='Место события' name='place'  />
-                            <Form.Input placeholder='Дата и время' name='date'  />
+                            <DateTimeInput
+                                duration={0}
+                                dateFormat={'YYYY-MM-DD'}
+                                onChange={handleChange}
+                                placeholder='дата и время'
+                                name={'date_exe'}
+                                // value={date_exe}
+                            />
                             <Form.Input placeholder='Добавить участников' name='members'  />
                             <Form.Input placeholder='Добавить вложения' name='members'  />
                         </Form.Group>
