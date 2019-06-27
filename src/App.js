@@ -10,13 +10,13 @@ const App = () => {
     const [curDate, setCurDate] = useState(DateTime.local());
     const [modal, changeModal] = useState(false);
 
-    function ModalExampleCloseIcon(){
+    function ModalExampleCloseIcon(props){
         return (
             <Modal open={modal} >
                 <Header icon='archive' content='Archive Old Messages' />
                 <Modal.Content>
                     <p>
-                        Your inbox is getting full, would you like us to enable automatic archiving of old messages?
+                        Your {props.value} is getting full, would?
                     </p>
                 </Modal.Content>
                 <Modal.Actions>
@@ -45,11 +45,6 @@ const App = () => {
         return mas[i];
     }
 
-    function createEvent(){
-        alert(modal === true ? false : true);
-        // alert('create event function ' + curDate.year);
-    }
-
     function firstMonthDay(){
         let zz = curDate;//текущая дата
         let mm = zz.day;
@@ -67,20 +62,18 @@ const App = () => {
             <React.Fragment>
                 {_.times(firstMonthDay(), i => (
                     <Grid.Column key={i} >
-                        <Button icon basic color='white'  content='' fluid style={{marginTop: '10px' , visibility : 'hidden' }}/>
+                        <Button icon basic content='' fluid style={{marginTop: '10px' , visibility : 'hidden' }}/>
                     </Grid.Column>
                 ))}
                 {_.times(curDate.daysInMonth, i => (
                     <Grid.Column key={i} >
+                        {<ModalExampleCloseIcon value={i+31} onClick={console.log(i + 1)}/>}
                         <Button icon basic color='teal' labelPosition='right' fluid style={{marginTop: '10px'}} onClick={() => changeModal(modal === true ? false : true)}>
                             <Icon name='plus' />
                             {dayMonth(i)}
                         </Button>
                     </Grid.Column>
                 ))}
-                {
-                    modal&&<ModalExampleCloseIcon />
-                }
             </React.Fragment>
         )
     }
@@ -137,8 +130,7 @@ const App = () => {
                                     { _.times(7, i => (
                                         <Grid.Column key={i} >
                                             <Segment color='orange' textAlign='center'>{dayWeek(i)}</Segment>
-                                        </Grid.Column>))
-                                    }
+                                        </Grid.Column>))}
                                 </Grid.Row>
                             </Grid>
                         </Grid.Column>
