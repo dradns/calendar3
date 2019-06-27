@@ -12,7 +12,7 @@ const App = () => {
 
     function ModalExampleCloseIcon(){
         return (
-            <Modal>
+            <Modal open={modal} closeIcon>
                 <Header icon='archive' content='Archive Old Messages' />
                 <Modal.Content>
                     <p>
@@ -138,7 +138,7 @@ const App = () => {
                                         </Grid.Column>))
                                     }
                                     {
-                                        <ModalExampleCloseIcon />
+                                        modal&&<ModalExampleCloseIcon />
                                     }
                                 </Grid.Row>
                             </Grid>
