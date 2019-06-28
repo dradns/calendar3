@@ -3,72 +3,61 @@ import {DateTime, Duration, Info, Interval, Settings} from 'luxon';
 import _ from 'lodash';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {Grid, Button, Segment, Icon, Modal, Header, Form} from "semantic-ui-react";
-import {DateInput, TimeInput, DateTimeInput, DatesRangeInput} from 'semantic-ui-calendar-react';
-
-
+import SemanticDatepicker from 'react-semantic-ui-datepickers';
+import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
 import 'semantic-ui-css/semantic.min.css';
 
 const App = () => {
     const DATA = DateTime.local();
     const [curDate, setCurDate] = useState(DateTime.local());
-    const [modal, changeModal] = useState(false);
+    const [modal, changeModal] = useState(true);
+    const [event, setEvent] = useState({
+        title: '',
+        place: '',
+        description: '',
+        date_exe: '',
+        user_id: '',
+        hour: 0,
+        minutes: 0,
+        duration: 0
+    });
 
-    function ModalExampleCloseIcon(props){
-
-        const handleChange = (e, {name, value }) => {
-            setEvent({...event, [name]: value });
-        };
-
-        const [event, setEvent] = useState({
-            title: '',
-            description: '',
-            date_exe: '',
-            user_id: '',
-            hour: 0,
-            minutes: 0,
-            duration: 0
-        });
-
-        const handleSubmit = (e) => {
-            e.preventDefault();
-            const formdata = new FormData(e.target);
-            console.log((event.hour + event.minutes));
-
-            setEvent({...event, duration: event.hour + event.minutes});
+    function Datepicker() {
+        function onDateChange(e) {
         }
 
+        return (<SemanticDatepicker onDateChange={onDateChange} />)
+    }
+    
+    function onSubmit(e) {
+        e.preventDefault();
+        setEvent({ title: event.target.title, place: event.target.place,  date_exe: event.target.date_exe});
+    }
+
+    function ModalExampleCloseIcon(){
         return (
-            <Modal open={modal} size='fullscreen'>
-                <Header icon='plane' content='    Создать новое событие' />
+            <Modal open={modal} size='big'>
+                <Header icon='plane' content='    Создать новое событие' style={{backgroundColor:'pink', textAlign:'center'}}  />
                 <Modal.Content>
-                    <Form onSubmit={e => {handleSubmit(e)}}>
+                    <Form onSubmit={onSubmit}>
                         <Form.Group>
-                            <Form.Input placeholder='Название события' name='title'  />
-                            <Form.Input placeholder='Место события' name='place'  />
-                            <DateTimeInput
-                                duration={0}
-                                dateFormat={'YYYY-MM-DD'}
-                                onChange={handleChange}
-                                placeholder='дата и время'
-                                name={'date_exe'}
-                                // value={date_exe}
-                            />
-                            <Form.Input placeholder='Добавить участников' name='members'  />
-                            <Form.Input placeholder='Добавить вложения' name='members'  />
+                            <Form.Input type='text' placeholder='Название события' name='title'  />
+                            <Form.Input type='text' placeholder='Место события' name='place'  />
+                            <Datepicker type='text' name='date_exe'  placeholder="Дата"/>
+                            <Modal.Actions>
+                                <Button color='green' type="submit">
+                                    <Icon name='checkmark' /> Создать событие
+                                </Button>
+                            </Modal.Actions>
                         </Form.Group>
                     </Form>
-                </Modal.Content>
-                <Modal.Actions>
-                    <Button color='red' onClick={() => changeModal(modal === true ? false : true)}>
+                    <Button color='pink' onClick={() => changeModal(!modal)}>
                         <Icon name='remove' /> Закрыть окно
                     </Button>
-                    <Button color='green' onClick={()=>alert('some')}>
-                        <Icon name='checkmark' /> Создать событие
-                    </Button>
-                </Modal.Actions>
+                </Modal.Content>
             </Modal>
         )
-    };
+    }
 
     function daysGrid() {
         return (
@@ -82,16 +71,16 @@ const App = () => {
     }
 
     function checkCurDay(i) {
-        if ((i === curDate.day - 1) && (curDate.year == DATA.year) && (curDate.month == DATA.month)){
+        if ((i === curDate.day - 1) && (curDate.year === DATA.year) && (curDate.month === DATA.month)){
             return (
-                <Button icon primary labelPosition='right' fluid style={{marginTop: '10px', fontWeight: 'bold' }} onClick={() => changeModal(modal === true ? false : true)}>
+                <Button icon primary labelPosition='right' fluid style={{marginTop: '10px', fontWeight: 'bold' }} onClick={() => changeModal(!modal)}>
                     <Icon name='plus' />
                     {dayMonth(i)}
                 </Button>
             )
         }
         return (
-            <Button icon basic color='teal' labelPosition='right' fluid style={{marginTop: '10px'}} onClick={() => changeModal(modal === true ? false : true)}>
+            <Button icon basic color='teal' labelPosition='right' fluid style={{marginTop: '10px'}} onClick={() => changeModal(!modal)}>
                 <Icon name='plus' />
                 {dayMonth(i)}
             </Button>
@@ -113,7 +102,7 @@ const App = () => {
     }
 
     function firstMonthDay(){
-        let zz = curDate;//текущая дата
+        let zz = curDate;
         let mm = zz.day;
         let nn = zz.minus({days: mm - 1 }).weekday;
         return nn - 1;
@@ -157,7 +146,6 @@ const App = () => {
                                 </Grid.Column>
                             </Grid>
                         </Grid.Column>
-
                         <Grid.Column width={8}>
                             <Button.Group fluid>
                                 <Button href='/day'>День</Button>
@@ -179,7 +167,6 @@ const App = () => {
                     </Grid.Row>
                 </Grid>
             </Grid.Row>
-
             <Grid.Row>
                 <Grid>
                     <Grid.Row>
@@ -194,7 +181,6 @@ const App = () => {
                             </Grid>
                         </Grid.Column>
                     </Grid.Row>
-
                     <Grid.Row>
                         <Grid.Column width={16}>
                             <React.Fragment>
