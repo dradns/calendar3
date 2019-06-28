@@ -10,7 +10,7 @@ import 'semantic-ui-css/semantic.min.css';
 
 const App = () => {
     const [curDate, setCurDate] = useState(DateTime.local());
-    const [modal, changeModal] = useState(true);
+    const [modal, changeModal] = useState(false);
 
     function ModalExampleCloseIcon(props){
 
@@ -69,6 +69,20 @@ const App = () => {
         )
     };
 
+    function daysGrid() {
+        return (
+            _.times(curDate.daysInMonth, i => (
+                <Grid.Column key={i} >
+                    {<ModalExampleCloseIcon value={i+31} onClick={console.log(i + 1)}/>}
+                    <Button icon basic color='teal' labelPosition='right' fluid style={{marginTop: '10px'}} onClick={() => changeModal(modal === true ? false : true)}>
+                        <Icon name='plus' />
+                        {dayMonth(i)}
+                    </Button>
+                </Grid.Column>
+            ))
+        )
+    }
+
     function monthName() {
         let mas = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль',
             'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
@@ -103,15 +117,7 @@ const App = () => {
                         <Button icon basic content='' fluid style={{marginTop: '10px' , visibility : 'hidden' }}/>
                     </Grid.Column>
                 ))}
-                {_.times(curDate.daysInMonth, i => (
-                    <Grid.Column key={i} >
-                        {<ModalExampleCloseIcon value={i+31} onClick={console.log(i + 1)}/>}
-                        <Button icon basic color='teal' labelPosition='right' fluid style={{marginTop: '10px'}} onClick={() => changeModal(modal === true ? false : true)}>
-                            <Icon name='plus' />
-                            {dayMonth(i)}
-                        </Button>
-                    </Grid.Column>
-                ))}
+                {daysGrid()}
             </React.Fragment>
         )
     }
