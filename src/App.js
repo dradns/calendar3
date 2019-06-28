@@ -9,6 +9,7 @@ import {DateInput, TimeInput, DateTimeInput, DatesRangeInput} from 'semantic-ui-
 import 'semantic-ui-css/semantic.min.css';
 
 const App = () => {
+    const DATA = DateTime.local();
     const [curDate, setCurDate] = useState(DateTime.local());
     const [modal, changeModal] = useState(false);
 
@@ -74,12 +75,26 @@ const App = () => {
             _.times(curDate.daysInMonth, i => (
                 <Grid.Column key={i} >
                     {<ModalExampleCloseIcon value={i+31} onClick={console.log(i + 1)}/>}
-                    <Button icon basic color='teal' labelPosition='right' fluid style={{marginTop: '10px'}} onClick={() => changeModal(modal === true ? false : true)}>
-                        <Icon name='plus' />
-                        {dayMonth(i)}
-                    </Button>
+                    {checkCurDay(i)}
                 </Grid.Column>
             ))
+        )
+    }
+
+    function checkCurDay(i) {
+        if ((i === curDate.day - 1) && (curDate.year == DATA.year) && (curDate.month == DATA.month)){
+            return (
+                <Button icon primary labelPosition='right' fluid style={{marginTop: '10px', fontWeight: 'bold' }} onClick={() => changeModal(modal === true ? false : true)}>
+                    <Icon name='plus' />
+                    {dayMonth(i)}
+                </Button>
+            )
+        }
+        return (
+            <Button icon basic color='teal' labelPosition='right' fluid style={{marginTop: '10px'}} onClick={() => changeModal(modal === true ? false : true)}>
+                <Icon name='plus' />
+                {dayMonth(i)}
+            </Button>
         )
     }
 
