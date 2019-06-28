@@ -25,7 +25,6 @@ const App = () => {
     function Datepicker() {
         function onDateChange(e) {
         }
-
         return (<SemanticDatepicker onDateChange={onDateChange} />)
     }
     
@@ -41,8 +40,8 @@ const App = () => {
                 <Modal.Content>
                     <Form onSubmit={onSubmit}>
                         <Form.Group>
-                            <Form.Input type='text' placeholder='Название события' name='title'  />
-                            <Form.Input type='text' placeholder='Место события' name='place'  />
+                            <Form.Input type='text' placeholder='Название события' name='title' onChange={e=>setEvent({title : e.target.value})} />
+                            <Form.Input type='text' placeholder='Место события' name='place' onChange={e=>setEvent({place : e.target.value})} />
                             <Datepicker type='text' name='date_exe'  placeholder="Дата"/>
                             <Modal.Actions>
                                 <Button color='green' type="submit">
@@ -136,11 +135,9 @@ const App = () => {
                                 <Grid.Column>
                                     <h1>{curDate.day}</h1>
                                 </Grid.Column>
-
                                 <Grid.Column>
                                     <h1>{monthName()}</h1>
                                 </Grid.Column>
-
                                 <Grid.Column>
                                     <h1>{curDate.year}</h1>
                                 </Grid.Column>
@@ -159,7 +156,7 @@ const App = () => {
                             <Grid style={{ justifyContent: 'space-evenly'}}>
                                 <Grid.Row>
                                     <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({month: 1}))}/>
-                                    <Button color='grey' content='Сегодня' onClick={() => setCurDate(DateTime.local())}></Button>
+                                    <Button color='grey' onClick={() => setCurDate(DateTime.local())}>Сегодня</Button>
                                     <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({month: 1}))}/>
                                 </Grid.Row>
                             </Grid>
