@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import {DateTime, Duration, Info, Interval, Settings} from 'luxon';
 import _ from 'lodash';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {Grid, Button, Segment, Icon, Modal, Header, Form} from "semantic-ui-react";
+import axios from 'axios';
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
 import 'semantic-ui-css/semantic.min.css';
@@ -10,17 +11,23 @@ import 'semantic-ui-css/semantic.min.css';
 const App = () => {
     const DATA = DateTime.local();
     const [curDate, setCurDate] = useState(DateTime.local());
-    const [modal, changeModal] = useState(true);
-    const [event, setEvent] = useState({
-        title: '',
-        place: '',
-        description: '',
-        date_exe: '',
-        user_id: '',
-        hour: 0,
-        minutes: 0,
-        duration: 0
-    });
+    const [modal, changeModal] = useState(false);
+    const [event, setEvent] = useState({ events: [] });
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await axios ('http://127.0.0.1:3020/events/list');
+            setEvent(response.data);
+            console.log('its a res.data');
+            console.log(response.data[5].id);
+            console.log(event);
+        }
+        fetchData();
+
+        console.log(event.events);
+    }, []);
+
+    console.log(event);
 
     function Datepicker() {
         function onDateChange(e) {
@@ -35,7 +42,7 @@ const App = () => {
 
     function ModalExampleCloseIcon(){
         return (
-            <Modal open={modal} size='big'>
+            <Modal open={modal} size='large'>
                 <Header icon='plane' content='    Создать новое событие' style={{backgroundColor:'pink', textAlign:'center'}}  />
                 <Modal.Content>
                     <Form onSubmit={onSubmit}>
@@ -133,13 +140,7 @@ const App = () => {
                         <Grid.Column width={4}>
                             <Grid style={{ justifyContent: 'space-evenly'}}>
                                 <Grid.Column>
-                                    <h1>{curDate.day}</h1>
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <h1>{monthName()}</h1>
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <h1>{curDate.year}</h1>
+                                    <h1>{curDate.day}    {monthName()}    {curDate.year}</h1>
                                 </Grid.Column>
                             </Grid>
                         </Grid.Column>
@@ -191,6 +192,7 @@ const App = () => {
                     </Grid.Row>
                 </Grid>
             </Grid.Row>
+            <Button onClick>Op</Button>
         </Grid>
     )
 };
