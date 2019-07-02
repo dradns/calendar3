@@ -9,6 +9,7 @@ import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
 import 'semantic-ui-css/semantic.min.css';
 
 const App = () => {
+    let mas2 = [];
     const DATA = DateTime.local();
     const [curDate, setCurDate] = useState(DateTime.local());
     const [modal, changeModal] = useState(false);
@@ -82,9 +83,19 @@ const App = () => {
     }
 
     function checkCurDay(i) {
+        let style;
+        if (i in [1, 5, 8]){
+            style = '20px';
+            console.log(style);
+            console.log('AAAAAAAAAAAAAAAAAAA234234234234234');
+        }else{
+            style = '10px';
+            console.log(style);
+        }
+
         if ((i === curDate.day - 1) && (curDate.year === DATA.year) && (curDate.month === DATA.month)){
             return (
-                <Button icon primary labelPosition='right' fluid style={{marginTop: '10px', fontWeight: 'bold' }} onClick={() => changeModal(!modal)}>
+                <Button icon primary labelPosition='right' fluid style={{marginTop: '10px', fontWeight: 'bold'}} onClick={() => changeModal(!modal)}>
                     <Icon name='plus' />
                     {dayMonth(i)}
                 </Button>
@@ -212,7 +223,6 @@ const App = () => {
     function compa() {
         let z = 0;
         let mas = [];
-        let mas2 = [];
         for (let i = 0; i < event.length; i++){
             let d = Date.parse(event[i].date_exe);
             let c = new Date(d);
@@ -231,18 +241,13 @@ const App = () => {
             if ((c.getMonth() + 1 === curDate.month) && (c.getFullYear() === curDate.year))
             {
                 mas.push(event[i].description);
-                mas2.push(c.getDate() + ' ' + (c.getMonth()+ 1) + ' ' + c.getFullYear());
+                mas2.push(c.getDate());
                 z++;
             }
-
-
-
-            console.log(mas);
-            console.log(mas2);
         }
         return (_.times(z, i => (
             <Grid.Column key={i} >
-                <Segment color='orange' textAlign='center'>{mas[i]}</Segment>
+                <Segment color='orange' textAlign='center'>{mas[i] + '  ' + mas2[i]}</Segment>
             </Grid.Column>)))
     }
 };
