@@ -185,6 +185,7 @@ const App = () => {
                                 <Grid columns={7} >
                                     <Grid.Row style={{marginTop: '20px'}}>
                                         { retCalendarGrid() }
+                                        { compa()}
                                     </Grid.Row>
                                 </Grid>
                             </React.Fragment>
@@ -195,6 +196,17 @@ const App = () => {
             <Button onClick>Op</Button>
         </Grid>
     )
+
+    function compa() {
+        for (let i = 0; i < event.length; i++){
+            console.log(event[i].date_exe);
+            let d = Date.parse(event[i].date_exe);
+        }
+        return (_.times(event.length, i => (
+            <Grid.Column key={i} >
+                <Segment color='orange' textAlign='center'>{dayWeek(i)}</Segment>
+            </Grid.Column>)))
+    }
 };
 
 export default App;
