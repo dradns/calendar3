@@ -18,9 +18,6 @@ const App = () => {
         async function fetchData() {
             const response = await axios ('http://127.0.0.1:3020/events/list');
             setEvent(response.data);
-            console.log('its a res.data');
-            console.log(response.data[5].id);
-            console.log(event);
         }
         fetchData();
 
@@ -198,11 +195,26 @@ const App = () => {
     )
 
     function compa() {
+        let z = 0;
         for (let i = 0; i < event.length; i++){
-            console.log(event[i].date_exe);
             let d = Date.parse(event[i].date_exe);
+            let c = new Date(d);
+
+            console.log('its a STRING');
+            console.log(event[i].date_exe);
+            console.log('its a parse');
+            console.log(c.getMonth()+1);
+            console.log(c.getFullYear());
+
+            console.log('its a DATA');
+            console.log(curDate.month);
+            console.log(curDate.year);
+            if ((c.getMonth() + 1 === curDate.month) && (c.getFullYear() === curDate.year))
+            {
+                z++;
+            }
         }
-        return (_.times(event.length, i => (
+        return (_.times(z, i => (
             <Grid.Column key={i} >
                 <Segment color='orange' textAlign='center'>{dayWeek(i)}</Segment>
             </Grid.Column>)))
