@@ -14,27 +14,25 @@ const App = () => {
     const [modal, changeModal] = useState(false);
     const [event, setEvent] = useState({ events: [] });
 
-    function checkFirstDayinMonth(i){
-        let zz = curDate;
-        let mm = zz.day;
-        let nn = zz.minus({days: mm - 1 }).weekday;
-
-        if(nn + i === 6 || nn + i === 7 || nn + i === 13 || nn + i === 14 || nn + i === 20 || nn + i === 21 || nn + i === 27 || nn + i === 28 || nn + i === 34 || nn + i === 35){
-            return true;
-        }
-    }
-
     useEffect(() => {
         async function fetchData() {
             const response = await axios ('http://127.0.0.1:3020/events/list');
             setEvent(response.data);
         }
         fetchData();
-
-        console.log(event.events);
     }, []);
 
-    console.log(event);
+
+    function isWeekends(i){
+        let zz = curDate;
+        let mm = zz.day;
+        let nn = zz.minus({days: mm - 1 }).weekday;
+
+        if(nn + i === 6 || nn + i === 7 || nn + i === 13 || nn + i === 14 || nn + i === 20 || nn + i === 21 ||
+            nn + i === 27 || nn + i === 28 || nn + i === 34 || nn + i === 35){
+            return true;
+        }
+    }
 
     function Datepicker() {
         function onDateChange(e) {
@@ -92,7 +90,7 @@ const App = () => {
                 </Button>
             )
         }
-        else if (checkFirstDayinMonth(i)){
+        else if (isWeekends(i)){
             return (
                 <Button icon basic color='pink' labelPosition='right' fluid style={{marginTop: '10px'}} onClick={() => changeModal(!modal)}>
                     <Icon name='plus' />
@@ -208,33 +206,43 @@ const App = () => {
                     </Grid.Row>
                 </Grid>
             </Grid.Row>
-            <Button onClick>Op</Button>
         </Grid>
     )
 
     function compa() {
         let z = 0;
+        let mas = [];
+        let mas2 = [];
         for (let i = 0; i < event.length; i++){
             let d = Date.parse(event[i].date_exe);
             let c = new Date(d);
-            //
-            // console.log('its a STRING');
-            // console.log(event[i].date_exe);
-            // console.log('its a parse');
-            // console.log(c.getMonth()+1);
-            // console.log(c.getFullYear());
-            //
-            // console.log('its a DATA');
-            // console.log(curDate.month);
-            // console.log(curDate.year);
+
+            console.log('its a STRING');
+            console.log(event[i].date_exe);
+            console.log('its a parse');
+            console.log(c.getMonth()+1);
+            console.log(c.getFullYear());
+
+            console.log('its a DATA');
+            console.log(curDate.month);
+            console.log(curDate.year);
+            console.log(event[i].description);
+
             if ((c.getMonth() + 1 === curDate.month) && (c.getFullYear() === curDate.year))
             {
+                mas.push(event[i].description);
+                mas2.push(c.getDate() + ' ' + (c.getMonth()+ 1) + ' ' + c.getFullYear());
                 z++;
             }
+
+
+
+            console.log(mas);
+            console.log(mas2);
         }
         return (_.times(z, i => (
             <Grid.Column key={i} >
-                <Segment color='orange' textAlign='center'>{dayWeek(i)}</Segment>
+                <Segment color='orange' textAlign='center'>{mas[i]}</Segment>
             </Grid.Column>)))
     }
 };
