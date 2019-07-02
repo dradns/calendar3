@@ -14,6 +14,16 @@ const App = () => {
     const [modal, changeModal] = useState(false);
     const [event, setEvent] = useState({ events: [] });
 
+    function checkFirstDayinMonth(i){
+        let zz = curDate;
+        let mm = zz.day;
+        let nn = zz.minus({days: mm - 1 }).weekday;
+
+        if(nn + i === 6 || nn + i === 7 || nn + i === 13 || nn + i === 14 || nn + i === 20 || nn + i === 21 || nn + i === 27 || nn + i === 28 || nn + i === 34 || nn + i === 35){
+            return true;
+        }
+    }
+
     useEffect(() => {
         async function fetchData() {
             const response = await axios ('http://127.0.0.1:3020/events/list');
@@ -66,7 +76,7 @@ const App = () => {
         return (
             _.times(curDate.daysInMonth, i => (
                 <Grid.Column key={i} >
-                    {<ModalExampleCloseIcon value={i+31} onClick={console.log(i + 1)}/>}
+                    {<ModalExampleCloseIcon value={i+31} />}
                     {checkCurDay(i)}
                 </Grid.Column>
             ))
@@ -77,6 +87,14 @@ const App = () => {
         if ((i === curDate.day - 1) && (curDate.year === DATA.year) && (curDate.month === DATA.month)){
             return (
                 <Button icon primary labelPosition='right' fluid style={{marginTop: '10px', fontWeight: 'bold' }} onClick={() => changeModal(!modal)}>
+                    <Icon name='plus' />
+                    {dayMonth(i)}
+                </Button>
+            )
+        }
+        else if (checkFirstDayinMonth(i)){
+            return (
+                <Button icon basic color='pink' labelPosition='right' fluid style={{marginTop: '10px'}} onClick={() => changeModal(!modal)}>
                     <Icon name='plus' />
                     {dayMonth(i)}
                 </Button>
@@ -199,16 +217,16 @@ const App = () => {
         for (let i = 0; i < event.length; i++){
             let d = Date.parse(event[i].date_exe);
             let c = new Date(d);
-
-            console.log('its a STRING');
-            console.log(event[i].date_exe);
-            console.log('its a parse');
-            console.log(c.getMonth()+1);
-            console.log(c.getFullYear());
-
-            console.log('its a DATA');
-            console.log(curDate.month);
-            console.log(curDate.year);
+            //
+            // console.log('its a STRING');
+            // console.log(event[i].date_exe);
+            // console.log('its a parse');
+            // console.log(c.getMonth()+1);
+            // console.log(c.getFullYear());
+            //
+            // console.log('its a DATA');
+            // console.log(curDate.month);
+            // console.log(curDate.year);
             if ((c.getMonth() + 1 === curDate.month) && (c.getFullYear() === curDate.year))
             {
                 z++;
