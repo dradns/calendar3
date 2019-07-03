@@ -9,6 +9,7 @@ import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
 import 'semantic-ui-css/semantic.min.css';
 
 const App = () => {
+    console.log('test');
     let mas2 = [];
     const DATA = DateTime.local();
     const [curDate, setCurDate] = useState(DateTime.local());
@@ -42,7 +43,7 @@ const App = () => {
             setMonth(mas2);
         }
         fetchMonth();
-    }, [month]);
+    }, [curDate]);
 
     function isWeekends(i){
         let zz = curDate;
@@ -60,13 +61,14 @@ const App = () => {
         }
         return (<SemanticDatepicker onDateChange={onDateChange} />)
     }
-    
+
     function onSubmit(e) {
         e.preventDefault();
         setEvent({ title: event.target.title, place: event.target.place,  date_exe: event.target.date_exe});
     }
 
-    function ModalExampleCloseIcon(){
+    function ModalWindow(){
+        console.log('its a modal window');
         return (
             <Modal open={modal} size='large'>
                 <Header icon='plane' content='    Создать новое событие' style={{backgroundColor:'pink', textAlign:'center'}}  />
@@ -95,7 +97,6 @@ const App = () => {
         return (
             _.times(curDate.daysInMonth, i => (
                 <Grid.Column key={i} >
-                    {<ModalExampleCloseIcon value={i+31} />}
                     {checkCurDay(i)}
                 </Grid.Column>
             ))
@@ -106,13 +107,13 @@ const App = () => {
         let style = '14px';
         for (let k = 0; k < month.length; k++){
             if (i + 1 === month[k]){
-                style = '30px';
+                style = '19px';
             }
         }
 
         if ((i === curDate.day - 1) && (curDate.year === DATA.year) && (curDate.month === DATA.month)){
             return (
-                <Button icon primary labelPosition='right' fluid style={{marginTop: '10px', fontWeight: 'bold', fontSize: style}} onClick={() => changeModal(!modal)}>
+                <Button icon primary labelPosition='right' fluid style={{marginTop: '10px', fontWeight: 'bold', fontSize: style }} onClick={() => changeModal(!modal)}>
                     <Icon name='plus' />
                     {dayMonth(i)}
                 </Button>
@@ -120,7 +121,7 @@ const App = () => {
         }
         else if (isWeekends(i)){
             return (
-                <Button icon basic color='pink' labelPosition='right' fluid style={{marginTop: '10px', fontSize: style}} onClick={() => changeModal(!modal)}>
+                <Button icon basic color='pink' labelPosition='right' fluid style={{marginTop: '10px', fontSize: style}} onClick={() => changeModal(!modal)} >
                     <Icon name='plus' />
                     {dayMonth(i)}
                 </Button>
@@ -226,7 +227,7 @@ const App = () => {
                                 <Grid columns={7} >
                                     <Grid.Row style={{marginTop: '20px'}}>
                                         { retCalendarGrid() }
-                                        {/*{ compa()}*/}
+                                        {ModalWindow()}
                                     </Grid.Row>
                                 </Grid>
                             </React.Fragment>
@@ -234,8 +235,20 @@ const App = () => {
                     </Grid.Row>
                 </Grid>
             </Grid.Row>
+            <Button onClick={funcAl}>OPPAAAA</Button>
         </Grid>
     );
+    function funcAl() {
+        axios.post('http://127.0.0.1:3020/events/add', {title: 'test',
+            description: 'test-desc',
+            date_creation: '2019-12-11 21:00:00',
+            date_exe: '2019-12-11 21:00:00',
+            duration: 3600,
+            author_id: 86,
+            })
+            .then(res => {console.log(res); console.log(res.data)});
+        console.log('opa');
+    }
 };
 
 export default App;
