@@ -42,7 +42,7 @@ const App = () => {
             setMonth(mas2);
         }
         fetchMonth();
-    }, []);
+    }, [month]);
 
     function isWeekends(i){
         let zz = curDate;
@@ -103,17 +103,16 @@ const App = () => {
     }
 
     function checkCurDay(i) {
-        console.log(month);
-        let style;
-        if (i in month){
-            style = '30px';
-        }else{
-            style = '14px';
+        let style = '14px';
+        for (let k = 0; k < month.length; k++){
+            if (i + 1 === month[k]){
+                style = '30px';
+            }
         }
 
         if ((i === curDate.day - 1) && (curDate.year === DATA.year) && (curDate.month === DATA.month)){
             return (
-                <Button icon primary labelPosition='right' fluid style={{marginTop: '10px', fontWeight: 'bold'}} onClick={() => changeModal(!modal)}>
+                <Button icon primary labelPosition='right' fluid style={{marginTop: '10px', fontWeight: 'bold', fontSize: style}} onClick={() => changeModal(!modal)}>
                     <Icon name='plus' />
                     {dayMonth(i)}
                 </Button>
@@ -237,13 +236,6 @@ const App = () => {
             </Grid.Row>
         </Grid>
     );
-
-    // function compa() {
-    //     return (_.times(month.length, i => (
-    //         <Grid.Column key={i}>
-    //             <Segment color='orange' textAlign='center'>{month[i]}</Segment>
-    //         </Grid.Column>)))
-    // }
 };
 
 export default App;
