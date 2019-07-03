@@ -14,6 +14,7 @@ const App = () => {
     const [curDate, setCurDate] = useState(DateTime.local());
     const [modal, changeModal] = useState(false);
     const [event, setEvent] = useState({ events: [] });
+    const [month, setMonth] = useState({eventsMonth: []});
 
     useEffect(() => {
         async function fetchData() {
@@ -23,6 +24,25 @@ const App = () => {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        async function fetchMonth() {
+            const response = await axios ('http://127.0.0.1:3020/events/list');
+            let z = 0;
+            let mas = [];
+            for (let i = 0; i < response.data.length; i++) {
+                let d = Date.parse(response.data[i].date_exe);
+                let c = new Date(d);
+
+                if ((c.getMonth() + 1 === curDate.month) && (c.getFullYear() === curDate.year)) {
+                    mas.push(response.data[i].description);
+                    mas2.push(c.getDate());
+                    z++;
+                }
+            }
+            setMonth(mas2);
+        }
+        fetchMonth();
+    }, []);
 
     function isWeekends(i){
         let zz = curDate;
@@ -83,14 +103,12 @@ const App = () => {
     }
 
     function checkCurDay(i) {
+        console.log(month);
         let style;
-        if (i in [1, 5, 8]){
-            style = '20px';
-            console.log(style);
-            console.log('AAAAAAAAAAAAAAAAAAA234234234234234');
+        if (i in month){
+            style = '30px';
         }else{
-            style = '10px';
-            console.log(style);
+            style = '14px';
         }
 
         if ((i === curDate.day - 1) && (curDate.year === DATA.year) && (curDate.month === DATA.month)){
@@ -103,14 +121,14 @@ const App = () => {
         }
         else if (isWeekends(i)){
             return (
-                <Button icon basic color='pink' labelPosition='right' fluid style={{marginTop: '10px'}} onClick={() => changeModal(!modal)}>
+                <Button icon basic color='pink' labelPosition='right' fluid style={{marginTop: '10px', fontSize: style}} onClick={() => changeModal(!modal)}>
                     <Icon name='plus' />
                     {dayMonth(i)}
                 </Button>
             )
         }
         return (
-            <Button icon basic color='teal' labelPosition='right' fluid style={{marginTop: '10px'}} onClick={() => changeModal(!modal)}>
+            <Button icon basic color='teal' labelPosition='right' fluid style={{marginTop: '10px', fontSize: style}} onClick={() => changeModal(!modal)}>
                 <Icon name='plus' />
                 {dayMonth(i)}
             </Button>
@@ -143,7 +161,7 @@ const App = () => {
         return mas[i];
     }
 
-    function retCalendarGrid() {
+     function retCalendarGrid() {
         return (
             <React.Fragment>
                 {_.times(firstMonthDay(), i => (
@@ -209,7 +227,7 @@ const App = () => {
                                 <Grid columns={7} >
                                     <Grid.Row style={{marginTop: '20px'}}>
                                         { retCalendarGrid() }
-                                        { compa()}
+                                        {/*{ compa()}*/}
                                     </Grid.Row>
                                 </Grid>
                             </React.Fragment>
@@ -218,38 +236,14 @@ const App = () => {
                 </Grid>
             </Grid.Row>
         </Grid>
-    )
+    );
 
-    function compa() {
-        let z = 0;
-        let mas = [];
-        for (let i = 0; i < event.length; i++){
-            let d = Date.parse(event[i].date_exe);
-            let c = new Date(d);
-
-            console.log('its a STRING');
-            console.log(event[i].date_exe);
-            console.log('its a parse');
-            console.log(c.getMonth()+1);
-            console.log(c.getFullYear());
-
-            console.log('its a DATA');
-            console.log(curDate.month);
-            console.log(curDate.year);
-            console.log(event[i].description);
-
-            if ((c.getMonth() + 1 === curDate.month) && (c.getFullYear() === curDate.year))
-            {
-                mas.push(event[i].description);
-                mas2.push(c.getDate());
-                z++;
-            }
-        }
-        return (_.times(z, i => (
-            <Grid.Column key={i} >
-                <Segment color='orange' textAlign='center'>{mas[i] + '  ' + mas2[i]}</Segment>
-            </Grid.Column>)))
-    }
+    // function compa() {
+    //     return (_.times(month.length, i => (
+    //         <Grid.Column key={i}>
+    //             <Segment color='orange' textAlign='center'>{month[i]}</Segment>
+    //         </Grid.Column>)))
+    // }
 };
 
 export default App;
