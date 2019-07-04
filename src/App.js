@@ -116,14 +116,6 @@ const App = () => {
         )
     }
 
-    // function firstMonthDayForYear(){
-    //     let zz = curDate;
-    //     let curYear = zz.set({year: curDate.year, month: counter - 1, day: 1});
-    //     let mm = curYear.day;
-    //     let nn = curYear.minus({days: mm - 1 }).weekday;
-    //     return nn - 1;
-    // }
-
     function checkCurDay(i) {
         let style = '14px';
         for (let k = 0; k < month.length; k++){
@@ -167,20 +159,20 @@ const App = () => {
         if ((i === curDate.day - 1) && (curDate.year === DATA.year) && (curDate.month === DATA.month)){
             return (
                 <Button icon primary labelPosition='right' fluid style={{margin: '2px', fontWeight: 'bold', fontSize: style }} onClick={() => changeModal(!modal)}>
-                    {dayMonth(i)}
+                    {dayMonthForYear(i)}
                 </Button>
             )
         }
         else if (isWeekends(i)){
             return (
                 <Button icon basic color='pink' labelPosition='right' fluid style={{margin: '2px', fontSize: style}} onClick={() => changeModal(!modal)} >
-                    {dayMonth(i)}
+                    {dayMonthForYear(i)}
                 </Button>
             )
         }
         return (
             <Button icon basic color='teal' labelPosition='right' fluid style={{margin: '2px', fontSize: style}} onClick={() => changeModal(!modal)}>
-                {dayMonth(i)}
+                {dayMonthForYear(i)}
             </Button>
         )
     }
@@ -201,6 +193,16 @@ const App = () => {
     function dayMonth(i) {
         let mas = [];
         for (let j = 1; j <= curDate.daysInMonth; j++){
+            mas.push(j);
+        }
+        return mas[i];
+    }
+
+    function dayMonthForYear(i) {
+        let zz = curDate;
+        let mm = zz.set({year: curDate.year, month: counter - 1, day: 1})
+        let mas = [];
+        for (let j = 1; j <= mm.daysInMonth; j++){
             mas.push(j);
         }
         return mas[i];
