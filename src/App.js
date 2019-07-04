@@ -47,6 +47,7 @@ const App = () => {
     }, [curDate]);
 
     function isWeekends(i){
+        console.log(i);
         let zz = curDate;
         let mm = zz.day;
         let nn = zz.minus({days: mm - 1 }).weekday;
@@ -56,6 +57,26 @@ const App = () => {
             return true;
         }
     }
+
+    function isWeekendsForYear(i){
+        console.log(i);
+        let zz = curDate;
+        let ss = zz.set({year: curDate.year, month: counter - 1, day: 1});
+        let mm = ss.day;
+        let nn = ss.minus({days: mm - 1 }).weekday;
+
+        if(nn + i === 6 || nn + i === 7 || nn + i === 13 || nn + i === 14 || nn + i === 20 || nn + i === 21 ||
+            nn + i === 27 || nn + i === 28 || nn + i === 34 || nn + i === 35){
+            return true;
+        }
+    }
+
+
+
+
+
+
+
 
     function Datepicker() {
         function onDateChange(e) {
@@ -124,7 +145,7 @@ const App = () => {
             }
         }
 
-        if ((i === curDate.day - 1) && (curDate.year === DATA.year) && (curDate.month === DATA.month)){
+        if ((i + 1 === curDate.day) && (curDate.year === DATA.year) && (curDate.month === DATA.month)){
             return (
                 <Button icon primary labelPosition='right' fluid style={{marginTop: '10px', fontWeight: 'bold', fontSize: style }} onClick={() => changeModal(!modal)}>
                     <Icon name='plus' />
@@ -149,6 +170,9 @@ const App = () => {
     }
 
     function checkCurDayForYear(i) {
+        let zz = curDate;
+        let mm = zz.set({year: curDate.year, month: counter - 1, day: 1});
+
         let style = '14px';
         for (let k = 0; k < month.length; k++){
             if (i + 1 === month[k]){
@@ -156,14 +180,17 @@ const App = () => {
             }
         }
 
-        if ((i === curDate.day - 1) && (curDate.year === DATA.year) && (curDate.month === DATA.month)){
-            return (
-                <Button icon primary labelPosition='right' fluid style={{margin: '2px', fontWeight: 'bold', fontSize: style }} onClick={() => changeModal(!modal)}>
-                    {dayMonthForYear(i)}
-                </Button>
-            )
+        if (DATA.month + 1 === counter){
+            if ((i + 1 === curDate.day) && (curDate.year === DATA.year) && (curDate.month === DATA.month) && (curDate.day === DATA.day)){
+                return (
+                    <Button icon primary labelPosition='right' fluid style={{margin: '2px', fontWeight: 'bold', fontSize: style }} onClick={() => changeModal(!modal)}>
+                        {dayMonthForYear(i)}
+                    </Button>
+                )
+            }
         }
-        else if (isWeekends(i)){
+
+        else if (isWeekendsForYear(i)){
             return (
                 <Button icon basic color='pink' labelPosition='right' fluid style={{margin: '2px', fontSize: style}} onClick={() => changeModal(!modal)} >
                     {dayMonthForYear(i)}
