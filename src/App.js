@@ -12,6 +12,7 @@ import GridColumn from "semantic-ui-react/dist/commonjs/collections/Grid/GridCol
 const App = () => {
     console.log('test');
     let mas2 = [];
+    let counter = 1;
     const DATA = DateTime.local();
     const [curDate, setCurDate] = useState(DateTime.local());
     const [modal, changeModal] = useState(false);
@@ -156,20 +157,20 @@ const App = () => {
 
         if ((i === curDate.day - 1) && (curDate.year === DATA.year) && (curDate.month === DATA.month)){
             return (
-                <Button icon primary labelPosition='right' fluid style={{marginTop: '10px', fontWeight: 'bold', fontSize: style }} onClick={() => changeModal(!modal)}>
+                <Button icon primary labelPosition='right' fluid style={{margin: '2px', fontWeight: 'bold', fontSize: style }} onClick={() => changeModal(!modal)}>
                     {dayMonth(i)}
                 </Button>
             )
         }
         else if (isWeekends(i)){
             return (
-                <Button icon basic color='pink' labelPosition='right' fluid style={{marginTop: '10px', fontSize: style}} onClick={() => changeModal(!modal)} >
+                <Button icon basic color='pink' labelPosition='right' fluid style={{margin: '2px', fontSize: style}} onClick={() => changeModal(!modal)} >
                     {dayMonth(i)}
                 </Button>
             )
         }
         return (
-            <Button icon basic color='teal' labelPosition='right' fluid style={{marginTop: '10px', fontSize: style}} onClick={() => changeModal(!modal)}>
+            <Button icon basic color='teal' labelPosition='right' fluid style={{margin: '2px', fontSize: style}} onClick={() => changeModal(!modal)}>
                 {dayMonth(i)}
             </Button>
         )
@@ -179,6 +180,13 @@ const App = () => {
         let mas = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль',
             'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
         return mas[curDate.month - 1];
+    }
+
+    function monthNameForYear() {
+        counter ++;
+        let mas = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль',
+            'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+        return mas[counter - 2];
     }
 
     function dayMonth(i) {
@@ -331,22 +339,19 @@ const App = () => {
                 </Grid>
             </Grid.Row>
 
-            {/*{retMonth()}*/}
-            {/*{_.times(12, i => (*/}
-            {/*    <h1>1</h1>*/}
-            {/*))}*/}
             <Grid columns={4} divided style={{textAlign : 'center'}}>
                 {_.times(3, i =>(
-                    <Grid.Row>
+                    <Grid.Row key={i}>
                         {_.times(4, i =>(
-                            <Grid.Column>
+                            <Grid.Column key={i}>
+                                <Segment color='blue' textAlign='center'>{monthNameForYear()}</Segment>
                                 {retMonth()}
                             </Grid.Column>
                         ))}
                     </Grid.Row>
                 ))}
-
             </Grid>
+
         </Grid>
     );
 
