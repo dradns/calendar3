@@ -104,6 +104,16 @@ const App = () => {
         )
     }
 
+    function daysGridForYear() {
+        return (
+            _.times(curDate.daysInMonth, i => (
+                <Grid.Column key={i} >
+                    {checkCurDayForYear(i)}
+                </Grid.Column>
+            ))
+        )
+    }
+
     function checkCurDay(i) {
         let style = '14px';
         for (let k = 0; k < month.length; k++){
@@ -136,6 +146,35 @@ const App = () => {
         )
     }
 
+    function checkCurDayForYear(i) {
+        let style = '14px';
+        for (let k = 0; k < month.length; k++){
+            if (i + 1 === month[k]){
+                style = '19px';
+            }
+        }
+
+        if ((i === curDate.day - 1) && (curDate.year === DATA.year) && (curDate.month === DATA.month)){
+            return (
+                <Button icon primary labelPosition='right' fluid style={{marginTop: '10px', fontWeight: 'bold', fontSize: style }} onClick={() => changeModal(!modal)}>
+                    {dayMonth(i)}
+                </Button>
+            )
+        }
+        else if (isWeekends(i)){
+            return (
+                <Button icon basic color='pink' labelPosition='right' fluid style={{marginTop: '10px', fontSize: style}} onClick={() => changeModal(!modal)} >
+                    {dayMonth(i)}
+                </Button>
+            )
+        }
+        return (
+            <Button icon basic color='teal' labelPosition='right' fluid style={{marginTop: '10px', fontSize: style}} onClick={() => changeModal(!modal)}>
+                {dayMonth(i)}
+            </Button>
+        )
+    }
+
     function monthName() {
         let mas = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль',
             'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
@@ -162,6 +201,11 @@ const App = () => {
         return mas[i];
     }
 
+    function dayWeekForYear(i) {
+        let mas = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
+        return mas[i];
+    }
+
      function retCalendarGrid() {
         return (
             <React.Fragment>
@@ -175,6 +219,19 @@ const App = () => {
         )
     }
 
+    function retCalendarGridForYear() {
+        return (
+            <React.Fragment>
+                {_.times(firstMonthDay(), i => (
+                    <Grid.Column key={i} >
+                        <Button icon basic content='' fluid style={{marginTop: '10px' , visibility : 'hidden' }}/>
+                    </Grid.Column>
+                ))}
+                {daysGridForYear()}
+            </React.Fragment>
+        )
+    }
+            ///////////ITS MONTH VIEW/////////
     // return (
     //     <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
     //         <Grid.Row>
@@ -293,7 +350,7 @@ const App = () => {
         </Grid>
     );
 
-    function retMonth(i) {
+    function retMonth() {
 
         return (<Grid.Row>
                     <Grid>
@@ -303,7 +360,7 @@ const App = () => {
                                     <Grid.Row>
                                         { _.times(7, i => (
                                             <Grid.Column key={i} >
-                                                <Segment color='orange' textAlign='center'>{dayWeek(i)}</Segment>
+                                                <Segment color='orange' textAlign='center'>{dayWeekForYear(i)}</Segment>
                                             </Grid.Column>))}
                                     </Grid.Row>
                                 </Grid>
@@ -314,8 +371,8 @@ const App = () => {
                                 <React.Fragment>
                                     <Grid columns={7} >
                                         <Grid.Row style={{marginTop: '20px'}}>
-                                            { retCalendarGrid() }
-                                            {ModalWindow()}
+                                            { retCalendarGridForYear() }
+                                            {/*{ ModalWindow() }*/}
                                         </Grid.Row>
                                     </Grid>
                                 </React.Fragment>
