@@ -10,7 +10,6 @@ import 'semantic-ui-css/semantic.min.css';
 import GridColumn from "semantic-ui-react/dist/commonjs/collections/Grid/GridColumn";
 
 const App = () => {
-    console.log('test');
     let mas2 = [];
     let counter = 1;
     const DATA = DateTime.local();
@@ -106,14 +105,24 @@ const App = () => {
     }
 
     function daysGridForYear() {
+        let zz = curDate;
+        let mm = zz.set({year: curDate.year, month: counter - 1, day: 1});
         return (
-            _.times(curDate.daysInMonth, i => (
+            _.times(mm.daysInMonth, i => (
                 <Grid.Column key={i} >
                     {checkCurDayForYear(i)}
                 </Grid.Column>
             ))
         )
     }
+
+    // function firstMonthDayForYear(){
+    //     let zz = curDate;
+    //     let curYear = zz.set({year: curDate.year, month: counter - 1, day: 1});
+    //     let mm = curYear.day;
+    //     let nn = curYear.minus({days: mm - 1 }).weekday;
+    //     return nn - 1;
+    // }
 
     function checkCurDay(i) {
         let style = '14px';
@@ -204,6 +213,14 @@ const App = () => {
         return nn - 1;
     }
 
+    function firstMonthDayForYear(){
+        let zz = curDate;
+        let curYear = zz.set({year: curDate.year, month: counter - 1, day: 1});
+        let mm = curYear.day;
+        let nn = curYear.minus({days: mm - 1 }).weekday;
+        return nn - 1;
+    }
+
     function dayWeek(i) {
         let mas = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье'];
         return mas[i];
@@ -230,7 +247,7 @@ const App = () => {
     function retCalendarGridForYear() {
         return (
             <React.Fragment>
-                {_.times(firstMonthDay(), i => (
+                {_.times(firstMonthDayForYear(), i => (
                     <Grid.Column key={i} >
                         <Button icon basic content='' fluid style={{marginTop: '10px' , visibility : 'hidden' }}/>
                     </Grid.Column>
@@ -356,7 +373,6 @@ const App = () => {
     );
 
     function retMonth() {
-
         return (<Grid.Row>
                     <Grid>
                         <Grid.Row>
