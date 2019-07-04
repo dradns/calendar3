@@ -7,6 +7,7 @@ import axios from 'axios';
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
 import 'semantic-ui-css/semantic.min.css';
+import GridColumn from "semantic-ui-react/dist/commonjs/collections/Grid/GridColumn";
 
 const App = () => {
     console.log('test');
@@ -174,6 +175,71 @@ const App = () => {
         )
     }
 
+    // return (
+    //     <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
+    //         <Grid.Row>
+    //             <Grid celled>
+    //                 <Grid.Row >
+    //                     <Grid.Column width={4}>
+    //                         <Grid style={{ justifyContent: 'space-evenly'}}>
+    //                             <Grid.Column>
+    //                                 <h1>{curDate.day}    {monthName()}    {curDate.year}</h1>
+    //                             </Grid.Column>
+    //                         </Grid>
+    //                     </Grid.Column>
+    //                     <Grid.Column width={8}>
+    //                         <Button.Group fluid>
+    //                             <Button href='/day'>День</Button>
+    //                             <Button href='/week'>Неделя</Button>
+    //                             <Button href='/month'>Месяц</Button>
+    //                             <Button href='/year'>Год</Button>
+    //                         </Button.Group>
+    //                     </Grid.Column>
+    //
+    //                     <Grid.Column width={4}>
+    //                         <Grid style={{ justifyContent: 'space-evenly'}}>
+    //                             <Grid.Row>
+    //                                 <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({month: 1}))}/>
+    //                                 <Button color='grey' onClick={() => setCurDate(DateTime.local())}>Сегодня</Button>
+    //                                 <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({month: 1}))}/>
+    //                             </Grid.Row>
+    //                         </Grid>
+    //                     </Grid.Column>
+    //                 </Grid.Row>
+    //             </Grid>
+    //         </Grid.Row>
+    //         <Grid.Row>
+    //             <Grid>
+    //                 <Grid.Row>
+    //                     <Grid.Column width={16}>
+    //                         <Grid columns={7}>
+    //                             <Grid.Row>
+    //                                 { _.times(7, i => (
+    //                                     <Grid.Column key={i} >
+    //                                         <Segment color='orange' textAlign='center'>{dayWeek(i)}</Segment>
+    //                                     </Grid.Column>))}
+    //                             </Grid.Row>
+    //                         </Grid>
+    //                     </Grid.Column>
+    //                 </Grid.Row>
+    //                 <Grid.Row>
+    //                     <Grid.Column width={16}>
+    //                         <React.Fragment>
+    //                             <Grid columns={7} >
+    //                                 <Grid.Row style={{marginTop: '20px'}}>
+    //                                     { retCalendarGrid() }
+    //                                     {ModalWindow()}
+    //                                 </Grid.Row>
+    //                             </Grid>
+    //                         </React.Fragment>
+    //                     </Grid.Column>
+    //                 </Grid.Row>
+    //             </Grid>
+    //         </Grid.Row>
+    //         <Button onClick={funcAl}>OPPAAAA</Button>
+    //     </Grid>
+    // );
+
     return (
         <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
             <Grid.Row>
@@ -207,37 +273,58 @@ const App = () => {
                     </Grid.Row>
                 </Grid>
             </Grid.Row>
-            <Grid.Row>
-                <Grid>
+
+            {/*{retMonth()}*/}
+            {/*{_.times(12, i => (*/}
+            {/*    <h1>1</h1>*/}
+            {/*))}*/}
+            <Grid columns={4} divided style={{textAlign : 'center'}}>
+                {_.times(3, i =>(
                     <Grid.Row>
-                        <Grid.Column width={16}>
-                            <Grid columns={7}>
-                                <Grid.Row>
-                                    { _.times(7, i => (
-                                        <Grid.Column key={i} >
-                                            <Segment color='orange' textAlign='center'>{dayWeek(i)}</Segment>
-                                        </Grid.Column>))}
-                                </Grid.Row>
-                            </Grid>
-                        </Grid.Column>
+                        {_.times(4, i =>(
+                            <Grid.Column>
+                                {retMonth()}
+                            </Grid.Column>
+                        ))}
                     </Grid.Row>
-                    <Grid.Row>
-                        <Grid.Column width={16}>
-                            <React.Fragment>
-                                <Grid columns={7} >
-                                    <Grid.Row style={{marginTop: '20px'}}>
-                                        { retCalendarGrid() }
-                                        {ModalWindow()}
-                                    </Grid.Row>
-                                </Grid>
-                            </React.Fragment>
-                        </Grid.Column>
-                    </Grid.Row>
-                </Grid>
-            </Grid.Row>
-            <Button onClick={funcAl}>OPPAAAA</Button>
+                ))}
+
+            </Grid>
         </Grid>
     );
+
+    function retMonth(i) {
+
+        return (<Grid.Row>
+                    <Grid>
+                        <Grid.Row>
+                            <Grid.Column width={16}>
+                                <Grid columns={7}>
+                                    <Grid.Row>
+                                        { _.times(7, i => (
+                                            <Grid.Column key={i} >
+                                                <Segment color='orange' textAlign='center'>{dayWeek(i)}</Segment>
+                                            </Grid.Column>))}
+                                    </Grid.Row>
+                                </Grid>
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column width={16}>
+                                <React.Fragment>
+                                    <Grid columns={7} >
+                                        <Grid.Row style={{marginTop: '20px'}}>
+                                            { retCalendarGrid() }
+                                            {ModalWindow()}
+                                        </Grid.Row>
+                                    </Grid>
+                                </React.Fragment>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                </Grid.Row>)
+    }
+
     function funcAl() {
         axios.post('http://127.0.0.1:3020/events/add', {title: 'test',
             description: 'test-desc',
