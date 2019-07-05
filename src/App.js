@@ -11,7 +11,6 @@ import GridColumn from "semantic-ui-react/dist/commonjs/collections/Grid/GridCol
 
 const App = () => {
     // console.log('render');
-    let total = 0;
     let mas2 = [];
     let counter = 1;
     const DATA = DateTime.local();
@@ -20,6 +19,7 @@ const App = () => {
     const [event, setEvent] = useState({ events: [] });
     const [month, setMonth] = useState({eventsMonth: []});
     const [eventsYear, setEventsYear] = useState({eventsYear: []});
+    const [view, setView] = useState(0);
 
     useEffect(() => {
         async function fetchData() {
@@ -172,17 +172,12 @@ const App = () => {
     }
 
     function checkCurDayForYear(i) {
-        let zz = curDate;
-        let mm = zz.set({year: curDate.year, month: counter - 1, day: 1});
         let style = '14px';
 
         for (let k = 0; k < Object.keys(eventsYear).length; k++){
             if (! (eventsYear[k] === undefined)){
-                // console.log(eventsYear[k].date_exe_day);
                 if ((i + 1 === eventsYear[k].date_exe_day) && (eventsYear[k].date_exe_month === counter - 1)){
                     style = '19px';
-                    console.log('test');
-                    console.log(eventsYear[k].date_exe_day);
                 }
             }
         }
@@ -235,7 +230,7 @@ const App = () => {
 
     function dayMonthForYear(i) {
         let zz = curDate;
-        let mm = zz.set({year: curDate.year, month: counter - 1, day: 1})
+        let mm = zz.set({year: curDate.year, month: counter - 1, day: 1});
         let mas = [];
         for (let j = 1; j <= mm.daysInMonth; j++){
             mas.push(j);
@@ -373,10 +368,10 @@ const App = () => {
                         </Grid.Column>
                         <Grid.Column width={8}>
                             <Button.Group fluid>
-                                <Button href='/day'>День</Button>
-                                <Button href='/week'>Неделя</Button>
-                                <Button href='/month'>Месяц</Button>
-                                <Button href='/year'>Год</Button>
+                                <Button onClick={() => setView(1)}>День</Button>
+                                <Button onClick={() => setView(2)}>Неделя</Button>
+                                <Button onClick={() => setView(0)}>Месяц</Button>
+                                <Button onClick={() => setView(3)}>Год</Button>
                             </Button.Group>
                         </Grid.Column>
 
@@ -429,8 +424,9 @@ const App = () => {
                                 <React.Fragment>
                                     <Grid columns={7} >
                                         <Grid.Row style={{marginTop: '20px'}}>
-                                            { retCalendarGridForYear() }
+                                            {/*{ retCalendarGridForYear() }*/}
                                             {/*{ ModalWindow() }*/}
+                                            {selectorView()}
                                         </Grid.Row>
                                     </Grid>
                                 </React.Fragment>
@@ -438,6 +434,18 @@ const App = () => {
                         </Grid.Row>
                     </Grid>
                 </Grid.Row>)
+    }
+
+    function selectorView() {
+        if (view === 0){
+            return retCalendarGrid();
+        }else if (view === 1){
+            return;
+        }else if (view === 2){
+            return ;
+        }else if (view === 3){
+            return retCalendarGridForYear();
+        }
     }
 
     function funcAl() {
