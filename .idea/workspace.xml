@@ -21,10 +21,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="62" column="25" lean-forward="true" selection-start-line="62" selection-start-column="25" selection-end-line="62" selection-end-column="25" />
+            <state relative-caret-position="334">
+              <caret line="181" column="9" lean-forward="true" selection-start-line="181" selection-start-column="9" selection-end-line="181" selection-end-column="9" />
               <folding>
                 <element signature="e#0#50#0" expanded="true" />
+                <marker date="1562311450386" expanded="true" signature="1021:2359" ph="..." />
               </folding>
             </state>
           </provider>
@@ -48,8 +49,8 @@
       <find>console</find>
       <find>op</find>
       <find>conso</find>
-      <find>cons</find>
       <find>test</find>
+      <find>cons</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -163,17 +164,19 @@
       <workItem from="1561963169091" duration="36722000" />
       <workItem from="1562154726031" duration="272000" />
       <workItem from="1562155140907" duration="18736000" />
-      <workItem from="1562247890837" duration="1692000" />
+      <workItem from="1562247890837" duration="3019000" />
+      <workItem from="1562306564738" duration="264000" />
+      <workItem from="1562307392120" duration="3274000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="113029000" />
+    <option name="totallyTimeSpent" value="117894000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="3600" y="23" width="1920" height="1057" extended-state="6" />
+    <frame x="3600" y="23" width="1920" height="1057" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11767838" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11980831" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -244,10 +247,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="62" column="25" lean-forward="true" selection-start-line="62" selection-start-column="25" selection-end-line="62" selection-end-column="25" />
+        <state relative-caret-position="334">
+          <caret line="181" column="9" lean-forward="true" selection-start-line="181" selection-start-column="9" selection-end-line="181" selection-end-column="9" />
           <folding>
             <element signature="e#0#50#0" expanded="true" />
+            <marker date="1562311450386" expanded="true" signature="1021:2359" ph="..." />
           </folding>
         </state>
       </provider>

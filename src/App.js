@@ -10,6 +10,7 @@ import 'semantic-ui-css/semantic.min.css';
 import GridColumn from "semantic-ui-react/dist/commonjs/collections/Grid/GridColumn";
 
 const App = () => {
+    // console.log('render');
     let mas2 = [];
     let counter = 1;
     const DATA = DateTime.local();
@@ -17,6 +18,7 @@ const App = () => {
     const [modal, changeModal] = useState(false);
     const [event, setEvent] = useState({ events: [] });
     const [month, setMonth] = useState({eventsMonth: []});
+    const [eventsYear, setEventsYear] = useState({eventsYear: []});
 
     useEffect(() => {
         async function fetchData() {
@@ -31,6 +33,7 @@ const App = () => {
             const response = await axios ('http://127.0.0.1:3020/events/list');
             let z = 0;
             let mas = [];
+            let mas3 = [];
             for (let i = 0; i < response.data.length; i++) {
                 let d = Date.parse(response.data[i].date_exe);
                 let c = new Date(d);
@@ -40,14 +43,20 @@ const App = () => {
                     mas2.push(c.getDate());
                     z++;
                 }
+
+                if (c.getFullYear() === curDate.year){
+                    mas3.push({id: response.data[i].id, date_exe_year: parseInt(response.data[i].date_exe.split('-')[0]),
+                    date_exe_month: parseInt(response.data[i].date_exe.split('-')[1]),
+                    date_exe_day: parseInt(response.data[i].date_exe.split('-')[2])});
+                }
             }
             setMonth(mas2);
+            setEventsYear(mas3);
         }
         fetchMonth();
     }, [curDate]);
 
     function isWeekends(i){
-        console.log(i);
         let zz = curDate;
         let mm = zz.day;
         let nn = zz.minus({days: mm - 1 }).weekday;
@@ -59,7 +68,6 @@ const App = () => {
     }
 
     function isWeekendsForYear(i){
-        console.log(i);
         let zz = curDate;
         let ss = zz.set({year: curDate.year, month: counter - 1, day: 1});
         let mm = ss.day;
@@ -71,13 +79,6 @@ const App = () => {
         }
     }
 
-
-
-
-
-
-
-
     function Datepicker() {
         function onDateChange(e) {
         }
@@ -86,7 +87,7 @@ const App = () => {
 
     function onSubmit(e) {
         e.preventDefault();
-        setEvent({ title: event.target.title, place: event.target.place,  date_exe: event.target.date_exe});
+        setEvent({ title: e.target.title, place: e.target.place,  date_exe: e.target.date_exe});
     }
 
     function ModalWindow(){
@@ -170,12 +171,14 @@ const App = () => {
     }
 
     function checkCurDayForYear(i) {
+        console.log(i + 'its a IIII');
+        console.log(counter + 'its a counter');
         let zz = curDate;
         let mm = zz.set({year: curDate.year, month: counter - 1, day: 1});
 
         let style = '14px';
-        for (let k = 0; k < month.length; k++){
-            if (i + 1 === month[k]){
+        for (let k = 0; k < Object.keys(eventsYear).length; k++){
+            if (i + 1 === eventsYear[k]){
                 style = '19px';
             }
         }
@@ -190,13 +193,14 @@ const App = () => {
             }
         }
 
-        else if (isWeekendsForYear(i)){
+        if (isWeekendsForYear(i)){
             return (
                 <Button icon basic color='pink' labelPosition='right' fluid style={{margin: '2px', fontSize: style}} onClick={() => changeModal(!modal)} >
                     {dayMonthForYear(i)}
                 </Button>
             )
         }
+
         return (
             <Button icon basic color='teal' labelPosition='right' fluid style={{margin: '2px', fontSize: style}} onClick={() => changeModal(!modal)}>
                 {dayMonthForYear(i)}
