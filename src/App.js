@@ -11,6 +11,7 @@ import GridColumn from "semantic-ui-react/dist/commonjs/collections/Grid/GridCol
 
 const App = () => {
     // console.log('render');
+    let total = 0;
     let mas2 = [];
     let counter = 1;
     const DATA = DateTime.local();
@@ -171,15 +172,18 @@ const App = () => {
     }
 
     function checkCurDayForYear(i) {
-        console.log(i + 'its a IIII');
-        console.log(counter + 'its a counter');
         let zz = curDate;
         let mm = zz.set({year: curDate.year, month: counter - 1, day: 1});
-
         let style = '14px';
+
         for (let k = 0; k < Object.keys(eventsYear).length; k++){
-            if (i + 1 === eventsYear[k]){
-                style = '19px';
+            if (! (eventsYear[k] === undefined)){
+                // console.log(eventsYear[k].date_exe_day);
+                if ((i + 1 === eventsYear[k].date_exe_day) && (eventsYear[k].date_exe_month === counter - 1)){
+                    style = '19px';
+                    console.log('test');
+                    console.log(eventsYear[k].date_exe_day);
+                }
             }
         }
 
