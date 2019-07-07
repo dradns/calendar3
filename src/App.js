@@ -288,121 +288,133 @@ const App = () => {
             </React.Fragment>
         )
     }
-            ///////////ITS MONTH VIEW/////////
-    // return (
-    //     <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
-    //         <Grid.Row>
-    //             <Grid celled>
-    //                 <Grid.Row >
-    //                     <Grid.Column width={4}>
-    //                         <Grid style={{ justifyContent: 'space-evenly'}}>
-    //                             <Grid.Column>
-    //                                 <h1>{curDate.day}    {monthName()}    {curDate.year}</h1>
-    //                             </Grid.Column>
-    //                         </Grid>
-    //                     </Grid.Column>
-    //                     <Grid.Column width={8}>
-    //                         <Button.Group fluid>
-    //                             <Button href='/day'>День</Button>
-    //                             <Button href='/week'>Неделя</Button>
-    //                             <Button href='/month'>Месяц</Button>
-    //                             <Button href='/year'>Год</Button>
-    //                         </Button.Group>
-    //                     </Grid.Column>
-    //
-    //                     <Grid.Column width={4}>
-    //                         <Grid style={{ justifyContent: 'space-evenly'}}>
-    //                             <Grid.Row>
-    //                                 <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({month: 1}))}/>
-    //                                 <Button color='grey' onClick={() => setCurDate(DateTime.local())}>Сегодня</Button>
-    //                                 <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({month: 1}))}/>
-    //                             </Grid.Row>
-    //                         </Grid>
-    //                     </Grid.Column>
-    //                 </Grid.Row>
-    //             </Grid>
-    //         </Grid.Row>
-    //         <Grid.Row>
-    //             <Grid>
-    //                 <Grid.Row>
-    //                     <Grid.Column width={16}>
-    //                         <Grid columns={7}>
-    //                             <Grid.Row>
-    //                                 { _.times(7, i => (
-    //                                     <Grid.Column key={i} >
-    //                                         <Segment color='orange' textAlign='center'>{dayWeek(i)}</Segment>
-    //                                     </Grid.Column>))}
-    //                             </Grid.Row>
-    //                         </Grid>
-    //                     </Grid.Column>
-    //                 </Grid.Row>
-    //                 <Grid.Row>
-    //                     <Grid.Column width={16}>
-    //                         <React.Fragment>
-    //                             <Grid columns={7} >
-    //                                 <Grid.Row style={{marginTop: '20px'}}>
-    //                                     { retCalendarGrid() }
-    //                                     {ModalWindow()}
-    //                                 </Grid.Row>
-    //                             </Grid>
-    //                         </React.Fragment>
-    //                     </Grid.Column>
-    //                 </Grid.Row>
-    //             </Grid>
-    //         </Grid.Row>
-    //         <Button onClick={funcAl}>OPPAAAA</Button>
-    //     </Grid>
-    // );
 
-    return (
-        <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
-            <Grid.Row>
-                <Grid celled>
-                    <Grid.Row >
-                        <Grid.Column width={4}>
-                            <Grid style={{ justifyContent: 'space-evenly'}}>
-                                <Grid.Column>
-                                    <h1>{curDate.day}    {monthName()}    {curDate.year}</h1>
-                                </Grid.Column>
-                            </Grid>
-                        </Grid.Column>
-                        <Grid.Column width={8}>
-                            <Button.Group fluid>
-                                <Button onClick={() => setView(1)}>День</Button>
-                                <Button onClick={() => setView(2)}>Неделя</Button>
-                                <Button onClick={() => setView(0)}>Месяц</Button>
-                                <Button onClick={() => setView(3)}>Год</Button>
-                            </Button.Group>
-                        </Grid.Column>
-
-                        <Grid.Column width={4}>
-                            <Grid style={{ justifyContent: 'space-evenly'}}>
-                                <Grid.Row>
-                                    <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({month: 1}))}/>
-                                    <Button color='grey' onClick={() => setCurDate(DateTime.local())}>Сегодня</Button>
-                                    <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({month: 1}))}/>
-                                </Grid.Row>
-                            </Grid>
-                        </Grid.Column>
-                    </Grid.Row>
-                </Grid>
-            </Grid.Row>
-
-            <Grid columns={4} divided style={{textAlign : 'center'}}>
-                {_.times(3, i =>(
-                    <Grid.Row key={i}>
-                        {_.times(4, i =>(
-                            <Grid.Column key={i}>
-                                <Segment color='blue' textAlign='center'>{monthNameForYear()}</Segment>
-                                {retMonth()}
+    function retViewMonth() {
+        return (
+            <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
+                <Grid.Row>
+                    <Grid celled>
+                        <Grid.Row >
+                            <Grid.Column width={4}>
+                                <Grid style={{ justifyContent: 'space-evenly'}}>
+                                    <Grid.Column>
+                                        <h1>{curDate.day}    {monthName()}    {curDate.year}</h1>
+                                    </Grid.Column>
+                                </Grid>
                             </Grid.Column>
-                        ))}
-                    </Grid.Row>
-                ))}
-            </Grid>
+                            <Grid.Column width={8}>
+                                <Button.Group fluid>
+                                    <Button onClick={() => setView(1)}>День</Button>
+                                    <Button onClick={() => setView(2)}>Неделя</Button>
+                                    <Button onClick={() => setView(0)}>Месяц</Button>
+                                    <Button onClick={() => setView(3)}>Год</Button>
+                                </Button.Group>
+                            </Grid.Column>
 
-        </Grid>
-    );
+                            <Grid.Column width={4}>
+                                <Grid style={{ justifyContent: 'space-evenly'}}>
+                                    <Grid.Row>
+                                        <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({month: 1}))}/>
+                                        <Button color='grey' onClick={() => setCurDate(DateTime.local())}>Сегодня</Button>
+                                        <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({month: 1}))}/>
+                                    </Grid.Row>
+                                </Grid>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                </Grid.Row>
+                <Grid.Row>
+                    <Grid>
+                        <Grid.Row>
+                            <Grid.Column width={16}>
+                                <Grid columns={7}>
+                                    <Grid.Row>
+                                        { _.times(7, i => (
+                                            <Grid.Column key={i} >
+                                                <Segment color='orange' textAlign='center'>{dayWeek(i)}</Segment>
+                                            </Grid.Column>))}
+                                    </Grid.Row>
+                                </Grid>
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column width={16}>
+                                <React.Fragment>
+                                    <Grid columns={7} >
+                                        <Grid.Row style={{marginTop: '20px'}}>
+                                            { retCalendarGrid() }
+                                            {/*{ModalWindow()}*/}
+                                        </Grid.Row>
+                                    </Grid>
+                                </React.Fragment>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                </Grid.Row>
+                <Button onClick={funcAl}>OPPAAAA</Button>
+            </Grid>
+        );
+    }
+
+    function retViewYear() {
+        return (
+            <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
+                <Grid.Row>
+                    <Grid celled>
+                        <Grid.Row >
+                            <Grid.Column width={4}>
+                                <Grid style={{ justifyContent: 'space-evenly'}}>
+                                    <Grid.Column>
+                                        <h1>{curDate.day}    {monthName()}    {curDate.year}</h1>
+                                    </Grid.Column>
+                                </Grid>
+                            </Grid.Column>
+                            <Grid.Column width={8}>
+                                <Button.Group fluid>
+                                    <Button onClick={() => setView(1)}>День</Button>
+                                    <Button onClick={() => setView(2)}>Неделя</Button>
+                                    <Button onClick={() => setView(0)}>Месяц</Button>
+                                    <Button onClick={() => setView(3)}>Год</Button>
+                                </Button.Group>
+                            </Grid.Column>
+
+                            <Grid.Column width={4}>
+                                <Grid style={{ justifyContent: 'space-evenly'}}>
+                                    <Grid.Row>
+                                        <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({month: 1}))}/>
+                                        <Button color='grey' onClick={() => setCurDate(DateTime.local())}>Сегодня</Button>
+                                        <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({month: 1}))}/>
+                                    </Grid.Row>
+                                </Grid>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                </Grid.Row>
+
+                <Grid columns={4} divided style={{textAlign : 'center'}}>
+                    {_.times(3, i =>(
+                        <Grid.Row key={i}>
+                            {_.times(4, i =>(
+                                <Grid.Column key={i}>
+                                    <Segment color='blue' textAlign='center'>{monthNameForYear()}</Segment>
+                                    {retMonth()}
+                                </Grid.Column>
+                            ))}
+                        </Grid.Row>
+                    ))}
+                </Grid>
+
+            </Grid>
+        );
+    }
+
+    function retViewWeek() {
+
+    }
+
+    function retViewDay() {
+
+    }
 
     function retMonth() {
         return (<Grid.Row>
@@ -424,9 +436,8 @@ const App = () => {
                                 <React.Fragment>
                                     <Grid columns={7} >
                                         <Grid.Row style={{marginTop: '20px'}}>
-                                            {/*{ retCalendarGridForYear() }*/}
+                                            { retCalendarGridForYear() }
                                             {/*{ ModalWindow() }*/}
-                                            {selectorView()}
                                         </Grid.Row>
                                     </Grid>
                                 </React.Fragment>
@@ -438,15 +449,17 @@ const App = () => {
 
     function selectorView() {
         if (view === 0){
-            return retCalendarGrid();
+            return retViewMonth();
         }else if (view === 1){
-            return;
+            return retViewWeek();
         }else if (view === 2){
-            return ;
+            return retViewDay();
         }else if (view === 3){
-            return retCalendarGridForYear();
+            return retViewYear();
         }
     }
+
+    return (selectorView());
 
     function funcAl() {
         axios.post('http://127.0.0.1:3020/events/add', {title: 'test',
