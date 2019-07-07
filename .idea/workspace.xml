@@ -20,11 +20,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="507">
-              <caret line="486" column="122" lean-forward="true" selection-start-line="486" selection-start-column="122" selection-end-line="486" selection-end-column="122" />
+            <state relative-caret-position="473">
+              <caret line="529" column="5" lean-forward="true" selection-start-line="529" selection-start-column="5" selection-end-line="529" selection-end-column="5" />
               <folding>
                 <element signature="e#0#50#0" expanded="true" />
-                <marker date="1562491047488" expanded="true" signature="1118:2456" ph="..." />
+                <marker date="1562491613843" expanded="true" signature="1118:2456" ph="..." />
               </folding>
             </state>
           </provider>
@@ -171,7 +171,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="131759000" />
+    <option name="totallyTimeSpent" value="132324000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="3600" y="23" width="1920" height="1057" extended-state="0" />
@@ -247,11 +247,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="507">
-          <caret line="486" column="122" lean-forward="true" selection-start-line="486" selection-start-column="122" selection-end-line="486" selection-end-column="122" />
+        <state relative-caret-position="473">
+          <caret line="529" column="5" lean-forward="true" selection-start-line="529" selection-start-column="5" selection-end-line="529" selection-end-column="5" />
           <folding>
             <element signature="e#0#50#0" expanded="true" />
-            <marker date="1562491047488" expanded="true" signature="1118:2456" ph="..." />
+            <marker date="1562491613843" expanded="true" signature="1118:2456" ph="..." />
           </folding>
         </state>
       </provider>

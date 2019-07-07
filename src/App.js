@@ -492,41 +492,23 @@ const App = () => {
                         </Grid.Row>
                     </Grid>
                 </Grid.Row>
-                <Grid.Row>
-                    <Grid>
-                        <Grid.Row>
-                            <Grid.Column width={16}>
-                                <React.Fragment>
-                                    <Grid columns={7} >
-                                        <Grid.Row style={{marginTop: '20px'}}>
-                                            { retCalendarGrid() }
-                                            {/*{ModalWindow()}*/}
-                                        </Grid.Row>
-                                    </Grid>
-                                </React.Fragment>
-                            </Grid.Column>
-                        </Grid.Row>
-                    </Grid>
-                </Grid.Row>
 
                 <Grid columns={1}>
                     <Grid.Row >
                         <Grid.Column>
-                            <Segment color='orange' textAlign='center' style={{fontSize: '30px'}}>{dayWeek(curDate.weekday - 1)}</Segment>
+                            <Segment color='orange' textAlign='center' style={{fontSize: '30px', marginBottom: '10px'}}>{dayWeek(curDate.weekday - 1)}</Segment>
                             <Item.Group divided relaxed='very'>
                                     {_.times(24, i => (
                                         <Item key={i}>
                                             <Item.Content content={hourInDayForDay(i)} verticalAlign='middle'/>
                                             <Item.Content verticalAlign='middle'>Событие</Item.Content>
+                                            <Button icon='plus' basic color='teal'></Button>
                                         </Item>
                                     ))}
                             </Item.Group>
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
-
-
-                <Segment style={{fontSize: '36px'}}>ITS DAY VIEW</Segment>
             </Grid>
         );
     }
