@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a90433f2-8534-4d66-a7b3-ecab3c35a9a6" name="Default Changelist" comment="1">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,11 +20,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="410" column="15" selection-start-line="410" selection-start-column="15" selection-end-line="410" selection-end-column="15" />
+            <state relative-caret-position="507">
+              <caret line="486" column="122" lean-forward="true" selection-start-line="486" selection-start-column="122" selection-end-line="486" selection-end-column="122" />
               <folding>
                 <element signature="e#0#50#0" expanded="true" />
-                <marker date="1562484049424" expanded="true" signature="1062:2400" ph="..." />
+                <marker date="1562491047488" expanded="true" signature="1118:2456" ph="..." />
               </folding>
             </state>
           </provider>
@@ -50,6 +50,7 @@
       <find>test</find>
       <find>cons</find>
       <find>console</find>
+      <find>check</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -170,11 +171,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="126794000" />
+    <option name="totallyTimeSpent" value="131759000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="3600" y="23" width="1920" height="1057" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11980831" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -247,11 +247,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="410" column="15" selection-start-line="410" selection-start-column="15" selection-end-line="410" selection-end-column="15" />
+        <state relative-caret-position="507">
+          <caret line="486" column="122" lean-forward="true" selection-start-line="486" selection-start-column="122" selection-end-line="486" selection-end-column="122" />
           <folding>
             <element signature="e#0#50#0" expanded="true" />
-            <marker date="1562484049424" expanded="true" signature="1062:2400" ph="..." />
+            <marker date="1562491047488" expanded="true" signature="1118:2456" ph="..." />
           </folding>
         </state>
       </provider>

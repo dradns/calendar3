@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import {DateTime, Duration, Info, Interval, Settings} from 'luxon';
 import _ from 'lodash';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import {Grid, Button, Segment, Icon, Modal, Header, Form} from "semantic-ui-react";
+import {Grid, Button, Segment, Icon, Modal, Header, Form, Item} from "semantic-ui-react";
 import axios from 'axios';
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
@@ -18,8 +18,9 @@ const App = () => {
     const [modal, changeModal] = useState(false);
     const [event, setEvent] = useState({ events: [] });
     const [month, setMonth] = useState({eventsMonth: []});
-    const [eventsYear, setEventsYear] = useState({eventsYear: []});
-    const [view, setView] = useState(0);
+    const [eventsYear, setEventsYear] = useState({eventsYear: []});///////////
+    const [view, setView] = useState(1);//////////////////////////////////////
+
 
     useEffect(() => {
         async function fetchData() {
@@ -57,28 +58,6 @@ const App = () => {
         fetchMonth();
     }, [curDate]);
 
-    function isWeekends(i){
-        let zz = curDate;
-        let mm = zz.day;
-        let nn = zz.minus({days: mm - 1 }).weekday;
-
-        if(nn + i === 6 || nn + i === 7 || nn + i === 13 || nn + i === 14 || nn + i === 20 || nn + i === 21 ||
-            nn + i === 27 || nn + i === 28 || nn + i === 34 || nn + i === 35){
-            return true;
-        }
-    }
-
-    function isWeekendsForYear(i){
-        let zz = curDate;
-        let ss = zz.set({year: curDate.year, month: counter - 1, day: 1});
-        let mm = ss.day;
-        let nn = ss.minus({days: mm - 1 }).weekday;
-
-        if(nn + i === 6 || nn + i === 7 || nn + i === 13 || nn + i === 14 || nn + i === 20 || nn + i === 21 ||
-            nn + i === 27 || nn + i === 28 || nn + i === 34 || nn + i === 35){
-            return true;
-        }
-    }
 
     function Datepicker() {
         function onDateChange(e) {
@@ -115,6 +94,29 @@ const App = () => {
                 </Modal.Content>
             </Modal>
         )
+    }
+
+    function isWeekends(i){
+        let zz = curDate;
+        let mm = zz.day;
+        let nn = zz.minus({days: mm - 1 }).weekday;
+
+        if(nn + i === 6 || nn + i === 7 || nn + i === 13 || nn + i === 14 || nn + i === 20 || nn + i === 21 ||
+            nn + i === 27 || nn + i === 28 || nn + i === 34 || nn + i === 35){
+            return true;
+        }
+    }
+
+    function isWeekendsForYear(i){
+        let zz = curDate;
+        let ss = zz.set({year: curDate.year, month: counter - 1, day: 1});
+        let mm = ss.day;
+        let nn = ss.minus({days: mm - 1 }).weekday;
+
+        if(nn + i === 6 || nn + i === 7 || nn + i === 13 || nn + i === 14 || nn + i === 20 || nn + i === 21 ||
+            nn + i === 27 || nn + i === 28 || nn + i === 34 || nn + i === 35){
+            return true;
+        }
     }
 
     function daysGrid() {
@@ -263,6 +265,14 @@ const App = () => {
         return mas[i];
     }
 
+    function hourInDayForDay(i){
+        let mas = ['00:00 — 00:59', '01:00 — 01:59', '02:00 — 02:59', '03:00 — 03:59', '00:04 — 04:59', '05:00 — 05:59',
+            '06:00 — 06:59', '07:00 — 07:59', '08:00 — 08:59', '09:00 — 09:59', '10:00 — 10:59', '11:00 — 11:59',
+            '12:00 — 12:59', '13:00 — 13:59', '14:00 — 14:59', '15:00 — 15:59', '16:00 — 16:59', '17:00 — 17:59',
+            '18:00 — 18:59', '19:00 — 19:59', '20:00 — 20:59', '21:00 — 21:59', '22:00 — 22:59', '23:00 — 23:59'];
+        return mas[i];
+    }
+
      function retCalendarGrid() {
         return (
             <React.Fragment>
@@ -287,6 +297,37 @@ const App = () => {
                 {daysGridForYear()}
             </React.Fragment>
         )
+    }
+
+    function retMonth() {
+        return (<Grid.Row>
+            <Grid>
+                <Grid.Row>
+                    <Grid.Column width={16}>
+                        <Grid columns={7}>
+                            <Grid.Row>
+                                { _.times(7, i => (
+                                    <Grid.Column key={i} >
+                                        <Segment color='orange' textAlign='center'>{dayWeekForYear(i)}</Segment>
+                                    </Grid.Column>))}
+                            </Grid.Row>
+                        </Grid>
+                    </Grid.Column>
+                </Grid.Row>
+                <Grid.Row>
+                    <Grid.Column width={16}>
+                        <React.Fragment>
+                            <Grid columns={7} >
+                                <Grid.Row style={{marginTop: '20px'}}>
+                                    { retCalendarGridForYear() }
+                                    {/*{ ModalWindow() }*/}
+                                </Grid.Row>
+                            </Grid>
+                        </React.Fragment>
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
+        </Grid.Row>)
     }
 
     function retViewMonth() {
@@ -351,6 +392,7 @@ const App = () => {
                         </Grid.Row>
                     </Grid>
                 </Grid.Row>
+                <Segment style={{fontSize: '36px'}}>ITS MONTH VIEW</Segment>
                 <Button onClick={funcAl}>OPPAAAA</Button>
             </Grid>
         );
@@ -409,57 +451,85 @@ const App = () => {
     }
 
     function retViewWeek() {
-
+        return (
+            <React.Fragment>
+                <h1>Week View</h1>
+                <Segment style={{fontSize: '36px'}}>ITS WEEK VIEW</Segment>
+            </React.Fragment>)
     }
 
     function retViewDay() {
+        return (
+            <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
+                <Grid.Row>
+                    <Grid celled>
+                        <Grid.Row >
+                            <Grid.Column width={4}>
+                                <Grid style={{ justifyContent: 'space-evenly'}}>
+                                    <Grid.Column>
+                                        <h1>{curDate.day}    {monthName()}    {curDate.year}</h1>
+                                    </Grid.Column>
+                                </Grid>
+                            </Grid.Column>
+                            <Grid.Column width={8}>
+                                <Button.Group fluid>
+                                    <Button onClick={() => setView(1)}>День</Button>
+                                    <Button onClick={() => setView(2)}>Неделя</Button>
+                                    <Button onClick={() => setView(0)}>Месяц</Button>
+                                    <Button onClick={() => setView(3)}>Год</Button>
+                                </Button.Group>
+                            </Grid.Column>
 
-    }
-
-    function retMonth() {
-        return (<Grid.Row>
-                    <Grid>
-                        <Grid.Row>
-                            <Grid.Column width={16}>
-                                <Grid columns={7}>
+                            <Grid.Column width={4}>
+                                <Grid style={{ justifyContent: 'space-evenly'}}>
                                     <Grid.Row>
-                                        { _.times(7, i => (
-                                            <Grid.Column key={i} >
-                                                <Segment color='orange' textAlign='center'>{dayWeekForYear(i)}</Segment>
-                                            </Grid.Column>))}
+                                        <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({day: 1}))}/>
+                                        <Button color='grey' onClick={() => setCurDate(DateTime.local())}>Сегодня</Button>
+                                        <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({day: 1}))}/>
                                     </Grid.Row>
                                 </Grid>
                             </Grid.Column>
                         </Grid.Row>
+                    </Grid>
+                </Grid.Row>
+                <Grid.Row>
+                    <Grid>
                         <Grid.Row>
                             <Grid.Column width={16}>
                                 <React.Fragment>
                                     <Grid columns={7} >
                                         <Grid.Row style={{marginTop: '20px'}}>
-                                            { retCalendarGridForYear() }
-                                            {/*{ ModalWindow() }*/}
+                                            { retCalendarGrid() }
+                                            {/*{ModalWindow()}*/}
                                         </Grid.Row>
                                     </Grid>
                                 </React.Fragment>
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
-                </Grid.Row>)
-    }
+                </Grid.Row>
 
-    function selectorView() {
-        if (view === 0){
-            return retViewMonth();
-        }else if (view === 1){
-            return retViewWeek();
-        }else if (view === 2){
-            return retViewDay();
-        }else if (view === 3){
-            return retViewYear();
-        }
-    }
+                <Grid columns={1}>
+                    <Grid.Row >
+                        <Grid.Column>
+                            <Segment color='orange' textAlign='center' style={{fontSize: '30px'}}>{dayWeek(curDate.weekday - 1)}</Segment>
+                            <Item.Group divided relaxed='very'>
+                                    {_.times(24, i => (
+                                        <Item key={i}>
+                                            <Item.Content content={hourInDayForDay(i)} verticalAlign='middle'/>
+                                            <Item.Content verticalAlign='middle'>Событие</Item.Content>
+                                        </Item>
+                                    ))}
+                            </Item.Group>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
 
-    return (selectorView());
+
+                <Segment style={{fontSize: '36px'}}>ITS DAY VIEW</Segment>
+            </Grid>
+        );
+    }
 
     function funcAl() {
         axios.post('http://127.0.0.1:3020/events/add', {title: 'test',
@@ -472,6 +542,21 @@ const App = () => {
             .then(res => {console.log(res); console.log(res.data)});
         console.log('opa');
     }
+
+    /////////////////////////////////////////////////////
+    function selectorView() {////////////////////////////
+        if (view === 0){/////////////////////////////////
+            return retViewMonth();//////////выбор View///
+        }else if (view === 1){///////////////////////////
+            return retViewDay();//////////выбор View/////
+        }else if (view === 2){///////////////////////////
+            return retViewWeek();//////////выбор View////
+        }else if (view === 3){///////////////////////////
+            return retViewYear();//////////выбор View////
+        }////////////////////////////////////////////////
+    }////////////////////////////////////////////////////
+
+    return (selectorView());/// это вызывается при рендере APP
 };
 
 export default App;
