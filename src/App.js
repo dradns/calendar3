@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import {DateTime, Duration, Info, Interval, Settings} from 'luxon';
 import _ from 'lodash';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import {Grid, Button, Segment, Icon, Modal, Header, Form, Item} from "semantic-ui-react";
+import {Grid, Button, Segment, Icon, Modal, Header, Form, Item, Divider, Container} from "semantic-ui-react";
 import axios from 'axios';
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
@@ -500,7 +500,7 @@ const App = () => {
     //                 <Grid.Row >
     //                     <Grid.Column>
     //                         <Segment color='orange' textAlign='center' style={{fontSize: '30px', marginBottom: '10px'}}>{dayWeek(curDate.weekday - 1)}</Segment>
-    //                         <Item.Group divided relaxed='very'>
+    //                         <Item.Group  relaxed='very'>
     //                                 {_.times(24, i => (
     //                                     <Item key={i}>
     //                                         <Item.Content content={hourInDayForDay(i)} verticalAlign='middle'/>
@@ -551,36 +551,113 @@ const App = () => {
                     </Grid>
                 </Grid.Row>
 
-                <Grid centered columns={1}>
-                    <Segment color='orange' textAlign='center' style={{fontSize: '30px', marginBottom: '10px'}}>{dayWeek(curDate.weekday - 1)}</Segment>
-                            {_.times(24, i => (
-                                <Grid.Row columns={3} key={i}>
-                                    <Grid.Column width={3}>
-                                        <Item>
-                                            <Item.Content content={hourInDayForDay(i)} verticalAlign='middle' style={{textAlign: 'center'}}/>
-                                        </Item>
-                                    </Grid.Column>
+                <Grid columns={1}>
+                    <Grid.Row >
+                        <Grid.Column>
+                            <Segment color='orange' textAlign='center' style={{fontSize: '30px', marginBottom: '10px'}}>{dayWeek(curDate.weekday - 1)}</Segment>
+                                {_.times(24, i => (
+                                <React.Fragment key={i}>
+                                    <Segment  style={{backgroundColor: 'yellow'}}>
+                                        <Grid columns={3}>
 
-                                    <Grid.Column width={10}>
-                                        <Item.Group divided relaxed='very'>
+                                            <Grid.Column width={15} >
+                                                <Grid.Row>
+                                                    Test
+                                                </Grid.Row>
+                                                <Grid.Row>
+                                                    Test
+                                                </Grid.Row>
+                                                <Grid.Row>
+                                                    Test
+                                                </Grid.Row>
+                                                <Grid.Row>
+                                                    Test
+                                                </Grid.Row>
+                                            </Grid.Column>
 
-                                            {_.times(4, i => (
-                                                <Item.Content key={i} verticalAlign='middle'  style={{textAlign: 'center'}}>Событие</Item.Content>
-                                            ))}
-                                        </Item.Group>
-                                    </Grid.Column>
-
-                                    <Grid.Column width={3} style={{textAlign: 'center'}}>
-                                        <Item>
-                                            <Button icon='plus' basic color='teal'></Button>
-                                        </Item>
-                                    </Grid.Column>
-                                </Grid.Row>
-                            ))}
+                                            <Grid.Column width={1} style={{textAlign: 'right'}} verticalAlign='middle'>
+                                                <Button icon='plus' basic color='teal'></Button>
+                                            </Grid.Column>
+                                        </Grid>
+                                    </Segment>
+                                    <Divider horizontal>{hourInDayForDay(i)}</Divider>
+                                </React.Fragment>
+                                ))}
+                        </Grid.Column>
+                    </Grid.Row>
                 </Grid>
             </Grid>
         );
     }
+
+    // function retViewDay() {
+    //     return (
+    //         <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
+    //             <Grid.Row>
+    //                 <Grid celled>
+    //                     <Grid.Row >
+    //                         <Grid.Column width={4}>
+    //                             <Grid style={{ justifyContent: 'space-evenly'}}>
+    //                                 <Grid.Column>
+    //                                     <h1>{curDate.day}    {monthName()}    {curDate.year}</h1>
+    //                                 </Grid.Column>
+    //                             </Grid>
+    //                         </Grid.Column>
+    //                         <Grid.Column width={8}>
+    //                             <Button.Group fluid>
+    //                                 <Button onClick={() => setView(1)}>День</Button>
+    //                                 <Button onClick={() => setView(2)}>Неделя</Button>
+    //                                 <Button onClick={() => setView(0)}>Месяц</Button>
+    //                                 <Button onClick={() => setView(3)}>Год</Button>
+    //                             </Button.Group>
+    //                         </Grid.Column>
+    //
+    //                         <Grid.Column width={4}>
+    //                             <Grid style={{ justifyContent: 'space-evenly'}}>
+    //                                 <Grid.Row>
+    //                                     <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({day: 1}))}/>
+    //                                     <Button color='grey' onClick={() => setCurDate(DateTime.local())}>Сегодня</Button>
+    //                                     <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({day: 1}))}/>
+    //                                 </Grid.Row>
+    //                             </Grid>
+    //                         </Grid.Column>
+    //                     </Grid.Row>
+    //                 </Grid>
+    //             </Grid.Row>
+    //
+    //             <Grid centered columns={1}>
+    //                 <Segment color='orange' textAlign='center' style={{fontSize: '30px', marginBottom: '10px'}}>{dayWeek(curDate.weekday - 1)}</Segment>
+    //                         {_.times(24, i => (
+    //
+    //                             <Grid.Row key={i}>
+    //                                 <Grid.Column width={3}>
+    //
+    //                                     <Item>
+    //                                         <Item.Content content={hourInDayForDay(i)} verticalAlign='middle' style={{textAlign: 'center'}}/>
+    //                                     </Item>
+    //
+    //                                 </Grid.Column>
+    //
+    //                                 <Grid.Column width={10}>
+    //                                     <Item.Group divided relaxed='very'>
+    //                                         {_.times(4, i => (
+    //                                             <Item.Content key={i} verticalAlign='middle'  style={{textAlign: 'center'}}>СобытиеСобытиеСобытиеСобытиеСобытиеСобытиеСобытиеСобытиеСобытиеСобытиеСобытиеСобытиеС</Item.Content>
+    //                                         ))}
+    //                                     </Item.Group>
+    //                                 </Grid.Column>
+    //
+    //                                 <Grid.Column width={3} style={{textAlign: 'center'}}>
+    //                                     <Item>
+    //                                         <Button icon='plus' basic color='teal'></Button>
+    //                                     </Item>
+    //                                 </Grid.Column>
+    //                             </Grid.Row>
+    //
+    //                         ))}
+    //             </Grid>
+    //         </Grid>
+    //     );
+    // }
 
     function funcAl() {
         axios.post('http://127.0.0.1:3020/events/add', {title: 'test',
