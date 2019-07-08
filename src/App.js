@@ -47,7 +47,10 @@ const App = () => {
                 }
 
                 if (c.getFullYear() === curDate.year){
-                    mas3.push({id: response.data[i].id, date_exe_year: parseInt(response.data[i].date_exe.split('-')[0]),
+                    mas3.push({id: response.data[i].id, title: response.data[i].title,
+                    description: response.data[i].description, date_creation: response.data[i].date_creation,
+                    duration: response.data[i].duration, author_id: parseInt(response.data[i].author_id),
+                    date_exe_year: parseInt(response.data[i].date_exe.split('-')[0]),
                     date_exe_month: parseInt(response.data[i].date_exe.split('-')[1]),
                     date_exe_day: parseInt(response.data[i].date_exe.split('-')[2])});
                 }
@@ -458,6 +461,61 @@ const App = () => {
             </React.Fragment>)
     }
 
+    // function retViewDay() {
+    //     return (
+    //         <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
+    //             <Grid.Row>
+    //                 <Grid celled>
+    //                     <Grid.Row >
+    //                         <Grid.Column width={4}>
+    //                             <Grid style={{ justifyContent: 'space-evenly'}}>
+    //                                 <Grid.Column>
+    //                                     <h1>{curDate.day}    {monthName()}    {curDate.year}</h1>
+    //                                 </Grid.Column>
+    //                             </Grid>
+    //                         </Grid.Column>
+    //                         <Grid.Column width={8}>
+    //                             <Button.Group fluid>
+    //                                 <Button onClick={() => setView(1)}>День</Button>
+    //                                 <Button onClick={() => setView(2)}>Неделя</Button>
+    //                                 <Button onClick={() => setView(0)}>Месяц</Button>
+    //                                 <Button onClick={() => setView(3)}>Год</Button>
+    //                             </Button.Group>
+    //                         </Grid.Column>
+    //
+    //                         <Grid.Column width={4}>
+    //                             <Grid style={{ justifyContent: 'space-evenly'}}>
+    //                                 <Grid.Row>
+    //                                     <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({day: 1}))}/>
+    //                                     <Button color='grey' onClick={() => setCurDate(DateTime.local())}>Сегодня</Button>
+    //                                     <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({day: 1}))}/>
+    //                                 </Grid.Row>
+    //                             </Grid>
+    //                         </Grid.Column>
+    //                     </Grid.Row>
+    //                 </Grid>
+    //             </Grid.Row>
+    //
+    //             <Grid columns={1}>
+    //                 <Grid.Row >
+    //                     <Grid.Column>
+    //                         <Segment color='orange' textAlign='center' style={{fontSize: '30px', marginBottom: '10px'}}>{dayWeek(curDate.weekday - 1)}</Segment>
+    //                         <Item.Group divided relaxed='very'>
+    //                                 {_.times(24, i => (
+    //                                     <Item key={i}>
+    //                                         <Item.Content content={hourInDayForDay(i)} verticalAlign='middle'/>
+    //                                         <Item.Content verticalAlign='middle'>Событие</Item.Content>
+    //                                         <Button icon='plus' basic color='teal'></Button>
+    //                                     </Item>
+    //                                 ))}
+    //                         </Item.Group>
+    //                     </Grid.Column>
+    //                 </Grid.Row>
+    //             </Grid>
+    //         </Grid>
+    //     );
+    // }
+
     function retViewDay() {
         return (
             <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
@@ -493,21 +551,32 @@ const App = () => {
                     </Grid>
                 </Grid.Row>
 
-                <Grid columns={1}>
-                    <Grid.Row >
-                        <Grid.Column>
-                            <Segment color='orange' textAlign='center' style={{fontSize: '30px', marginBottom: '10px'}}>{dayWeek(curDate.weekday - 1)}</Segment>
-                            <Item.Group divided relaxed='very'>
-                                    {_.times(24, i => (
-                                        <Item key={i}>
-                                            <Item.Content content={hourInDayForDay(i)} verticalAlign='middle'/>
-                                            <Item.Content verticalAlign='middle'>Событие</Item.Content>
+                <Grid centered columns={1}>
+                    <Segment color='orange' textAlign='center' style={{fontSize: '30px', marginBottom: '10px'}}>{dayWeek(curDate.weekday - 1)}</Segment>
+                            {_.times(24, i => (
+                                <Grid.Row columns={3} key={i}>
+                                    <Grid.Column width={3}>
+                                        <Item>
+                                            <Item.Content content={hourInDayForDay(i)} verticalAlign='middle' style={{textAlign: 'center'}}/>
+                                        </Item>
+                                    </Grid.Column>
+
+                                    <Grid.Column width={10}>
+                                        <Item.Group divided relaxed='very'>
+
+                                            {_.times(4, i => (
+                                                <Item.Content key={i} verticalAlign='middle'  style={{textAlign: 'center'}}>Событие</Item.Content>
+                                            ))}
+                                        </Item.Group>
+                                    </Grid.Column>
+
+                                    <Grid.Column width={3} style={{textAlign: 'center'}}>
+                                        <Item>
                                             <Button icon='plus' basic color='teal'></Button>
                                         </Item>
-                                    ))}
-                            </Item.Group>
-                        </Grid.Column>
-                    </Grid.Row>
+                                    </Grid.Column>
+                                </Grid.Row>
+                            ))}
                 </Grid>
             </Grid>
         );
