@@ -19,8 +19,7 @@ const App = () => {
     const [event, setEvent] = useState({ events: [] });
     const [month, setMonth] = useState({eventsMonth: []});
     const [eventsYear, setEventsYear] = useState({eventsYear: []});///////////
-    const [view, setView] = useState(1);//////////////////////////////////////
-
+    const [view, setView] = useState(2);//////////////////////////////////////
 
     useEffect(() => {
         async function fetchData() {
@@ -58,7 +57,6 @@ const App = () => {
                     date_exe_minute_str: response.data[i].date_exe.split('T')[1].split(':')[1],
                     date_exe_second: parseInt(response.data[i].date_exe.split('T')[1].split(':')[2])
                     });
-                    // console.log(response.data[i]);
                 }
             }
             setMonth(mas2);
@@ -321,10 +319,7 @@ const App = () => {
     }
 
     function fillEventsForDay(todayEvents, i) {
-        // console.log(todayEvents);
         for (let k = 0; k < todayEvents.length; k++){
-            // console.log(i + ' its I');
-            // console.log(todayEvents[k].date_exe_hour + ' its HOUR');
             if (i === todayEvents[k].date_exe_hour){
                 return (
                     <Card>
@@ -349,11 +344,11 @@ const App = () => {
     // function howMuchEventInHour(todayEvents, i) {
     //     let counter = 0;
     //     for (let k = 0; k < todayEvents.length; k++){
-    //         for (let z = 0; z < 20; z++){
-    //
+    //         if (i === todayEvents[k]){
+    //             counter++;
     //         }
+    //         console.log(counter);
     //     }
-    //     console.log(counter);
     // }
 
     function retMonth() {
@@ -506,16 +501,77 @@ const App = () => {
     }
 
     function retViewWeek() {
+        let todayEvents =  isEventForDay();
         return (
             <React.Fragment>
-                <h1>Week View</h1>
-                <Segment style={{fontSize: '36px'}}>ITS WEEK VIEW</Segment>
-            </React.Fragment>)
+            <h1>Week view</h1>
+            <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
+                <Grid.Row>
+                    <Grid celled>
+                        <Grid.Row >
+                            <Grid.Column width={4}>
+                                <Grid style={{ justifyContent: 'space-evenly'}}>
+                                    <Grid.Column>
+                                        <h1>{curDate.day}    {monthName()}    {curDate.year}</h1>
+                                    </Grid.Column>
+                                </Grid>
+                            </Grid.Column>
+                            <Grid.Column width={8}>
+                                <Button.Group fluid>
+                                    <Button onClick={() => setView(1)}>День</Button>
+                                    <Button onClick={() => setView(2)}>Неделя</Button>
+                                    <Button onClick={() => setView(0)}>Месяц</Button>
+                                    <Button onClick={() => setView(3)}>Год</Button>
+                                </Button.Group>
+                            </Grid.Column>
+
+                            <Grid.Column width={4}>
+                                <Grid style={{ justifyContent: 'space-evenly'}}>
+                                    <Grid.Row>
+                                        <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({day: 1}))}/>
+                                        <Button color='grey' onClick={() => setCurDate(DateTime.local())}>Сегодня</Button>
+                                        <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({day: 1}))}/>
+                                    </Grid.Row>
+                                </Grid>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                </Grid.Row>
+
+                <Grid columns={7}>
+                    <Grid.Row >
+                        <Grid.Column>
+                            <Segment color='orange' textAlign='center' style={{fontSize: '30px', marginBottom: '10px'}}>{dayWeek(curDate.weekday - 1)}</Segment>
+                            {_.times(24, i => (
+                                <React.Fragment key={i}>
+                                    <Divider horizontal  >{hourInDayForDay(i)}</Divider>
+                                    <Segment>
+                                        <Grid columns={3}>
+                                            <Grid.Column width={15} >
+                                                {fillEventsForDay(todayEvents, i)}
+                                                {/*{_.times(howMuchEventInHour(todayEvents), i => (*/}
+                                                {/*    */}
+                                                {/*))}*/}
+                                                {/*{howMuchEventInHour(todayEvents, i)}*/}
+                                            </Grid.Column>
+
+                                            <Grid.Column width={1} style={{textAlign: 'right'}} verticalAlign='middle'>
+                                                <Button icon='plus' basic color='teal' onClick={() => alert(i + 1)}></Button>
+                                            </Grid.Column>
+                                        </Grid>
+                                    </Segment>
+                                </React.Fragment>
+                            ))}
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+            </Grid>
+            </React.Fragment>
+        );
     }
 
     function retViewDay() {
         let todayEvents =  isEventForDay();
-        // console.log(todayEvents[0]);
         return (
             <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
                 <Grid.Row>
