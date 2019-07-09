@@ -58,7 +58,7 @@ const App = () => {
                     date_exe_minute_str: response.data[i].date_exe.split('T')[1].split(':')[1],
                     date_exe_second: parseInt(response.data[i].date_exe.split('T')[1].split(':')[2])
                     });
-                    console.log(response.data[i]);
+                    // console.log(response.data[i]);
                 }
             }
             setMonth(mas2);
@@ -321,22 +321,21 @@ const App = () => {
     }
 
     function fillEventsForDay(todayEvents, i) {
-        console.log(todayEvents);
+        // console.log(todayEvents);
         for (let k = 0; k < todayEvents.length; k++){
-            if (i + 1 === todayEvents[k].date_exe_hour){
+            console.log(i + ' its I');
+            console.log(todayEvents[k].date_exe_hour + ' its HOUR');
+            if (i === todayEvents[k].date_exe_hour){
                 return (
                     <Card>
                         <Card.Content>
-                            <Card.Header style={{textAlign: 'center'}}>{todayEvents[0].title}</Card.Header>
-                            <Card.Meta>Время начала: {todayEvents[0].date_exe_hour_str}:{todayEvents[0].date_exe_minute_str}</Card.Meta>
-                            <Card.Meta>Продолжительность: {todayEvents[0].duration /60} минут</Card.Meta>
-                            <Card.Description>{todayEvents[0].description} its a description</Card.Description>
+                            <Card.Header style={{textAlign: 'center'}}>{todayEvents[k].title}</Card.Header>
+                            <Card.Meta>Время начала: {todayEvents[k].date_exe_hour_str}:{todayEvents[0].date_exe_minute_str}</Card.Meta>
+                            <Card.Meta>Продолжительность: {todayEvents[k].duration /60} минут</Card.Meta>
+                            <Card.Description>{todayEvents[k].description} ----------------its a description</Card.Description>
                         </Card.Content>
                         <Card.Content extra>
                             <div className='ui two buttons'>
-                                {/*<Button basic color='green'>*/}
-                                {/*    Approve*/}
-                                {/*</Button>*/}
                                 <Button basic color='red'>
                                     Отменить
                                 </Button>
