@@ -323,8 +323,8 @@ const App = () => {
     function fillEventsForDay(todayEvents, i) {
         // console.log(todayEvents);
         for (let k = 0; k < todayEvents.length; k++){
-            console.log(i + ' its I');
-            console.log(todayEvents[k].date_exe_hour + ' its HOUR');
+            // console.log(i + ' its I');
+            // console.log(todayEvents[k].date_exe_hour + ' its HOUR');
             if (i === todayEvents[k].date_exe_hour){
                 return (
                     <Card>
@@ -345,6 +345,16 @@ const App = () => {
             }
         }
     }
+
+    // function howMuchEventInHour(todayEvents, i) {
+    //     let counter = 0;
+    //     for (let k = 0; k < todayEvents.length; k++){
+    //         for (let z = 0; z < 20; z++){
+    //
+    //         }
+    //     }
+    //     console.log(counter);
+    // }
 
     function retMonth() {
         return (<Grid.Row>
@@ -503,61 +513,6 @@ const App = () => {
             </React.Fragment>)
     }
 
-    // function retViewDay() {
-    //     return (
-    //         <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
-    //             <Grid.Row>
-    //                 <Grid celled>
-    //                     <Grid.Row >
-    //                         <Grid.Column width={4}>
-    //                             <Grid style={{ justifyContent: 'space-evenly'}}>
-    //                                 <Grid.Column>
-    //                                     <h1>{curDate.day}    {monthName()}    {curDate.year}</h1>
-    //                                 </Grid.Column>
-    //                             </Grid>
-    //                         </Grid.Column>
-    //                         <Grid.Column width={8}>
-    //                             <Button.Group fluid>
-    //                                 <Button onClick={() => setView(1)}>День</Button>
-    //                                 <Button onClick={() => setView(2)}>Неделя</Button>
-    //                                 <Button onClick={() => setView(0)}>Месяц</Button>
-    //                                 <Button onClick={() => setView(3)}>Год</Button>
-    //                             </Button.Group>
-    //                         </Grid.Column>
-    //
-    //                         <Grid.Column width={4}>
-    //                             <Grid style={{ justifyContent: 'space-evenly'}}>
-    //                                 <Grid.Row>
-    //                                     <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({day: 1}))}/>
-    //                                     <Button color='grey' onClick={() => setCurDate(DateTime.local())}>Сегодня</Button>
-    //                                     <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({day: 1}))}/>
-    //                                 </Grid.Row>
-    //                             </Grid>
-    //                         </Grid.Column>
-    //                     </Grid.Row>
-    //                 </Grid>
-    //             </Grid.Row>
-    //
-    //             <Grid columns={1}>
-    //                 <Grid.Row >
-    //                     <Grid.Column>
-    //                         <Segment color='orange' textAlign='center' style={{fontSize: '30px', marginBottom: '10px'}}>{dayWeek(curDate.weekday - 1)}</Segment>
-    //                         <Item.Group  relaxed='very'>
-    //                                 {_.times(24, i => (
-    //                                     <Item key={i}>
-    //                                         <Item.Content content={hourInDayForDay(i)} verticalAlign='middle'/>
-    //                                         <Item.Content verticalAlign='middle'>Событие</Item.Content>
-    //                                         <Button icon='plus' basic color='teal'></Button>
-    //                                     </Item>
-    //                                 ))}
-    //                         </Item.Group>
-    //                     </Grid.Column>
-    //                 </Grid.Row>
-    //             </Grid>
-    //         </Grid>
-    //     );
-    // }
-
     function retViewDay() {
         let todayEvents =  isEventForDay();
         // console.log(todayEvents[0]);
@@ -605,19 +560,11 @@ const App = () => {
                                     <Segment>
                                         <Grid columns={3}>
                                             <Grid.Column width={15} >
-                                                {/*<Grid.Row style={{backgroundColor: 'pink'}}>*/}
-                                                {/*    <Segment></Segment>*/}
-                                                {/*</Grid.Row>*/}
-                                                {/*<Grid.Row>*/}
-                                                {/*    <Segment></Segment>*/}
-                                                {/*</Grid.Row>*/}
-                                                {/*<Grid.Row>*/}
-                                                {/*    <Segment></Segment>*/}
-                                                {/*</Grid.Row>*/}
-                                                {/*<Grid.Row>*/}
-                                                {/*    <Segment></Segment>*/}
-                                                {/*</Grid.Row>*/}
                                                 {fillEventsForDay(todayEvents, i)}
+                                                {/*{_.times(howMuchEventInHour(todayEvents), i => (*/}
+                                                {/*    */}
+                                                {/*))}*/}
+                                                {/*{howMuchEventInHour(todayEvents, i)}*/}
                                             </Grid.Column>
 
                                             <Grid.Column width={1} style={{textAlign: 'right'}} verticalAlign='middle'>
@@ -633,75 +580,6 @@ const App = () => {
             </Grid>
         );
     }
-
-    // function retViewDay() {
-    //     return (
-    //         <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
-    //             <Grid.Row>
-    //                 <Grid celled>
-    //                     <Grid.Row >
-    //                         <Grid.Column width={4}>
-    //                             <Grid style={{ justifyContent: 'space-evenly'}}>
-    //                                 <Grid.Column>
-    //                                     <h1>{curDate.day}    {monthName()}    {curDate.year}</h1>
-    //                                 </Grid.Column>
-    //                             </Grid>
-    //                         </Grid.Column>
-    //                         <Grid.Column width={8}>
-    //                             <Button.Group fluid>
-    //                                 <Button onClick={() => setView(1)}>День</Button>
-    //                                 <Button onClick={() => setView(2)}>Неделя</Button>
-    //                                 <Button onClick={() => setView(0)}>Месяц</Button>
-    //                                 <Button onClick={() => setView(3)}>Год</Button>
-    //                             </Button.Group>
-    //                         </Grid.Column>
-    //
-    //                         <Grid.Column width={4}>
-    //                             <Grid style={{ justifyContent: 'space-evenly'}}>
-    //                                 <Grid.Row>
-    //                                     <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({day: 1}))}/>
-    //                                     <Button color='grey' onClick={() => setCurDate(DateTime.local())}>Сегодня</Button>
-    //                                     <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({day: 1}))}/>
-    //                                 </Grid.Row>
-    //                             </Grid>
-    //                         </Grid.Column>
-    //                     </Grid.Row>
-    //                 </Grid>
-    //             </Grid.Row>
-    //
-    //             <Grid centered columns={1}>
-    //                 <Segment color='orange' textAlign='center' style={{fontSize: '30px', marginBottom: '10px'}}>{dayWeek(curDate.weekday - 1)}</Segment>
-    //                         {_.times(24, i => (
-    //
-    //                             <Grid.Row key={i}>
-    //                                 <Grid.Column width={3}>
-    //
-    //                                     <Item>
-    //                                         <Item.Content content={hourInDayForDay(i)} verticalAlign='middle' style={{textAlign: 'center'}}/>
-    //                                     </Item>
-    //
-    //                                 </Grid.Column>
-    //
-    //                                 <Grid.Column width={10}>
-    //                                     <Item.Group divided relaxed='very'>
-    //                                         {_.times(4, i => (
-    //                                             <Item.Content key={i} verticalAlign='middle'  style={{textAlign: 'center'}}>СобытиеСобытиеСобытиеСобытиеСобытиеСобытиеСобытиеСобытиеСобытиеСобытиеСобытиеСобытиеС</Item.Content>
-    //                                         ))}
-    //                                     </Item.Group>
-    //                                 </Grid.Column>
-    //
-    //                                 <Grid.Column width={3} style={{textAlign: 'center'}}>
-    //                                     <Item>
-    //                                         <Button icon='plus' basic color='teal'></Button>
-    //                                     </Item>
-    //                                 </Grid.Column>
-    //                             </Grid.Row>
-    //
-    //                         ))}
-    //             </Grid>
-    //         </Grid>
-    //     );
-    // }
 
     function funcAl() {
         axios.post('http://127.0.0.1:3020/events/add', {title: 'test',
