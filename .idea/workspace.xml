@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a90433f2-8534-4d66-a7b3-ecab3c35a9a6" name="Default Changelist" comment="1">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,12 +21,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="58" column="23" lean-forward="true" selection-start-line="58" selection-start-column="23" selection-end-line="58" selection-end-column="23" />
+            <state relative-caret-position="336">
+              <caret line="318" column="19" lean-forward="true" selection-start-line="318" selection-start-column="19" selection-end-line="318" selection-end-column="19" />
               <folding>
                 <element signature="e#0#50#0" expanded="true" />
-                <marker date="1562661973777" expanded="true" signature="1138:3115" ph="..." />
-                <marker date="1562661973777" expanded="true" signature="19789:22928" ph="..." />
+                <marker date="1562663991696" expanded="true" signature="1138:3068" ph="..." />
+                <marker date="1562663991696" expanded="true" signature="19668:22807" ph="..." />
               </folding>
             </state>
           </provider>
@@ -52,6 +53,7 @@
       <find>cons</find>
       <find>console</find>
       <find>check</find>
+      <find>consol</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -70,7 +72,7 @@
   <component name="PhpServers">
     <servers />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="x" value="3600" />
     <option name="y" value="23" />
     <option name="width" value="1920" />
@@ -168,16 +170,17 @@
       <workItem from="1562247890837" duration="3019000" />
       <workItem from="1562306564738" duration="264000" />
       <workItem from="1562307392120" duration="11735000" />
+      <workItem from="1562663358897" duration="426000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="148113000" />
+    <option name="totallyTimeSpent" value="149752000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="3600" y="23" width="1920" height="1057" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11980831" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12087327" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -248,12 +251,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="58" column="23" lean-forward="true" selection-start-line="58" selection-start-column="23" selection-end-line="58" selection-end-column="23" />
+        <state relative-caret-position="336">
+          <caret line="318" column="19" lean-forward="true" selection-start-line="318" selection-start-column="19" selection-end-line="318" selection-end-column="19" />
           <folding>
             <element signature="e#0#50#0" expanded="true" />
-            <marker date="1562661973777" expanded="true" signature="1138:3115" ph="..." />
-            <marker date="1562661973777" expanded="true" signature="19789:22928" ph="..." />
+            <marker date="1562663991696" expanded="true" signature="1138:3068" ph="..." />
+            <marker date="1562663991696" expanded="true" signature="19668:22807" ph="..." />
           </folding>
         </state>
       </provider>

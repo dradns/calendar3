@@ -53,11 +53,10 @@ const App = () => {
                     date_exe_year: parseInt(response.data[i].date_exe.split('-')[0]),
                     date_exe_month: parseInt(response.data[i].date_exe.split('-')[1]),
                     date_exe_day: parseInt(response.data[i].date_exe.split('-')[2]),
-                    date_exe_hour: parseInt(response.data[i].date_exe.split('T')[1].split(':')[0]) + 3,
+                    date_exe_hour: parseInt(response.data[i].date_exe.split('T')[1].split(':')[0]),
                     date_exe_minute: parseInt(response.data[i].date_exe.split('T')[1].split(':')[1]),
                     date_exe_second: parseInt(response.data[i].date_exe.split('T')[1].split(':')[2])
                     });
-                    console.log(eventsYear);
                 }
             }
             setMonth(mas2);
@@ -307,18 +306,16 @@ const App = () => {
         )
     }
 
-    function isEventForDay(i){
-        // console.log(eventsYear);
-        // console.log(curDate.year);
-        // console.log(curDate.month);
-        // console.log(curDate.day);
+    function isEventForDay(){
+        let mas = [];
         for (let k = 0; k < Object.keys(eventsYear).length; k++){
             if (eventsYear[k] !== undefined){
                 if ((eventsYear[k].date_exe_day === curDate.day) && (eventsYear[k].date_exe_month === curDate.month) && (eventsYear[k].date_exe_year === curDate.year)){
-                    console.log(eventsYear[k]);
+                    mas.push(eventsYear[k]);
                 }
             }
         }
+        return mas;
     }
 
     function retMonth() {
@@ -534,7 +531,8 @@ const App = () => {
     // }
 
     function retViewDay() {
-        {isEventForDay()}
+        console.log( isEventForDay() );
+        // {isEventForDay()}
         return (
             <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
                 <Grid.Row>
