@@ -45,7 +45,6 @@ const App = () => {
                     mas2.push(c.getDate());
                     z++;
                 }
-
                 if (c.getFullYear() === curDate.year){
                     mas3.push({id: response.data[i].id, title: response.data[i].title,
                     description: response.data[i].description, date_creation: response.data[i].date_creation,
@@ -57,6 +56,7 @@ const App = () => {
                     date_exe_minute: parseInt(response.data[i].date_exe.split('T')[1].split(':')[1]),
                     date_exe_second: parseInt(response.data[i].date_exe.split('T')[1].split(':')[2])
                     });
+                    console.log(response.data[i]);
                 }
             }
             setMonth(mas2);
@@ -321,7 +321,7 @@ const App = () => {
     function fillEventsForDay(todayEvents, i) {
         console.log(todayEvents);
         for (let k = 0; k < todayEvents.length; k++){
-            if (i === 3){
+            if (i + 1 === todayEvents[k].date_exe_hour){
                 return (
                     <Card>
                         <Card.Content>
@@ -385,7 +385,7 @@ const App = () => {
                             <Grid.Column width={4}>
                                 <Grid style={{ justifyContent: 'space-evenly'}}>
                                     <Grid.Column>
-                                        <h1>{curDate.day}    {monthName()}    {curDate.year}</h1>
+                                        <h1>{monthName()}    {curDate.year}</h1>
                                     </Grid.Column>
                                 </Grid>
                             </Grid.Column>
@@ -451,7 +451,7 @@ const App = () => {
                             <Grid.Column width={4}>
                                 <Grid style={{ justifyContent: 'space-evenly'}}>
                                     <Grid.Column>
-                                        <h1>{curDate.day}    {monthName()}    {curDate.year}</h1>
+                                        <h1>{curDate.year}</h1>
                                     </Grid.Column>
                                 </Grid>
                             </Grid.Column>
