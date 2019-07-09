@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import {DateTime, Duration, Info, Interval, Settings} from 'luxon';
 import _ from 'lodash';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import {Grid, Button, Segment, Icon, Modal, Header, Form, Item, Divider, Container} from "semantic-ui-react";
+import {Grid, Button, Segment, Icon, Modal, Header, Form, Item, Divider, Container, Card, Image} from "semantic-ui-react";
 import axios from 'axios';
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
@@ -318,10 +318,30 @@ const App = () => {
         return mas;
     }
 
-    function fillEventsForDay(todayEvents) {
+    function fillEventsForDay(todayEvents, i) {
         console.log(todayEvents);
-        for (let i = 0; i < todayEvents.length; i++){
-            return todayEvents[0].title;
+        for (let k = 0; k < todayEvents.length; k++){
+            if (i === 3){
+                return (
+                    <Card>
+                        <Card.Content>
+                            <Card.Header style={{textAlign: 'center'}}>{todayEvents[0].title}</Card.Header>
+                            <Card.Meta>Время начала: {todayEvents[0].date_exe_hour}:{todayEvents[0].date_exe_minute}</Card.Meta>
+                            <Card.Meta>Продолжительность: {todayEvents[0].duration /60} минут</Card.Meta>
+                            <Card.Description>{todayEvents[0].description} its a description</Card.Description>
+                        </Card.Content>
+                        <Card.Content extra>
+                            <div className='ui two buttons'>
+                                {/*<Button basic color='green'>*/}
+                                {/*    Approve*/}
+                                {/*</Button>*/}
+                                <Button basic color='red'>
+                                    Отменить
+                                </Button>
+                            </div>
+                        </Card.Content>
+                    </Card>);
+            }
         }
     }
 
@@ -596,7 +616,7 @@ const App = () => {
                                                 {/*<Grid.Row>*/}
                                                 {/*    <Segment></Segment>*/}
                                                 {/*</Grid.Row>*/}
-                                                {fillEventsForDay(todayEvents)}
+                                                {fillEventsForDay(todayEvents, i)}
                                             </Grid.Column>
 
                                             <Grid.Column width={1} style={{textAlign: 'right'}} verticalAlign='middle'>
