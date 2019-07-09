@@ -53,7 +53,9 @@ const App = () => {
                     date_exe_month: parseInt(response.data[i].date_exe.split('-')[1]),
                     date_exe_day: parseInt(response.data[i].date_exe.split('-')[2]),
                     date_exe_hour: parseInt(response.data[i].date_exe.split('T')[1].split(':')[0]),
+                    date_exe_hour_str: response.data[i].date_exe.split('T')[1].split(':')[0],
                     date_exe_minute: parseInt(response.data[i].date_exe.split('T')[1].split(':')[1]),
+                    date_exe_minute_str: response.data[i].date_exe.split('T')[1].split(':')[1],
                     date_exe_second: parseInt(response.data[i].date_exe.split('T')[1].split(':')[2])
                     });
                     console.log(response.data[i]);
@@ -326,7 +328,7 @@ const App = () => {
                     <Card>
                         <Card.Content>
                             <Card.Header style={{textAlign: 'center'}}>{todayEvents[0].title}</Card.Header>
-                            <Card.Meta>Время начала: {todayEvents[0].date_exe_hour}:{todayEvents[0].date_exe_minute}</Card.Meta>
+                            <Card.Meta>Время начала: {todayEvents[0].date_exe_hour_str}:{todayEvents[0].date_exe_minute_str}</Card.Meta>
                             <Card.Meta>Продолжительность: {todayEvents[0].duration /60} минут</Card.Meta>
                             <Card.Description>{todayEvents[0].description} its a description</Card.Description>
                         </Card.Content>
