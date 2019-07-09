@@ -52,7 +52,12 @@ const App = () => {
                     duration: response.data[i].duration, author_id: parseInt(response.data[i].author_id),
                     date_exe_year: parseInt(response.data[i].date_exe.split('-')[0]),
                     date_exe_month: parseInt(response.data[i].date_exe.split('-')[1]),
-                    date_exe_day: parseInt(response.data[i].date_exe.split('-')[2])});
+                    date_exe_day: parseInt(response.data[i].date_exe.split('-')[2]),
+                    date_exe_hour: parseInt(response.data[i].date_exe.split('T')[1].split(':')[0]) + 3,
+                    date_exe_minute: parseInt(response.data[i].date_exe.split('T')[1].split(':')[1]),
+                    date_exe_second: parseInt(response.data[i].date_exe.split('T')[1].split(':')[2])
+                    });
+                    console.log(eventsYear);
                 }
             }
             setMonth(mas2);
@@ -302,6 +307,20 @@ const App = () => {
         )
     }
 
+    function isEventForDay(i){
+        // console.log(eventsYear);
+        // console.log(curDate.year);
+        // console.log(curDate.month);
+        // console.log(curDate.day);
+        for (let k = 0; k < Object.keys(eventsYear).length; k++){
+            if (eventsYear[k] !== undefined){
+                if ((eventsYear[k].date_exe_day === curDate.day) && (eventsYear[k].date_exe_month === curDate.month) && (eventsYear[k].date_exe_year === curDate.year)){
+                    console.log(eventsYear[k]);
+                }
+            }
+        }
+    }
+
     function retMonth() {
         return (<Grid.Row>
             <Grid>
@@ -395,8 +414,6 @@ const App = () => {
                         </Grid.Row>
                     </Grid>
                 </Grid.Row>
-                <Segment style={{fontSize: '36px'}}>ITS MONTH VIEW</Segment>
-                <Button onClick={funcAl}>OPPAAAA</Button>
             </Grid>
         );
     }
@@ -426,9 +443,9 @@ const App = () => {
                             <Grid.Column width={4}>
                                 <Grid style={{ justifyContent: 'space-evenly'}}>
                                     <Grid.Row>
-                                        <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({month: 1}))}/>
+                                        <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({year: 1}))}/>
                                         <Button color='grey' onClick={() => setCurDate(DateTime.local())}>Сегодня</Button>
-                                        <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({month: 1}))}/>
+                                        <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({year: 1}))}/>
                                     </Grid.Row>
                                 </Grid>
                             </Grid.Column>
@@ -517,6 +534,7 @@ const App = () => {
     // }
 
     function retViewDay() {
+        {isEventForDay()}
         return (
             <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
                 <Grid.Row>
@@ -557,30 +575,30 @@ const App = () => {
                             <Segment color='orange' textAlign='center' style={{fontSize: '30px', marginBottom: '10px'}}>{dayWeek(curDate.weekday - 1)}</Segment>
                                 {_.times(24, i => (
                                 <React.Fragment key={i}>
-                                    <Segment  style={{backgroundColor: 'yellow'}}>
+                                    <Divider horizontal  >{hourInDayForDay(i)}</Divider>
+                                    <Segment>
                                         <Grid columns={3}>
-
                                             <Grid.Column width={15} >
-                                                <Grid.Row>
-                                                    Test
-                                                </Grid.Row>
-                                                <Grid.Row>
-                                                    Test
-                                                </Grid.Row>
-                                                <Grid.Row>
-                                                    Test
-                                                </Grid.Row>
-                                                <Grid.Row>
-                                                    Test
-                                                </Grid.Row>
+                                                {/*<Grid.Row style={{backgroundColor: 'pink'}}>*/}
+                                                {/*    <Segment></Segment>*/}
+                                                {/*</Grid.Row>*/}
+                                                {/*<Grid.Row>*/}
+                                                {/*    <Segment></Segment>*/}
+                                                {/*</Grid.Row>*/}
+                                                {/*<Grid.Row>*/}
+                                                {/*    <Segment></Segment>*/}
+                                                {/*</Grid.Row>*/}
+                                                {/*<Grid.Row>*/}
+                                                {/*    <Segment></Segment>*/}
+                                                {/*</Grid.Row>*/}
+
                                             </Grid.Column>
 
                                             <Grid.Column width={1} style={{textAlign: 'right'}} verticalAlign='middle'>
-                                                <Button icon='plus' basic color='teal'></Button>
+                                                <Button icon='plus' basic color='teal' onClick={() => alert(i + 1)}></Button>
                                             </Grid.Column>
                                         </Grid>
                                     </Segment>
-                                    <Divider horizontal>{hourInDayForDay(i)}</Divider>
                                 </React.Fragment>
                                 ))}
                         </Grid.Column>
