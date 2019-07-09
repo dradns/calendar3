@@ -318,6 +318,13 @@ const App = () => {
         return mas;
     }
 
+    function fillEventsForDay(todayEvents) {
+        console.log(todayEvents);
+        for (let i = 0; i < todayEvents.length; i++){
+            return todayEvents[0].title;
+        }
+    }
+
     function retMonth() {
         return (<Grid.Row>
             <Grid>
@@ -531,8 +538,8 @@ const App = () => {
     // }
 
     function retViewDay() {
-        console.log( isEventForDay() );
-        // {isEventForDay()}
+        let todayEvents =  isEventForDay();
+        // console.log(todayEvents[0]);
         return (
             <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
                 <Grid.Row>
@@ -589,7 +596,7 @@ const App = () => {
                                                 {/*<Grid.Row>*/}
                                                 {/*    <Segment></Segment>*/}
                                                 {/*</Grid.Row>*/}
-
+                                                {fillEventsForDay(todayEvents)}
                                             </Grid.Column>
 
                                             <Grid.Column width={1} style={{textAlign: 'right'}} verticalAlign='middle'>
