@@ -55,7 +55,10 @@ const App = () => {
                     date_exe_hour_str: response.data[i].date_exe.split('T')[1].split(':')[0],
                     date_exe_minute: parseInt(response.data[i].date_exe.split('T')[1].split(':')[1]),
                     date_exe_minute_str: response.data[i].date_exe.split('T')[1].split(':')[1],
-                    date_exe_second: parseInt(response.data[i].date_exe.split('T')[1].split(':')[2])
+                    date_exe_second: parseInt(response.data[i].date_exe.split('T')[1].split(':')[2]),
+                    event_start_in_minute: parseInt(response.data[i].date_exe.split('T')[1].split(':')[0]) * 60 +
+                                           parseInt(response.data[i].date_exe.split('T')[1].split(':')[1]),
+                    duration_in_minute: parseInt(response.data[i].duration)/60,
                     });
                 }
             }
@@ -306,6 +309,18 @@ const App = () => {
         )
     }
 
+    // function isEventForDay(){
+    //     let mas = [];
+    //     for (let k = 0; k < Object.keys(eventsYear).length; k++){
+    //         if (eventsYear[k] !== undefined){
+    //             if ((eventsYear[k].date_exe_day === curDate.day) && (eventsYear[k].date_exe_month === curDate.month) && (eventsYear[k].date_exe_year === curDate.year)){
+    //                 mas.push(eventsYear[k]);
+    //             }
+    //         }
+    //     }
+    //     return mas;
+    // }
+
     function isEventForDay(){
         let mas = [];
         for (let k = 0; k < Object.keys(eventsYear).length; k++){
@@ -350,11 +365,15 @@ const App = () => {
                 }
             })
         }
-        console.log(counter + 'its a counter');
-        console.log(i + ' its a hour');
         return counter;
     }
 
+    function durationCounter(todayEvents){
+        let j = 0;
+        if (todayEvents.length > 0){
+
+        }
+    }
 
     function retMonth() {
         return (<Grid.Row>
@@ -624,6 +643,8 @@ const App = () => {
                                                 {fillEventsForDay(todayEvents, i)}
                                                 {/*{_.times(howMuchEventInHour(todayEvents), i => (*/}
                                                 {eventsCounter(todayEvents, i)}
+                                                {durationCounter(todayEvents,i)}
+                                                {console.log(todayEvents)}
                                                 {/*))}*/}
                                                 {/*{howMuchEventInHour(todayEvents, i)}*/}
                                             </Grid.Column>
