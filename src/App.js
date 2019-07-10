@@ -19,7 +19,7 @@ const App = () => {
     const [event, setEvent] = useState({ events: [] });
     const [month, setMonth] = useState({eventsMonth: []});
     const [eventsYear, setEventsYear] = useState({eventsYear: []});///////////
-    const [view, setView] = useState(2);//////////////////////////////////////
+    const [view, setView] = useState(1);//////////////////////////////////////
 
     useEffect(() => {
         async function fetchData() {
@@ -340,16 +340,21 @@ const App = () => {
             }
         }
     }
+    
+    function eventsCounter(todayEvents, i) {
+        let counter = 0;
+        if (todayEvents.length > 0){
+            todayEvents.forEach( (todayEvents) => {
+                if (todayEvents.date_exe_hour === i){
+                    counter++;
+                }
+            })
+        }
+        console.log(counter + 'its a counter');
+        console.log(i + ' its a hour');
+        return counter;
+    }
 
-    // function howMuchEventInHour(todayEvents, i) {
-    //     let counter = 0;
-    //     for (let k = 0; k < todayEvents.length; k++){
-    //         if (i === todayEvents[k]){
-    //             counter++;
-    //         }
-    //         console.log(counter);
-    //     }
-    // }
 
     function retMonth() {
         return (<Grid.Row>
@@ -618,7 +623,7 @@ const App = () => {
                                             <Grid.Column width={15} >
                                                 {fillEventsForDay(todayEvents, i)}
                                                 {/*{_.times(howMuchEventInHour(todayEvents), i => (*/}
-                                                {/*    */}
+                                                {eventsCounter(todayEvents, i)}
                                                 {/*))}*/}
                                                 {/*{howMuchEventInHour(todayEvents, i)}*/}
                                             </Grid.Column>
