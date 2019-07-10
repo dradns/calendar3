@@ -45,9 +45,13 @@ const App = () => {
                     z++;
                 }
                 if (c.getFullYear() === curDate.year){
-                    mas3.push({id: response.data[i].id, title: response.data[i].title,
-                    description: response.data[i].description, date_creation: response.data[i].date_creation,
-                    duration: response.data[i].duration, author_id: parseInt(response.data[i].author_id),
+                    mas3.push({
+                    id: response.data[i].id,
+                    title: response.data[i].title,
+                    description: response.data[i].description,
+                    date_creation: response.data[i].date_creation,
+                    duration: response.data[i].duration,
+                    author_id: parseInt(response.data[i].author_id),
                     date_exe_year: parseInt(response.data[i].date_exe.split('-')[0]),
                     date_exe_month: parseInt(response.data[i].date_exe.split('-')[1]),
                     date_exe_day: parseInt(response.data[i].date_exe.split('-')[2]),
@@ -59,6 +63,10 @@ const App = () => {
                     event_start_in_minute: parseInt(response.data[i].date_exe.split('T')[1].split(':')[0]) * 60 +
                                            parseInt(response.data[i].date_exe.split('T')[1].split(':')[1]),
                     duration_in_minute: parseInt(response.data[i].duration)/60,
+                    is_exactly_start: ((parseInt(response.data[i].date_exe.split('T')[1].split(':')[0])) * 60 +
+                        parseInt(response.data[i].date_exe.split('T')[1].split(':')[1])) % 60 === 0,
+                    event_end_in_minute: parseInt(response.data[i].date_exe.split('T')[1].split(':')[0]) * 60 +
+                        parseInt(response.data[i].date_exe.split('T')[1].split(':')[1]) + parseInt(response.data[i].duration)/60
                     });
                 }
             }
@@ -355,6 +363,20 @@ const App = () => {
             }
         }
     }
+
+    function someFun(todayEvents) {
+            if (todayEvents.length > 0){
+                for (let k = 0; k < todayEvents.length; k++){
+                    if (eventsYear[k].is_exactly_start === true && eventsYear[k].duration_in_minute > 60){
+                        console.log('long event more than one hour and exactly');
+                    }else if (eventsYear[k].is_exactly_start === false && eventsYear[k].duration_in_minute > eventsYear[k].event_start_in_minute % 60){
+                        console.log('long and not eaqul');
+                    }else if (eventsYear[k].is_exactly_start === false && eventsYear[k].duration_in_minute > eventsYear[k].event_start_in_minute % 60){
+                        console.log('long and not eaqul');
+                }
+            }
+        }
+    }
     
     function eventsCounter(todayEvents, i) {
         let counter = 0;
@@ -596,6 +618,7 @@ const App = () => {
 
     function retViewDay() {
         let todayEvents =  isEventForDay();
+        someFun(todayEvents);
         return (
             <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
                 <Grid.Row>
