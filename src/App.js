@@ -343,6 +343,48 @@ const App = () => {
         return mas;
     }
 
+    // function longEventForDay(todayEvents) {
+    //
+    //     function calcHourEnd (todayEvents){
+    //         if (todayEvents.event_end_in_minute % 60 === 0){
+    //             return (Math.floor(todayEvents.event_end_in_minute / 60) - 1)
+    //         }else{
+    //             return Math.floor(todayEvents.event_end_in_minute / 60);
+    //         }
+    //     }
+    //
+    //     let arr = [];
+    //     for (let i = 0; i < todayEvents.length; i++){
+    //         if (todayEvents[i].date_exe_hour + 1 === todayEvents[i].event_end_in_minute/60){//если встреча укладывается ровно в час
+    //             arr.push(todayEvents[i]);
+    //         }else if(Math.floor(todayEvents[i].hour_end) > todayEvents[i].date_exe_hour){//если встреча не укладывается в один час
+    //             if (todayEvents[i].event_end_in_minute%60 === 0){
+    //                 let hourStart = Math.floor(todayEvents[i].event_start_in_minute/60);
+    //                 let hourEnd = calcHourEnd(todayEvents[i]);
+    //                 for (let k = 0; k <= hourEnd - hourStart; k++){
+    //                     console.log(k);
+    //                     let copy = Object.assign({}, todayEvents[i]);
+    //                     copy.test = 'test';
+    //                     arr.push(copy);
+    //                 }
+    //             }else{
+    //                 let hourStart = Math.floor(todayEvents[i].event_start_in_minute/60);
+    //                 let hourEnd = calcHourEnd(todayEvents[i]);
+    //
+    //                 console.log(hourStart + '   its a hour start');
+    //                 console.log(hourEnd + '   its a hour end');
+    //                 for (let k = 0; k <= hourEnd - hourStart; k++){
+    //                     console.log(k);
+    //                     let copy = Object.assign({}, todayEvents[i]);
+    //                     copy.test = 'test';
+    //                     arr.push(copy);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return arr;
+    // }
+
     function longEventForDay(todayEvents) {
 
         function calcHourEnd (todayEvents){
@@ -356,32 +398,20 @@ const App = () => {
         let arr = [];
         for (let i = 0; i < todayEvents.length; i++){
             if (todayEvents[i].date_exe_hour + 1 === todayEvents[i].event_end_in_minute/60){//если встреча укладывается ровно в час
+                let hourStart = Math.floor(todayEvents[i].event_start_in_minute/60);
+                arr.visible_hour = hourStart;
                 arr.push(todayEvents[i]);
             }else if(Math.floor(todayEvents[i].hour_end) > todayEvents[i].date_exe_hour){//если встреча не укладывается в один час
-                if (todayEvents[i].event_end_in_minute%60 === 0){
                     let hourStart = Math.floor(todayEvents[i].event_start_in_minute/60);
                     let hourEnd = calcHourEnd(todayEvents[i]);
                     for (let k = 0; k <= hourEnd - hourStart; k++){
                         console.log(k);
                         let copy = Object.assign({}, todayEvents[i]);
-                        copy.test = 'test';
-                        arr.push(copy);
-                    }
-                }else{
-                    let hourStart = Math.floor(todayEvents[i].event_start_in_minute/60);
-                    let hourEnd = calcHourEnd(todayEvents[i]);
-
-                    console.log(hourStart + '   its a hour start');
-                    console.log(hourEnd + '   its a hour end');
-                    for (let k = 0; k <= hourEnd - hourStart; k++){
-                        console.log(k);
-                        let copy = Object.assign({}, todayEvents[i]);
-                        copy.test = 'test';
+                        copy.visible_hour = hourStart + k;
                         arr.push(copy);
                     }
                 }
             }
-        }
         return arr;
     }
 
