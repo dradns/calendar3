@@ -66,7 +66,9 @@ const App = () => {
                     is_exactly_start: ((parseInt(response.data[i].date_exe.split('T')[1].split(':')[0])) * 60 +
                         parseInt(response.data[i].date_exe.split('T')[1].split(':')[1])) % 60 === 0,
                     event_end_in_minute: parseInt(response.data[i].date_exe.split('T')[1].split(':')[0]) * 60 +
-                        parseInt(response.data[i].date_exe.split('T')[1].split(':')[1]) + parseInt(response.data[i].duration)/60
+                        parseInt(response.data[i].date_exe.split('T')[1].split(':')[1]) + parseInt(response.data[i].duration)/60,
+                    hour_end: (parseInt(response.data[i].date_exe.split('T')[1].split(':')[0]) * 60 +
+                        parseInt(response.data[i].date_exe.split('T')[1].split(':')[1]) + parseInt(response.data[i].duration)/60)/60,
                     });
                 }
             }
@@ -341,6 +343,22 @@ const App = () => {
         return mas;
     }
 
+    function longEventForDay(todayEvents) {
+        let arr = [];
+        for (let i = 0; i < todayEvents.length; i++){
+            if (todayEvents[i].date_exe_hour + 1 === todayEvents[i].event_end_in_minute/60){
+                arr.push('11');
+            }else if(Math.floor(todayEvents[i].hour_end) > todayEvents[i].date_exe_hour){
+                arr.push('sharp hour');
+            }else{
+                arr.push('trigger');
+            }
+        }
+        return arr;
+
+
+    }
+
     function fillEventsForDay(todayEvents, i) {
         for (let k = 0; k < todayEvents.length; k++){
             if (i === todayEvents[k].date_exe_hour){
@@ -348,8 +366,9 @@ const App = () => {
                     <Card>
                         <Card.Content>
                             <Card.Header style={{textAlign: 'center'}}>{todayEvents[k].title}</Card.Header>
-                            <Card.Meta>Время начала: {todayEvents[k].date_exe_hour_str}:{todayEvents[0].date_exe_minute_str}</Card.Meta>
-                            <Card.Meta>Продолжительность: {todayEvents[k].duration /60} минут</Card.Meta>
+                            <Card.Meta>Время начала: {todayEvents[k].date_exe_hour_str}:{todayEvents[k].date_exe_minute}</Card.Meta>
+                            <Card.Meta>Продолжительность: {todayEvents[k].duration_in_minute} минут</Card.Meta>
+                            <Card.Meta>Окончание: {Math.floor(todayEvents[k].event_end_in_minute / 60)}:{todayEvents[k].event_end_in_minute % 60}</Card.Meta>
                             <Card.Description>{todayEvents[k].description} ----------------its a description</Card.Description>
                         </Card.Content>
                         <Card.Content extra>
@@ -364,19 +383,19 @@ const App = () => {
         }
     }
 
-    function someFun(todayEvents) {
-            if (todayEvents.length > 0){
-                for (let k = 0; k < todayEvents.length; k++){
-                    if (eventsYear[k].is_exactly_start === true && eventsYear[k].duration_in_minute > 60){
-                        console.log('long event more than one hour and exactly');
-                    }else if (eventsYear[k].is_exactly_start === false && eventsYear[k].duration_in_minute > eventsYear[k].event_start_in_minute % 60){
-                        console.log('long and not eaqul');
-                    }else if (eventsYear[k].is_exactly_start === false && eventsYear[k].duration_in_minute > eventsYear[k].event_start_in_minute % 60){
-                        console.log('long and not eaqul');
-                }
-            }
-        }
-    }
+    // function someFun(todayEvents) {
+    //         if (todayEvents.length > 0){
+    //             for (let k = 0; k < todayEvents.length; k++){
+    //                 if (eventsYear[k].is_exactly_start === true && eventsYear[k].duration_in_minute > 60){
+    //                     console.log('long event more than one hour and exactly');
+    //                 }else if (eventsYear[k].is_exactly_start === false && eventsYear[k].duration_in_minute > eventsYear[k].event_start_in_minute % 60){
+    //                     console.log('long and not eaqul');
+    //                 }else if (eventsYear[k].is_exactly_start === false && eventsYear[k].duration_in_minute > eventsYear[k].event_start_in_minute % 60){
+    //                     console.log('long and not eaqul');
+    //             }
+    //         }
+    //     }
+    // }
     
     function eventsCounter(todayEvents, i) {
         let counter = 0;
@@ -618,7 +637,10 @@ const App = () => {
 
     function retViewDay() {
         let todayEvents =  isEventForDay();
-        someFun(todayEvents);
+        let todayEventsLong = longEventForDay(todayEvents);
+        // {longEventForDay(todayEvents)}
+        console.log(todayEvents);
+        console.log(todayEventsLong);
         return (
             <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
                 <Grid.Row>
@@ -667,7 +689,8 @@ const App = () => {
                                                 {/*{_.times(howMuchEventInHour(todayEvents), i => (*/}
                                                 {eventsCounter(todayEvents, i)}
                                                 {durationCounter(todayEvents,i)}
-                                                {console.log(todayEvents)}
+                                                {/*{console.log(todayEvents)}*/}
+
                                                 {/*))}*/}
                                                 {/*{howMuchEventInHour(todayEvents, i)}*/}
                                             </Grid.Column>
