@@ -358,21 +358,22 @@ const App = () => {
             if (todayEvents[i].date_exe_hour + 1 === todayEvents[i].event_end_in_minute/60){//если встреча укладывается ровно в час
                 arr.push(todayEvents[i]);
             }else if(Math.floor(todayEvents[i].hour_end) > todayEvents[i].date_exe_hour){//если встреча не укладывается в один час
+                console.log('trigger');
                 let hourStart = Math.floor(todayEvents[i].event_start_in_minute/60);
                 let hourEnd = calcHourEnd(todayEvents[i]);
 
-                console.log(hourStart + 'its a hour start');
-                console.log(hourEnd + 'its a hour end');
+                console.log(hourStart + '   its a hour start');
+                console.log(hourEnd + '   its a hour end');
+                for (let k = 0; k <= hourEnd - hourStart + 1; k++){
 
-
-                arr.push('sharp hour');
-
-                //здесь надо разбивать объект на несколько и пушить в массив
+                    console.log(k);
+                    let copy = Object.assign({}, todayEvents[i]);
+                    copy.test = 'test';
+                    arr.push(copy);
+                }
             }
         }
         return arr;
-
-
     }
 
     function fillEventsForDay(todayEvents, i) {
@@ -655,8 +656,8 @@ const App = () => {
         let todayEvents =  isEventForDay();
         let todayEventsLong = longEventForDay(todayEvents);
         // {longEventForDay(todayEvents)}
-        console.log(todayEvents);
-        console.log(todayEventsLong);
+        // console.log(todayEvents);
+        console.log(todayEventsLong, 'its a target');
         return (
             <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
                 <Grid.Row>
