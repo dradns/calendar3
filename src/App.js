@@ -358,18 +358,27 @@ const App = () => {
             if (todayEvents[i].date_exe_hour + 1 === todayEvents[i].event_end_in_minute/60){//если встреча укладывается ровно в час
                 arr.push(todayEvents[i]);
             }else if(Math.floor(todayEvents[i].hour_end) > todayEvents[i].date_exe_hour){//если встреча не укладывается в один час
-                console.log('trigger');
-                let hourStart = Math.floor(todayEvents[i].event_start_in_minute/60);
-                let hourEnd = calcHourEnd(todayEvents[i]);
+                if (todayEvents[i].event_end_in_minute%60 === 0){
+                    let hourStart = Math.floor(todayEvents[i].event_start_in_minute/60);
+                    let hourEnd = calcHourEnd(todayEvents[i]);
+                    for (let k = 0; k <= hourEnd - hourStart; k++){
+                        console.log(k);
+                        let copy = Object.assign({}, todayEvents[i]);
+                        copy.test = 'test';
+                        arr.push(copy);
+                    }
+                }else{
+                    let hourStart = Math.floor(todayEvents[i].event_start_in_minute/60);
+                    let hourEnd = calcHourEnd(todayEvents[i]);
 
-                console.log(hourStart + '   its a hour start');
-                console.log(hourEnd + '   its a hour end');
-                for (let k = 0; k <= hourEnd - hourStart + 1; k++){
-
-                    console.log(k);
-                    let copy = Object.assign({}, todayEvents[i]);
-                    copy.test = 'test';
-                    arr.push(copy);
+                    console.log(hourStart + '   its a hour start');
+                    console.log(hourEnd + '   its a hour end');
+                    for (let k = 0; k <= hourEnd - hourStart; k++){
+                        console.log(k);
+                        let copy = Object.assign({}, todayEvents[i]);
+                        copy.test = 'test';
+                        arr.push(copy);
+                    }
                 }
             }
         }
@@ -657,7 +666,8 @@ const App = () => {
         let todayEventsLong = longEventForDay(todayEvents);
         // {longEventForDay(todayEvents)}
         // console.log(todayEvents);
-        console.log(todayEventsLong, 'its a target');
+        console.log(todayEventsLong, 'its a new');
+        console.log(todayEvents, 'its a old');
         return (
             <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
                 <Grid.Row>
@@ -706,7 +716,7 @@ const App = () => {
                                                 {/*{_.times(howMuchEventInHour(todayEvents), i => (*/}
                                                 {eventsCounter(todayEvents, i)}
                                                 {durationCounter(todayEvents,i)}
-                                                {/*{console.log(todayEvents)}*/}
+
 
                                                 {/*))}*/}
                                                 {/*{howMuchEventInHour(todayEvents, i)}*/}
