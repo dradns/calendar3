@@ -344,14 +344,30 @@ const App = () => {
     }
 
     function longEventForDay(todayEvents) {
+
+        function calcHourEnd (todayEvents){
+            if (todayEvents.event_end_in_minute % 60 === 0){
+                return (Math.floor(todayEvents.event_end_in_minute / 60) - 1)
+            }else{
+                return Math.floor(todayEvents.event_end_in_minute / 60);
+            }
+        }
+
         let arr = [];
         for (let i = 0; i < todayEvents.length; i++){
-            if (todayEvents[i].date_exe_hour + 1 === todayEvents[i].event_end_in_minute/60){
-                arr.push('11');
-            }else if(Math.floor(todayEvents[i].hour_end) > todayEvents[i].date_exe_hour){
+            if (todayEvents[i].date_exe_hour + 1 === todayEvents[i].event_end_in_minute/60){//если встреча укладывается ровно в час
+                arr.push(todayEvents[i]);
+            }else if(Math.floor(todayEvents[i].hour_end) > todayEvents[i].date_exe_hour){//если встреча не укладывается в один час
+                let hourStart = Math.floor(todayEvents[i].event_start_in_minute/60);
+                let hourEnd = calcHourEnd(todayEvents[i]);
+
+                console.log(hourStart + 'its a hour start');
+                console.log(hourEnd + 'its a hour end');
+
+
                 arr.push('sharp hour');
-            }else{
-                arr.push('trigger');
+
+                //здесь надо разбивать объект на несколько и пушить в массив
             }
         }
         return arr;
