@@ -319,18 +319,6 @@ const App = () => {
         )
     }
 
-    // function isEventForDay(){
-    //     let mas = [];
-    //     for (let k = 0; k < Object.keys(eventsYear).length; k++){
-    //         if (eventsYear[k] !== undefined){
-    //             if ((eventsYear[k].date_exe_day === curDate.day) && (eventsYear[k].date_exe_month === curDate.month) && (eventsYear[k].date_exe_year === curDate.year)){
-    //                 mas.push(eventsYear[k]);
-    //             }
-    //         }
-    //     }
-    //     return mas;
-    // }
-
     function isEventForDay(){
         let mas = [];
         for (let k = 0; k < Object.keys(eventsYear).length; k++){
@@ -343,50 +331,7 @@ const App = () => {
         return mas;
     }
 
-    // function longEventForDay(todayEvents) {
-    //
-    //     function calcHourEnd (todayEvents){
-    //         if (todayEvents.event_end_in_minute % 60 === 0){
-    //             return (Math.floor(todayEvents.event_end_in_minute / 60) - 1)
-    //         }else{
-    //             return Math.floor(todayEvents.event_end_in_minute / 60);
-    //         }
-    //     }
-    //
-    //     let arr = [];
-    //     for (let i = 0; i < todayEvents.length; i++){
-    //         if (todayEvents[i].date_exe_hour + 1 === todayEvents[i].event_end_in_minute/60){//если встреча укладывается ровно в час
-    //             arr.push(todayEvents[i]);
-    //         }else if(Math.floor(todayEvents[i].hour_end) > todayEvents[i].date_exe_hour){//если встреча не укладывается в один час
-    //             if (todayEvents[i].event_end_in_minute%60 === 0){
-    //                 let hourStart = Math.floor(todayEvents[i].event_start_in_minute/60);
-    //                 let hourEnd = calcHourEnd(todayEvents[i]);
-    //                 for (let k = 0; k <= hourEnd - hourStart; k++){
-    //                     console.log(k);
-    //                     let copy = Object.assign({}, todayEvents[i]);
-    //                     copy.test = 'test';
-    //                     arr.push(copy);
-    //                 }
-    //             }else{
-    //                 let hourStart = Math.floor(todayEvents[i].event_start_in_minute/60);
-    //                 let hourEnd = calcHourEnd(todayEvents[i]);
-    //
-    //                 console.log(hourStart + '   its a hour start');
-    //                 console.log(hourEnd + '   its a hour end');
-    //                 for (let k = 0; k <= hourEnd - hourStart; k++){
-    //                     console.log(k);
-    //                     let copy = Object.assign({}, todayEvents[i]);
-    //                     copy.test = 'test';
-    //                     arr.push(copy);
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     return arr;
-    // }
-
     function longEventForDay(todayEvents) {
-
         function calcHourEnd (todayEvents){
             if (todayEvents.event_end_in_minute % 60 === 0){
                 return (Math.floor(todayEvents.event_end_in_minute / 60) - 1)
@@ -405,7 +350,6 @@ const App = () => {
                     let hourStart = Math.floor(todayEvents[i].event_start_in_minute/60);
                     let hourEnd = calcHourEnd(todayEvents[i]);
                     for (let k = 0; k <= hourEnd - hourStart; k++){
-                        console.log(k);
                         let copy = Object.assign({}, todayEvents[i]);
                         copy.visible_hour = hourStart + k;
                         arr.push(copy);
@@ -415,61 +359,155 @@ const App = () => {
         return arr;
     }
 
-    function fillEventsForDay(todayEvents, i) {
-        for (let k = 0; k < todayEvents.length; k++){
-            if (i === todayEvents[k].date_exe_hour){
-                return (
-                    <Card>
-                        <Card.Content>
-                            <Card.Header style={{textAlign: 'center'}}>{todayEvents[k].title}</Card.Header>
-                            <Card.Meta>Время начала: {todayEvents[k].date_exe_hour_str}:{todayEvents[k].date_exe_minute}</Card.Meta>
-                            <Card.Meta>Продолжительность: {todayEvents[k].duration_in_minute} минут</Card.Meta>
-                            <Card.Meta>Окончание: {Math.floor(todayEvents[k].event_end_in_minute / 60)}:{todayEvents[k].event_end_in_minute % 60}</Card.Meta>
-                            <Card.Description>{todayEvents[k].description} ----------------its a description</Card.Description>
-                        </Card.Content>
-                        <Card.Content extra>
-                            <div className='ui two buttons'>
-                                <Button basic color='red'>
-                                    Отменить
-                                </Button>
-                            </div>
-                        </Card.Content>
-                    </Card>);
-            }
-        }
-    }
-
-    // function someFun(todayEvents) {
-    //         if (todayEvents.length > 0){
-    //             for (let k = 0; k < todayEvents.length; k++){
-    //                 if (eventsYear[k].is_exactly_start === true && eventsYear[k].duration_in_minute > 60){
-    //                     console.log('long event more than one hour and exactly');
-    //                 }else if (eventsYear[k].is_exactly_start === false && eventsYear[k].duration_in_minute > eventsYear[k].event_start_in_minute % 60){
-    //                     console.log('long and not eaqul');
-    //                 }else if (eventsYear[k].is_exactly_start === false && eventsYear[k].duration_in_minute > eventsYear[k].event_start_in_minute % 60){
-    //                     console.log('long and not eaqul');
-    //             }
+    // function fillEventsForDay(todayEventsLong, i) {
+    //     for (let k = 0; k < todayEventsLong.length; k++){
+    //         if (i === todayEventsLong[k].visible_hour){
+    //             return (
+    //                 <React.Fragment>
+    //                     <Card.Group>
+    //                         {_.times(eventsCounter(todayEventsLong, i), i =>(
+    //                             <Card key={i}>
+    //                                 <Card.Content>
+    //                                     <Card.Header style={{textAlign: 'center'}}>{todayEventsLong[k].title}</Card.Header>
+    //                                     <Card.Meta>Время начала: {todayEventsLong[k].date_exe_hour_str}:{todayEventsLong[k].date_exe_minute}</Card.Meta>
+    //                                     <Card.Meta>Продолжительность: {todayEventsLong[k].duration_in_minute} минут</Card.Meta>
+    //                                     <Card.Meta>Окончание: {Math.floor(todayEventsLong[k].event_end_in_minute / 60)}:{todayEventsLong[k].event_end_in_minute % 60}</Card.Meta>
+    //                                     <Card.Description>{todayEventsLong[k].description} ----------------its a description</Card.Description>
+    //                                 </Card.Content>
+    //                                 <Card.Content extra>
+    //                                     <div className='ui two buttons'>
+    //                                         <Button basic color='red'>
+    //                                             Отменить
+    //                                         </Button>
+    //                                     </div>
+    //                                 </Card.Content>
+    //                             </Card>
+    //                         ))}
+    //                     </Card.Group>
+    //                 </React.Fragment>);
     //         }
     //     }
     // }
-    
-    function eventsCounter(todayEvents, i) {
+
+    // function gooddluck() {
+    //     return(
+    //
+    //     )
+    // }
+    //
+    // function fillEventsForDay(todayEventsLong, i) {
+    //     for (let k = 0; k < todayEventsLong.length; k++){
+    //         if (i === todayEventsLong[k].visible_hour){
+    //             return (
+    //                 <React.Fragment>
+    //                     <Card.Group>
+    //                             <Card key={i}>
+    //                                 <Card.Content>
+    //                                     <Card.Header style={{textAlign: 'center'}}>{todayEventsLong[k].title}</Card.Header>
+    //                                     <Card.Meta>Время начала: {todayEventsLong[k].date_exe_hour_str}:{todayEventsLong[k].date_exe_minute}</Card.Meta>
+    //                                     <Card.Meta>Продолжительность: {todayEventsLong[k].duration_in_minute} минут</Card.Meta>
+    //                                     <Card.Meta>Окончание: {Math.floor(todayEventsLong[k].event_end_in_minute / 60)}:{todayEventsLong[k].event_end_in_minute % 60}</Card.Meta>
+    //                                     <Card.Description>{todayEventsLong[k].description} ----------------its a description</Card.Description>
+    //                                 </Card.Content>
+    //                                 <Card.Content extra>
+    //                                     <div className='ui two buttons'>
+    //                                         <Button basic color='red'>
+    //                                             Отменить
+    //                                         </Button>
+    //                                     </div>
+    //                                 </Card.Content>
+    //                             </Card>
+    //                     </Card.Group>
+    //                 </React.Fragment>);
+    //         }
+    //     }
+    // }
+
+    // function fillEventsForDay(todayEventsLong, i) {
+    //     for (let k = 0; k < todayEventsLong.length; k++){
+    //         if (i === todayEventsLong[k].visible_hour){
+    //             return (
+    //                 <React.Fragment>
+    //                     <Card.Group>
+    //                         {singleCard(todayEventsLong[k])}
+    //                     </Card.Group>
+    //                 </React.Fragment>);
+    //         }
+    //     }
+    // }
+    //
+    // function singleCard(item) {
+    //     return (<Card>
+    //                 <Card.Content>
+    //                     <Card.Header style={{textAlign: 'center'}}>{item.title}</Card.Header>
+    //                     <Card.Meta>Время начала: {item.date_exe_hour_str}:{item.date_exe_minute}</Card.Meta>
+    //                     <Card.Meta>Продолжительность: {item.duration_in_minute} минут</Card.Meta>
+    //                     <Card.Meta>Окончание: {Math.floor(item.event_end_in_minute / 60)}:{item.event_end_in_minute % 60}</Card.Meta>
+    //                     <Card.Description>{item.description} ----------------its a description</Card.Description>
+    //                 </Card.Content>
+    //                 <Card.Content extra>
+    //                     <div className='ui two buttons'>
+    //                         <Button basic color='red'>
+    //                             Отменить
+    //                         </Button>
+    //                     </div>
+    //                 </Card.Content>
+    //             </Card>);
+    // }
+
+
+    // function fillEventsForDay(todayEventsLong, i) {
+    //    let mas = [];
+    //    for (let z = 0; z < todayEventsLong.length; z++){
+    //        if (i === todayEventsLong[z].visible_hour){
+    //            mas.push(todayEventsLong[z]);
+    //        }
+    //    }
+    //    console.log(mas, 'its a mas');
+    // }
+
+    function fillEventsForDay(todayEventsLong, i) {
+        let s;
+        let mas = [];
+        for (let z = 0; z < todayEventsLong.length; z++){
+            if (i === todayEventsLong[z].visible_hour){
+                mas.push(todayEventsLong[z]);
+            }
+        }
+        console.log(mas, 'its a mas');
+
+        for (let k = 0; k < mas.length; k++){
+            s =
+                (<Card>
+                    <Card.Content>
+                             <Card.Header style={{textAlign: 'center'}}>{mas[k].title}</Card.Header>
+                             <Card.Meta>Время начала: {mas[k].date_exe_hour_str}:{mas[k].date_exe_minute}</Card.Meta>
+                             <Card.Meta>Продолжительность: {mas[k].duration_in_minute} минут</Card.Meta>
+                             <Card.Meta>Окончание: {Math.floor(mas[k].event_end_in_minute / 60)}:{mas[k].event_end_in_minute % 60}</Card.Meta>
+                             <Card.Description>{mas[k].description} ----------------its a description</Card.Description>
+                         </Card.Content>
+                         <Card.Content extra>
+                             <div className='ui two buttons'>
+                                 <Button basic color='red'>
+                                     Отменить
+                                 </Button>
+                             </div>
+                         </Card.Content>
+                     </Card>);
+        }
+        return s;
+    }
+
+    function eventsCounter(todayEventsLong, i) {
         let counter = 0;
-        if (todayEvents.length > 0){
-            todayEvents.forEach( (todayEvents) => {
-                if (todayEvents.date_exe_hour === i){
+        if (todayEventsLong.length > 0){
+            todayEventsLong.forEach( (todayEvents) => {
+                if (todayEvents.visible_hour === i){
                     counter++;
                 }
             })
         }
         return counter;
-    }
-
-    function durationCounter(todayEvents){
-        let j = 0;
-        if (todayEvents.length > 0){
-
-        }
     }
 
     function retMonth() {
@@ -669,7 +707,7 @@ const App = () => {
                                     <Segment>
                                         <Grid columns={3}>
                                             <Grid.Column width={15} >
-                                                {fillEventsForDay(todayEvents, i)}
+                                                {/*{fillEventsForDay(todayEvents, i)}*/}
                                                 {/*{_.times(howMuchEventInHour(todayEvents), i => (*/}
                                                 {/*    */}
                                                 {/*))}*/}
@@ -694,8 +732,6 @@ const App = () => {
     function retViewDay() {
         let todayEvents =  isEventForDay();
         let todayEventsLong = longEventForDay(todayEvents);
-        // {longEventForDay(todayEvents)}
-        // console.log(todayEvents);
         console.log(todayEventsLong, 'its a new');
         console.log(todayEvents, 'its a old');
         return (
@@ -742,14 +778,10 @@ const App = () => {
                                     <Segment>
                                         <Grid columns={3}>
                                             <Grid.Column width={15} >
-                                                {fillEventsForDay(todayEvents, i)}
-                                                {/*{_.times(howMuchEventInHour(todayEvents), i => (*/}
-                                                {eventsCounter(todayEvents, i)}
-                                                {durationCounter(todayEvents,i)}
+                                                {fillEventsForDay(todayEventsLong, i)}
 
+                                                {eventsCounter(todayEventsLong, i)}
 
-                                                {/*))}*/}
-                                                {/*{howMuchEventInHour(todayEvents, i)}*/}
                                             </Grid.Column>
 
                                             <Grid.Column width={1} style={{textAlign: 'right'}} verticalAlign='middle'>
