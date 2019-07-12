@@ -466,8 +466,38 @@ const App = () => {
     //    console.log(mas, 'its a mas');
     // }
 
+    // function fillEventsForDay(todayEventsLong, i) {
+    //     let s;
+    //     let mas = [];
+    //     for (let z = 0; z < todayEventsLong.length; z++){
+    //         if (i === todayEventsLong[z].visible_hour){
+    //             mas.push(todayEventsLong[z]);
+    //         }
+    //     }
+    //     console.log(mas, 'its a mas');
+    //     for (let k = 0; k < mas.length; k++){
+    //         s =
+    //             (<Card>
+    //                 <Card.Content>
+    //                          <Card.Header style={{textAlign: 'center'}}>{mas[k].title}</Card.Header>
+    //                          <Card.Meta>Время начала: {mas[k].date_exe_hour_str}:{mas[k].date_exe_minute}</Card.Meta>
+    //                          <Card.Meta>Продолжительность: {mas[k].duration_in_minute} минут</Card.Meta>
+    //                          <Card.Meta>Окончание: {Math.floor(mas[k].event_end_in_minute / 60)}:{mas[k].event_end_in_minute % 60}</Card.Meta>
+    //                          <Card.Description>{mas[k].description} ----------------its a description</Card.Description>
+    //                      </Card.Content>
+    //                      <Card.Content extra>
+    //                          <div className='ui two buttons'>
+    //                              <Button basic color='red'>
+    //                                  Отменить
+    //                              </Button>
+    //                          </div>
+    //                 </Card.Content>
+    //             </Card>);
+    //     }
+    //     return s;
+    // }
+
     function fillEventsForDay(todayEventsLong, i) {
-        let s;
         let mas = [];
         for (let z = 0; z < todayEventsLong.length; z++){
             if (i === todayEventsLong[z].visible_hour){
@@ -475,27 +505,28 @@ const App = () => {
             }
         }
         console.log(mas, 'its a mas');
-
-        for (let k = 0; k < mas.length; k++){
-            s =
-                (<Card>
-                    <Card.Content>
-                             <Card.Header style={{textAlign: 'center'}}>{mas[k].title}</Card.Header>
-                             <Card.Meta>Время начала: {mas[k].date_exe_hour_str}:{mas[k].date_exe_minute}</Card.Meta>
-                             <Card.Meta>Продолжительность: {mas[k].duration_in_minute} минут</Card.Meta>
-                             <Card.Meta>Окончание: {Math.floor(mas[k].event_end_in_minute / 60)}:{mas[k].event_end_in_minute % 60}</Card.Meta>
-                             <Card.Description>{mas[k].description} ----------------its a description</Card.Description>
-                         </Card.Content>
-                         <Card.Content extra>
-                             <div className='ui two buttons'>
-                                 <Button basic color='red'>
-                                     Отменить
-                                 </Button>
-                             </div>
-                         </Card.Content>
-                     </Card>);
-        }
-        return s;
+        return ( <Card.Group>
+            {mas.map(item => {
+                return(
+                    <Card key={item.id}>
+                        <Card.Content>
+                            <Card.Header style={{textAlign: 'center'}}>{item.title}</Card.Header>
+                            <Card.Meta>Время начала: {item.date_exe_hour_str}:{item.date_exe_minute}</Card.Meta>
+                            <Card.Meta>Продолжительность: {item.duration_in_minute} минут</Card.Meta>
+                            <Card.Meta>Окончание: {Math.floor(item.event_end_in_minute / 60)}:{item.event_end_in_minute % 60}</Card.Meta>
+                            <Card.Description>{item.description} ----------------its a description</Card.Description>
+                        </Card.Content>
+                        <Card.Content extra>
+                            <div className='ui two buttons'>
+                                <Button basic color='red'>
+                                    Отменить
+                                </Button>
+                            </div>
+                        </Card.Content>
+                    </Card>
+                )
+            })}
+        </Card.Group>)
     }
 
     function eventsCounter(todayEventsLong, i) {
