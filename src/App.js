@@ -19,7 +19,7 @@ const App = () => {
     const [event, setEvent] = useState({ events: [] });
     const [month, setMonth] = useState({eventsMonth: []});
     const [eventsYear, setEventsYear] = useState({eventsYear: []});///////////
-    const [view, setView] = useState(1);//////////////////////////////////////
+    const [view, setView] = useState(2);//////////////////////////////////////
 
     useEffect(() => {
         async function fetchData() {
@@ -296,6 +296,10 @@ const App = () => {
         return mas[i];
     }
 
+    function nameForDayInWeek(i) {
+        return dayWeekForYear(i);
+    }
+
      function retCalendarGrid() {
         return (
             <React.Fragment>
@@ -555,11 +559,26 @@ const App = () => {
         );
     }
 
+    function dateForDayInWeek(i){
+        let zz = curDate;
+        let some = zz.set({year: curDate.year, month: curDate.month, day: curDate.day - curDate.weekday + 1});
+        // if (i + 1 === zz.weekday){
+        //     return zz.day;
+        // }
+        if (i + 1 === DATA.weekday && curDate.month === DATA.month && curDate.year === DATA.year && curDate.day === DATA.day){
+            return (
+                <Header as='h4' color='red'>
+                    {zz.day}
+                </Header>
+            );
+        }
+        return curDate.day + i - 1;
+    }
+
     function retViewWeek() {
         let todayEvents =  isEventForDay();
         return (
             <React.Fragment>
-            <h1>Week view</h1>
             <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
                 <Grid.Row>
                     <Grid celled>
@@ -567,7 +586,7 @@ const App = () => {
                             <Grid.Column width={4}>
                                 <Grid style={{ justifyContent: 'space-evenly'}}>
                                     <Grid.Column>
-                                        <h1>{curDate.day}    {monthName()}    {curDate.year}</h1>
+                                        <h1>{monthName()}    {curDate.year}</h1>
                                     </Grid.Column>
                                 </Grid>
                             </Grid.Column>
@@ -583,9 +602,9 @@ const App = () => {
                             <Grid.Column width={4}>
                                 <Grid style={{ justifyContent: 'space-evenly'}}>
                                     <Grid.Row>
-                                        <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({day: 1}))}/>
+                                        <Button icon='angle double left' onClick={() => setCurDate(curDate.minus({week: 1}))}/>
                                         <Button color='grey' onClick={() => setCurDate(DateTime.local())}>Сегодня</Button>
-                                        <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({day: 1}))}/>
+                                        <Button icon='angle double right' onClick={() => setCurDate(curDate.plus({week: 1}))}/>
                                     </Grid.Row>
                                 </Grid>
                             </Grid.Column>
@@ -594,31 +613,33 @@ const App = () => {
                 </Grid.Row>
 
                 <Grid columns={7}>
-                    <Grid.Row >
-                        <Grid.Column>
-                            <Segment color='orange' textAlign='center' style={{fontSize: '30px', marginBottom: '10px'}}>{dayWeek(curDate.weekday - 1)}</Segment>
-                            {_.times(24, i => (
-                                <React.Fragment key={i}>
-                                    <Divider horizontal  >{hourInDayForDay(i)}</Divider>
-                                    <Segment>
-                                        <Grid columns={3}>
-                                            <Grid.Column width={15} >
-                                                {/*{fillEventsForDay(todayEvents, i)}*/}
-                                                {/*{_.times(howMuchEventInHour(todayEvents), i => (*/}
-                                                {/*    */}
-                                                {/*))}*/}
-                                                {/*{howMuchEventInHour(todayEvents, i)}*/}
-                                            </Grid.Column>
+                        <Grid.Row>
+                            {_.times(7, i => (
+                            <Grid.Column key={i}>
+                                <Segment color='orange' textAlign='left' style={{fontSize: '30px', marginBottom: '10px' }}>{nameForDayInWeek(i)}     {dateForDayInWeek(i)}</Segment>
+                                {_.times(24, i => (
+                                    <React.Fragment key={i}>
+                                        <Divider horizontal  >{hourInDayForDay(i)}</Divider>
+                                        <Segment>
+                                            <Grid columns={3}>
+                                                <Grid.Column width={15} >
+                                                    {/*{fillEventsForDay(todayEvents, i)}*/}
+                                                    {/*{_.times(howMuchEventInHour(todayEvents), i => (*/}
+                                                    {/*    */}
+                                                    {/*))}*/}
+                                                    {/*{howMuchEventInHour(todayEvents, i)}*/}
+                                                </Grid.Column>
 
-                                            <Grid.Column width={1} style={{textAlign: 'right'}} verticalAlign='middle'>
-                                                <Button icon='plus' basic color='teal' onClick={() => alert(i + 1)}></Button>
-                                            </Grid.Column>
-                                        </Grid>
-                                    </Segment>
-                                </React.Fragment>
+                                                <Grid.Column width={1} style={{textAlign: 'right'}} verticalAlign='middle'>
+                                                    <Button icon='plus' basic color='teal' onClick={() => alert(i + 1)}></Button>
+                                                </Grid.Column>
+                                            </Grid>
+                                        </Segment>
+                                    </React.Fragment>
+                                ))}
+                            </Grid.Column>
                             ))}
-                        </Grid.Column>
-                    </Grid.Row>
+                        </Grid.Row>
                 </Grid>
             </Grid>
             </React.Fragment>
