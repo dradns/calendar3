@@ -10,6 +10,7 @@ import 'semantic-ui-css/semantic.min.css';
 import GridColumn from "semantic-ui-react/dist/commonjs/collections/Grid/GridColumn";
 
 const App = () => {
+    let weekEvent = [];
     let dateCounter = 1;
     let mas2 = [];
     let counter = 1;
@@ -614,8 +615,90 @@ const App = () => {
         }
     }
 
+    function longEventForWeek(weekEvents) {
+        function calcHourEnd (weekEvents){
+            if (weekEvents.event_end_in_minute % 60 === 0){
+                return (Math.floor(weekEvents.event_end_in_minute / 60) - 1)
+            }else{
+                return Math.floor(weekEvents.event_end_in_minute / 60);
+            }
+        }
+
+        let arr = [];
+        for (let i = 0; i < weekEvents.length; i++){
+            if (weekEvents[i].date_exe_hour + 1 === weekEvents[i].event_end_in_minute/60){//если встреча укладывается ровно в час
+                let hourStart = Math.floor(weekEvents[i].event_start_in_minute/60);
+                arr.visible_hour = hourStart;
+                arr.push(weekEvents[i]);
+            }else if(Math.floor(weekEvents[i].hour_end) > weekEvents[i].date_exe_hour){//если встреча не укладывается в один час
+                let hourStart = Math.floor(weekEvents[i].event_start_in_minute/60);
+                let hourEnd = calcHourEnd(weekEvents[i]);
+                for (let k = 0; k <= hourEnd - hourStart; k++){
+                    let copy = Object.assign({}, weekEvents[i]);
+                    copy.visible_hour = hourStart + k;
+                    arr.push(copy);
+                }
+            }
+        }
+        return arr;
+    }
+
+    function retFillWeek(i,j) {
+        let zz = curDate;
+        let dateValueMon = zz.set({year: curDate.year, month: curDate.month, day: curDate.day - curDate.weekday + 1});
+        // console.log(todayEventsLong, 'its a todayEventsLong');
+        // console.log(dateValueMon.day + ' ' + dateValueMon.month + ' ' + dateValueMon.year);
+        // weekEvent.push({day: i + 1, hour: j, is: someFun(j)});
+        // console.log(weekEvent);
+
+        if (i === 5 || i === 6){
+            return (
+                   <Button icon='plus' basic color='red' onClick={() => alert(i + 1)}></Button>
+            )
+        }else{
+            return(
+                <React.Fragment>
+                <Button icon='plus' basic color='teal' onClick={() => alert(i + 1)}></Button>
+
+                </React.Fragment>
+            )
+        }
+    }
+
+    function isEventForWeek() {
+        let zz = curDate;
+        let dateValueMon = zz.set({year: curDate.year, month: curDate.month, day: curDate.day - curDate.weekday + 1});
+        let temporaryDate = dateValueMon;
+        let mas = [];
+
+        for (let y = 0; y < 7; y++){
+            for (let i = 0; i < Object.keys(eventsYear).length; i++){
+                if (eventsYear[i] !== undefined){
+                    if ((eventsYear[i].date_exe_day === temporaryDate.day) && (eventsYear[i].date_exe_month === temporaryDate.month) && (eventsYear[i].date_exe_year === temporaryDate.year)){
+                        mas.push(eventsYear[i]);
+                    }
+                }
+            }
+            temporaryDate = temporaryDate.plus({day: 1});
+        }
+        return mas;
+    }
+
+    function fillMarkForWeek(i, j, weekEventsLong) {
+        let zz = curDate;
+        let dateValueMon = zz.set({year: curDate.year, month: curDate.month, day: curDate.day - curDate.weekday + 1});
+
+        // console.log(i + ' its a I');
+        // console.log(j + ' its a J');
+        console.log(weekEventsLong);
+        return (<Icon name='certificate' />)
+    }
+
     function retViewWeek() {
-        let todayEvents =  isEventForDay();
+        let weekEvents = isEventForWeek();
+        let weekEventsLong = longEventForWeek(weekEvents);
+
+        console.log(weekEventsLong);
         return (
             <React.Fragment>
             <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
@@ -658,11 +741,17 @@ const App = () => {
                                 <Segment color='orange' textAlign='left' style={{fontSize: '30px', marginBottom: '10px' }}>{nameForDayInWeek(i)}     {dateForDayInWeek(i)}</Segment>
                                 {_.times(24, j => (
                                     <React.Fragment key={j}>
-                                        <Divider horizontal  >{hourInDayForWeek(i)}</Divider>
+                                        <Divider horizontal  >{hourInDayForWeek(j)}</Divider>
                                         <Segment>
                                             <Grid columns={3}>
                                                 <Grid.Column width={1} style={{textAlign: 'left'}} verticalAlign='middle'>
                                                     {retFillWeek(i,j)}
+                                                </Grid.Column>
+                                                <Grid.Column width={1} style={{textAlign: 'left'}} verticalAlign='middle'>
+
+                                                </Grid.Column>
+                                                <Grid.Column width={1} style={{textAlign: 'right'}} verticalAlign='middle'>
+                                                    {fillMarkForWeek(i, j, weekEventsLong)}
                                                 </Grid.Column>
                                             </Grid>
                                         </Segment>
@@ -675,20 +764,6 @@ const App = () => {
             </Grid>
             </React.Fragment>
         );
-    }
-
-    function retFillWeek(i,j) {
-        // console.log(i, 'its I');
-        // console.log(j, 'its J');
-        if (i === 5 || i === 6){
-            return (
-                <Button icon='plus' basic color='red' onClick={() => alert(i + 1)}></Button>
-            )
-        }else{
-            return(
-                <Button icon='plus' basic color='teal' onClick={() => alert(i + 1)}></Button>
-            )
-        }
     }
 
     function retViewDay() {
