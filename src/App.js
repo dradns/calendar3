@@ -296,6 +296,14 @@ const App = () => {
         return mas[i];
     }
 
+    function hourInDayForWeek(i){
+        let mas = ['00:00 — 00:59', '01:00 — 01:59', '02:00 — 02:59', '03:00 — 03:59', '00:04 — 04:59', '05:00 — 05:59',
+            '06:00 — 06:59', '07:00 — 07:59', '08:00 — 08:59', '09:00 — 09:59', '10:00 — 10:59', '11:00 — 11:59',
+            '12:00 — 12:59', '13:00 — 13:59', '14:00 — 14:59', '15:00 — 15:59', '16:00 — 16:59', '17:00 — 17:59',
+            '18:00 — 18:59', '19:00 — 19:59', '20:00 — 20:59', '21:00 — 21:59', '22:00 — 22:59', '23:00 — 23:59'];
+        return mas[i];
+    }
+
     function nameForDayInWeek(i) {
         return (<Header as='h4' color='black' style={{textAlign: 'center'}}>
                 {dayWeekForYear(i)}
@@ -561,7 +569,7 @@ const App = () => {
         );
     }
 
-    function overflow(i, dateValue) {
+    function overflowForWeek(i, dateValue) {
         if (dateValue.day + i > dateValue.daysInMonth){
             return dateCounter++;
         }else{
@@ -583,13 +591,13 @@ const App = () => {
         if (isWeekendsForWeek(i)){
             return (
             <Header as='h3' color='red' style={{textAlign: 'center', marginTop: '7px'}}>
-                {overflow(i, dateValue)}
+                {overflowForWeek(i, dateValue)}
             </Header>)
         }
         return (
             <div style={{borderRadius: '50%', borderColor: 'blue', borderWidth: '2px' }}>
                 <Header as='h3' color='black' style={{textAlign: 'center', marginTop: '7px'}}>
-                    {overflow(i, dateValue)}
+                    {overflowForWeek(i, dateValue)}
                 </Header>
             </div>
         );
@@ -648,21 +656,13 @@ const App = () => {
                             {_.times(7, i => (
                             <Grid.Column key={i}>
                                 <Segment color='orange' textAlign='left' style={{fontSize: '30px', marginBottom: '10px' }}>{nameForDayInWeek(i)}     {dateForDayInWeek(i)}</Segment>
-                                {_.times(24, i => (
-                                    <React.Fragment key={i}>
-                                        <Divider horizontal  >{hourInDayForDay(i)}</Divider>
+                                {_.times(24, j => (
+                                    <React.Fragment key={j}>
+                                        <Divider horizontal  >{hourInDayForWeek(i)}</Divider>
                                         <Segment>
                                             <Grid columns={3}>
-                                                <Grid.Column width={15} >
-                                                    {/*{fillEventsForDay(todayEvents, i)}*/}
-                                                    {/*{_.times(howMuchEventInHour(todayEvents), i => (*/}
-                                                    {/*    */}
-                                                    {/*))}*/}
-                                                    {/*{howMuchEventInHour(todayEvents, i)}*/}
-                                                </Grid.Column>
-
-                                                <Grid.Column width={1} style={{textAlign: 'right'}} verticalAlign='middle'>
-                                                    <Button icon='plus' basic color='teal' onClick={() => alert(i + 1)}></Button>
+                                                <Grid.Column width={1} style={{textAlign: 'left'}} verticalAlign='middle'>
+                                                    {retFillWeek(i,j)}
                                                 </Grid.Column>
                                             </Grid>
                                         </Segment>
@@ -675,6 +675,20 @@ const App = () => {
             </Grid>
             </React.Fragment>
         );
+    }
+
+    function retFillWeek(i,j) {
+        // console.log(i, 'its I');
+        // console.log(j, 'its J');
+        if (i === 5 || i === 6){
+            return (
+                <Button icon='plus' basic color='red' onClick={() => alert(i + 1)}></Button>
+            )
+        }else{
+            return(
+                <Button icon='plus' basic color='teal' onClick={() => alert(i + 1)}></Button>
+            )
+        }
     }
 
     function retViewDay() {
@@ -727,9 +741,7 @@ const App = () => {
                                         <Grid columns={3}>
                                             <Grid.Column width={15} >
                                                 {fillEventsForDay(todayEventsLong, i)}
-
                                                 {eventsCounter(todayEventsLong, i)}
-
                                             </Grid.Column>
 
                                             <Grid.Column width={1} style={{textAlign: 'right'}} verticalAlign='middle'>
