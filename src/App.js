@@ -688,10 +688,24 @@ const App = () => {
         let zz = curDate;
         let dateValueMon = zz.set({year: curDate.year, month: curDate.month, day: curDate.day - curDate.weekday + 1});
 
+        let temporaryDate = dateValueMon.plus({day: i});
+        console.log(temporaryDate.day + ' ' + temporaryDate.month + ' ' + temporaryDate.year);
+        console.log(weekEventsLong.date_exe_day + ' ' + weekEventsLong.date_exe_month + ' ' + weekEventsLong.date_exe_year);
         // console.log(i + ' its a I');
         // console.log(j + ' its a J');
-        console.log(weekEventsLong);
-        return (<Icon name='certificate' />)
+        // console.log(weekEventsLong);
+
+
+        for (let i = 0; i < Object.keys(eventsYear).length; i++){
+            console.log(weekEventsLong[i]);
+            if (weekEventsLong[i] !== undefined){
+                if(temporaryDate.day === weekEventsLong[i].date_exe_day && temporaryDate.month === weekEventsLong[i].date_exe_month
+                    && temporaryDate.year === weekEventsLong[i].date_exe_year && j === weekEventsLong[i].visible_hour){
+                    return (<Icon name='certificate' color='red' />)
+                }
+            }
+
+        }
     }
 
     function retViewWeek() {
