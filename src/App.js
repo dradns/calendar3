@@ -7,7 +7,6 @@ import axios from 'axios';
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
 import 'semantic-ui-css/semantic.min.css';
-import GridColumn from "semantic-ui-react/dist/commonjs/collections/Grid/GridColumn";
 
 const App = () => {
     let weekEvent = [];
@@ -121,6 +120,17 @@ const App = () => {
     }
 
     function isWeekends(i){
+        let zz = curDate;
+        let mm = zz.day;
+        let nn = zz.minus({days: mm - 1 }).weekday;
+
+        if(nn + i === 6 || nn + i === 7 || nn + i === 13 || nn + i === 14 || nn + i === 20 || nn + i === 21 ||
+            nn + i === 27 || nn + i === 28 || nn + i === 34 || nn + i === 35){
+            return true;
+        }
+    }
+
+    function isWeekendsForWeek(i){
         let zz = curDate;
         let mm = zz.day;
         let nn = zz.minus({days: mm - 1 }).weekday;
@@ -306,9 +316,10 @@ const App = () => {
     }
 
     function nameForDayInWeek(i) {
-        return (<Header as='h4' color='black' style={{textAlign: 'center'}}>
+        return (
+            <Header as='h4' color='black' style={{textAlign: 'center'}}>
                 {dayWeekForYear(i)}
-                </Header>);
+            </Header>);
     }
 
      function retCalendarGrid() {
@@ -384,7 +395,6 @@ const App = () => {
                 mas.push(todayEventsLong[z]);
             }
         }
-        console.log(mas, 'its a mas');
         return ( <Card.Group>
             {mas.map(item => {
                 return(
@@ -604,17 +614,6 @@ const App = () => {
         );
     }
 
-    function isWeekendsForWeek(i){
-        let zz = curDate;
-        let mm = zz.day;
-        let nn = zz.minus({days: mm - 1 }).weekday;
-
-        if(nn + i === 6 || nn + i === 7 || nn + i === 13 || nn + i === 14 || nn + i === 20 || nn + i === 21 ||
-            nn + i === 27 || nn + i === 28 || nn + i === 34 || nn + i === 35){
-            return true;
-        }
-    }
-
     function longEventForWeek(weekEvents) {
         function calcHourEnd (weekEvents){
             if (weekEvents.event_end_in_minute % 60 === 0){
@@ -646,10 +645,6 @@ const App = () => {
     function retFillWeek(i,j) {
         let zz = curDate;
         let dateValueMon = zz.set({year: curDate.year, month: curDate.month, day: curDate.day - curDate.weekday + 1});
-        // console.log(todayEventsLong, 'its a todayEventsLong');
-        // console.log(dateValueMon.day + ' ' + dateValueMon.month + ' ' + dateValueMon.year);
-        // weekEvent.push({day: i + 1, hour: j, is: someFun(j)});
-        // console.log(weekEvent);
 
         if (i === 5 || i === 6){
             return (
@@ -657,10 +652,8 @@ const App = () => {
             )
         }else{
             return(
-                <React.Fragment>
                 <Button icon='plus' basic color='teal' onClick={() => alert(i + 1)}></Button>
 
-                </React.Fragment>
             )
         }
     }
@@ -689,12 +682,6 @@ const App = () => {
         let dateValueMon = zz.set({year: curDate.year, month: curDate.month, day: curDate.day - curDate.weekday + 1});
 
         let temporaryDate = dateValueMon.plus({day: i});
-        console.log(temporaryDate.day + ' ' + temporaryDate.month + ' ' + temporaryDate.year);
-        console.log(weekEventsLong.date_exe_day + ' ' + weekEventsLong.date_exe_month + ' ' + weekEventsLong.date_exe_year);
-        // console.log(i + ' its a I');
-        // console.log(j + ' its a J');
-        // console.log(weekEventsLong);
-
 
         for (let i = 0; i < Object.keys(eventsYear).length; i++){
             console.log(weekEventsLong[i]);
@@ -712,7 +699,6 @@ const App = () => {
         let weekEvents = isEventForWeek();
         let weekEventsLong = longEventForWeek(weekEvents);
 
-        console.log(weekEventsLong);
         return (
             <React.Fragment>
             <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
@@ -783,8 +769,7 @@ const App = () => {
     function retViewDay() {
         let todayEvents =  isEventForDay();
         let todayEventsLong = longEventForDay(todayEvents);
-        console.log(todayEventsLong, 'its a new');
-        console.log(todayEvents, 'its a old');
+
         return (
             <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
                 <Grid.Row>
@@ -859,18 +844,17 @@ const App = () => {
         console.log('opa');
     }
 
-    /////////////////////////////////////////////////////
-    function selectorView() {////////////////////////////
-        if (view === 0){/////////////////////////////////
-            return retViewMonth();//////////выбор View///
-        }else if (view === 1){///////////////////////////
-            return retViewDay();//////////выбор View/////
-        }else if (view === 2){///////////////////////////
-            return retViewWeek();//////////выбор View////
-        }else if (view === 3){///////////////////////////
-            return retViewYear();//////////выбор View////
-        }////////////////////////////////////////////////
-    }////////////////////////////////////////////////////
+    function selectorView() {
+        if (view === 0){
+            return retViewMonth();
+        }else if (view === 1){
+            return retViewDay();
+        }else if (view === 2){
+            return retViewWeek();
+        }else if (view === 3){
+            return retViewYear();
+        }
+    }
 
     return (selectorView());/// это вызывается при рендере APP
 };
