@@ -10,7 +10,7 @@ import 'semantic-ui-css/semantic.min.css';
 import GridColumn from "semantic-ui-react/dist/commonjs/collections/Grid/GridColumn";
 
 const App = () => {
-    // console.log('render');
+    let dateCounter = 1;
     let mas2 = [];
     let counter = 1;
     const DATA = DateTime.local();
@@ -297,7 +297,9 @@ const App = () => {
     }
 
     function nameForDayInWeek(i) {
-        return dayWeekForYear(i);
+        return (<Header as='h4' color='black' style={{textAlign: 'center'}}>
+                {dayWeekForYear(i)}
+                </Header>);
     }
 
      function retCalendarGrid() {
@@ -559,20 +561,49 @@ const App = () => {
         );
     }
 
+    function overflow(i, dateValue) {
+        if (dateValue.day + i > dateValue.daysInMonth){
+            return dateCounter++;
+        }else{
+            return dateValue.day + i ;
+        }
+    }
+
     function dateForDayInWeek(i){
         let zz = curDate;
-        let some = zz.set({year: curDate.year, month: curDate.month, day: curDate.day - curDate.weekday + 1});
-        // if (i + 1 === zz.weekday){
-        //     return zz.day;
-        // }
+        let dateValue = zz.set({year: curDate.year, month: curDate.month, day: curDate.day - curDate.weekday + 1});
+
         if (i + 1 === DATA.weekday && curDate.month === DATA.month && curDate.year === DATA.year && curDate.day === DATA.day){
             return (
-                <Header as='h4' color='red'>
+                <Header as='h3' color='blue' style={{textAlign: 'center', marginTop: '7px'}}>
                     {zz.day}
                 </Header>
             );
         }
-        return curDate.day + i - 1;
+        if (isWeekendsForWeek(i)){
+            return (
+            <Header as='h3' color='red' style={{textAlign: 'center', marginTop: '7px'}}>
+                {overflow(i, dateValue)}
+            </Header>)
+        }
+        return (
+            <div style={{borderRadius: '50%', borderColor: 'blue', borderWidth: '2px' }}>
+                <Header as='h3' color='black' style={{textAlign: 'center', marginTop: '7px'}}>
+                    {overflow(i, dateValue)}
+                </Header>
+            </div>
+        );
+    }
+
+    function isWeekendsForWeek(i){
+        let zz = curDate;
+        let mm = zz.day;
+        let nn = zz.minus({days: mm - 1 }).weekday;
+
+        if(nn + i === 6 || nn + i === 7 || nn + i === 13 || nn + i === 14 || nn + i === 20 || nn + i === 21 ||
+            nn + i === 27 || nn + i === 28 || nn + i === 34 || nn + i === 35){
+            return true;
+        }
     }
 
     function retViewWeek() {
