@@ -9,7 +9,6 @@ import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
 import 'semantic-ui-css/semantic.min.css';
 
 const App = () => {
-    let weekEvent = [];
     let dateCounter = 1;
     let mas2 = [];
     let counter = 1;
@@ -516,7 +515,7 @@ const App = () => {
                                     <Grid columns={7} >
                                         <Grid.Row style={{marginTop: '20px'}}>
                                             { retCalendarGrid() }
-                                            {/*{ModalWindow()}*/}
+                                            {ModalWindow()}
                                         </Grid.Row>
                                     </Grid>
                                 </React.Fragment>
@@ -538,6 +537,7 @@ const App = () => {
                                 <Grid style={{ justifyContent: 'space-evenly'}}>
                                     <Grid.Column>
                                         <h1>{curDate.year}</h1>
+                                        {ModalWindow()}
                                     </Grid.Column>
                                 </Grid>
                             </Grid.Column>
@@ -648,11 +648,11 @@ const App = () => {
 
         if (i === 5 || i === 6){
             return (
-                   <Button icon='plus' basic color='red' onClick={() => alert(i + 1)}></Button>
+                   <Button icon='plus' basic color='red' onClick={() => changeModal(!modal)}></Button>
             )
         }else{
             return(
-                <Button icon='plus' basic color='teal' onClick={() => alert(i + 1)}></Button>
+                <Button icon='plus' basic color='teal' onClick={() => changeModal(!modal)}></Button>
 
             )
         }
@@ -684,11 +684,10 @@ const App = () => {
         let temporaryDate = dateValueMon.plus({day: i});
 
         for (let i = 0; i < Object.keys(eventsYear).length; i++){
-            console.log(weekEventsLong[i]);
             if (weekEventsLong[i] !== undefined){
                 if(temporaryDate.day === weekEventsLong[i].date_exe_day && temporaryDate.month === weekEventsLong[i].date_exe_month
                     && temporaryDate.year === weekEventsLong[i].date_exe_year && j === weekEventsLong[i].visible_hour){
-                    return (<Icon name='certificate' color='red' />)
+                    return (<Icon size='big' name='hourglass' color='red' />)
                 }
             }
 
@@ -698,7 +697,6 @@ const App = () => {
     function retViewWeek() {
         let weekEvents = isEventForWeek();
         let weekEventsLong = longEventForWeek(weekEvents);
-
         return (
             <React.Fragment>
             <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
@@ -708,6 +706,7 @@ const App = () => {
                             <Grid.Column width={4}>
                                 <Grid style={{ justifyContent: 'space-evenly'}}>
                                     <Grid.Column>
+                                        {ModalWindow()}
                                         <h1>{monthName()}    {curDate.year}</h1>
                                     </Grid.Column>
                                 </Grid>
@@ -769,7 +768,6 @@ const App = () => {
     function retViewDay() {
         let todayEvents =  isEventForDay();
         let todayEventsLong = longEventForDay(todayEvents);
-
         return (
             <Grid columns={1} centered style={{marginLeft: '10px', marginRight: '10px'}}>
                 <Grid.Row>
@@ -778,6 +776,7 @@ const App = () => {
                             <Grid.Column width={4}>
                                 <Grid style={{ justifyContent: 'space-evenly'}}>
                                     <Grid.Column>
+                                        {ModalWindow()}
                                         <h1>{curDate.day}    {monthName()}    {curDate.year}</h1>
                                     </Grid.Column>
                                 </Grid>
@@ -819,7 +818,7 @@ const App = () => {
                                             </Grid.Column>
 
                                             <Grid.Column width={1} style={{textAlign: 'right'}} verticalAlign='middle'>
-                                                <Button icon='plus' basic color='teal' onClick={() => alert(i + 1)}></Button>
+                                                <Button icon='plus' basic color='teal' onClick={() => changeModal(!modal)}></Button>
                                             </Grid.Column>
                                         </Grid>
                                     </Segment>
