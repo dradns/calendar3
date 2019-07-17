@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="a90433f2-8534-4d66-a7b3-ecab3c35a9a6" name="Default Changelist" comment="1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,11 +23,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="385">
-              <caret line="657" column="9" lean-forward="true" selection-start-line="657" selection-start-column="9" selection-end-line="657" selection-end-column="9" />
+            <state relative-caret-position="353">
+              <caret line="122" lean-forward="true" selection-start-line="122" selection-end-line="122" />
               <folding>
                 <element signature="e#0#50#0" expanded="true" />
-                <marker date="1563345813674" expanded="true" signature="1059:4796" ph="..." />
+                <marker date="1563362936990" expanded="true" signature="1257:4997" ph="..." />
               </folding>
             </state>
           </provider>
@@ -78,7 +80,7 @@
   <component name="PhpServers">
     <servers />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="x" value="3600" />
     <option name="y" value="23" />
     <option name="width" value="1920" />
@@ -90,6 +92,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -106,7 +109,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -193,18 +195,18 @@
       <workItem from="1563261481921" duration="2004000" />
       <workItem from="1563264876975" duration="7076000" />
       <workItem from="1563277691837" duration="5316000" />
-      <workItem from="1563284645062" duration="5054000" />
+      <workItem from="1563284645062" duration="8886000" />
+      <workItem from="1563353021271" duration="4589000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="227783000" />
+    <option name="totallyTimeSpent" value="236204000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="3600" y="23" width="1920" height="1057" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13578275" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1368477" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -256,13 +258,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/react-semantic-ui-datepickers/dist/index.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="40" column="14" selection-start-line="40" selection-start-column="14" selection-end-line="40" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/YearGrid.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
@@ -273,13 +268,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-semantic-ui-datepickers/dist/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="7" lean-forward="true" selection-start-column="7" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="657" column="9" lean-forward="true" selection-start-line="657" selection-start-column="9" selection-end-line="657" selection-end-column="9" />
+        <state relative-caret-position="353">
+          <caret line="122" lean-forward="true" selection-start-line="122" selection-end-line="122" />
           <folding>
             <element signature="e#0#50#0" expanded="true" />
-            <marker date="1563345813674" expanded="true" signature="1059:4796" ph="..." />
+            <marker date="1563362936990" expanded="true" signature="1257:4997" ph="..." />
           </folding>
         </state>
       </provider>

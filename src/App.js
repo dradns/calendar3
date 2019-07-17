@@ -15,15 +15,20 @@ const App = () => {
     const DATA = DateTime.local();
     const [curDate, setCurDate] = useState(DateTime.local());
     const [modal, changeModal] = useState(false);
-    const [event, setEvent] = useState({ events: [] });
+    // const [event, setEvent] = useState({ events: [] });
+    const [formTitle, setFormTitle] = useState();
+    const [formPlace, setFormPlace] = useState();
+    const [formDate, setFormDate] = useState();
+    const [formStart, setFormStart] = useState();
+    const [formEnd, setFormEnd] = useState();
     const [month, setMonth] = useState({eventsMonth: []});
-    const [eventsYear, setEventsYear] = useState({eventsYear: []});///////////
-    const [view, setView] = useState(2);//////////////////////////////////////
+    const [eventsYear, setEventsYear] = useState({eventsYear: []});
+    const [view, setView] = useState(1);
 
     useEffect(() => {
         async function fetchData() {
             const response = await axios ('http://127.0.0.1:3020/events/list');
-            setEvent(response.data);
+            // setEvent(response.data);
         }
         fetchData();
     }, []);
@@ -81,15 +86,39 @@ const App = () => {
         fetchMonth();
     }, [curDate]);
 
-    function Datepicker() {
-        function onDateChange(e) {
-        }
-        return (<SemanticDatepicker onDateChange={onDateChange} />)
-    }
+    // function Datepicker() {
+    //     function onDateChange(e) {
+    //     }
+    //     return (<SemanticDatepicker onDateChange={onDateChange} />)
+    // }
 
     function onSubmit(e) {
         e.preventDefault();
-        setEvent({ title: e.target.title, place: e.target.place,  date_exe: e.target.date_exe});
+        let mas = [];
+        let reqSQL = {};
+        mas.push(formTitle, formPlace, formDate, formStart, formEnd);
+        reqSQL.title = formTitle.title;
+        reqSQL.description = formPlace.place;
+        reqSQL.date_exe = formDate.date + ' ' + formStart.start;
+        let duration_start = parseInt(formStart.start.split(':')[0])*60 + parseInt(formStart.start.split(':')[1]);
+        let duration_end = parseInt(formEnd.end.split(':')[0])*60 + parseInt(formEnd.end.split(':')[1]);
+        reqSQL.duration = (duration_end - duration_start)*60;
+        console.log(reqSQL);
+
+        let postData = Object.keys(reqSQL).map((key) => {
+            return encodeURIComponent(key) + '=' + encodeURIComponent(reqSQL[key]);
+        }).join('&');
+
+        axios.post('http://localhost:3020/events/add', postData, {
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
+            }
+        )
+        .then(
+            () => {changeModal(!modal)})
+        .catch(e => console.log(e));
     }
 
     function ModalWindow(){
@@ -100,12 +129,34 @@ const App = () => {
                 <Modal.Content>
                     <Form onSubmit={onSubmit}>
                         <Form.Group>
-                            <Form.Input type='text' placeholder='Название события' name='title' onChange={e=>setEvent({title : e.target.value})} />
-                            <Form.Input type='text' placeholder='Место события' name='place' onChange={e=>setEvent({place : e.target.value})} />
-                            <Datepicker type='text' name='date_exe'  placeholder="Дата"/>
+                            <Form.Field>
+                                <label>Название событие</label>
+                                <Form.Input type='text' placeholder='Название события' name='title' onChange={e=>setFormTitle({title : e.target.value})} />
+                            </Form.Field>
+                            <Form.Field>
+                                <label>Место события</label>
+                                <Form.Input type='text' placeholder='Место события' name='place' onChange={e=>setFormPlace({place : e.target.value})} />
+                            </Form.Field>
+                            {/*<Form.Field>*/}
+                            {/*    <label>Дата</label>*/}
+                            {/*    <Datepicker type='text' name='date_exe'  placeholder="Дата" onChange={e=>console.log({date : e.target.value})}/>*/}
+                            {/*</Form.Field>*/}
+                            <Form.Field>
+                                <label>Дата</label>
+                                <Form.Input type='text' placeholder='2019-07-12' name='place' onChange={e=>setFormDate({date : e.target.value})} />
+                            </Form.Field>
+                            <Form.Field>
+                                <label>Время начала</label>
+                                <Form.Input type='text' placeholder='08:00' name='place' onChange={e=>setFormStart({start : e.target.value})} />
+                            </Form.Field>
+                            <Form.Field>
+                                <label>Время окончания</label>
+                                <Form.Input type='text' placeholder='10:00' name='place' onChange={e=>setFormEnd({end : e.target.value})} />
+                            </Form.Field>
                             <Modal.Actions>
-                                <Button color='green' type="submit">
-                                    <Icon name='checkmark' /> Создать событие
+                                <Button color='green' type="submit" style={{marginTop: '10px'}}>
+                                    <Icon name='checkmark' />
+                                    Создать событие
                                 </Button>
                             </Modal.Actions>
                         </Form.Group>
