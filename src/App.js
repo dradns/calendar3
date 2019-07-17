@@ -1,10 +1,9 @@
 import React, { useState, useEffect} from 'react';
-import {DateTime, Duration, Info, Interval, Settings} from 'luxon';
+import {DateTime} from 'luxon';
 import _ from 'lodash';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import {Grid, Button, Segment, Icon, Modal, Header, Form, Item, Divider, Container, Card, Image} from "semantic-ui-react";
+// import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {Grid, Button, Segment, Icon, Modal, Header, Form, Divider, Card} from "semantic-ui-react";
 import axios from 'axios';
-import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
 import 'semantic-ui-css/semantic.min.css';
 
@@ -15,7 +14,6 @@ const App = () => {
     const DATA = DateTime.local();
     const [curDate, setCurDate] = useState(DateTime.local());
     const [modal, changeModal] = useState(false);
-    // const [event, setEvent] = useState({ events: [] });
     const [formTitle, setFormTitle] = useState();
     const [formPlace, setFormPlace] = useState();
     const [formDate, setFormDate] = useState();
@@ -24,14 +22,6 @@ const App = () => {
     const [month, setMonth] = useState({eventsMonth: []});
     const [eventsYear, setEventsYear] = useState({eventsYear: []});
     const [view, setView] = useState(1);
-
-    useEffect(() => {
-        async function fetchData() {
-            const response = await axios ('http://127.0.0.1:3020/events/list');
-            // setEvent(response.data);
-        }
-        fetchData();
-    }, []);
 
     useEffect(() => {
         async function fetchMonth() {
@@ -94,9 +84,7 @@ const App = () => {
 
     function onSubmit(e) {
         e.preventDefault();
-        let mas = [];
         let reqSQL = {};
-        mas.push(formTitle, formPlace, formDate, formStart, formEnd);
         reqSQL.title = formTitle.title;
         reqSQL.description = formPlace.place;
         reqSQL.date_exe = formDate.date + ' ' + formStart.start;
@@ -108,7 +96,6 @@ const App = () => {
         let postData = Object.keys(reqSQL).map((key) => {
             return encodeURIComponent(key) + '=' + encodeURIComponent(reqSQL[key]);
         }).join('&');
-
         axios.post('http://localhost:3020/events/add', postData, {
                 headers: {
                     "Accept": "application/json",
@@ -122,7 +109,6 @@ const App = () => {
     }
 
     function ModalWindow(){
-        console.log('its a modal window');
         return (
             <Modal open={modal} size='large'>
                 <Header icon='plane' content='    Создать новое событие' style={{backgroundColor:'pink', textAlign:'center'}}  />
@@ -452,7 +438,7 @@ const App = () => {
                         <Card.Content>
                             <Card.Header style={{textAlign: 'center'}}>{item.title}</Card.Header>
                             <Card.Meta>Время начала: {item.date_exe_hour_str}:{item.date_exe_minute_str}</Card.Meta>
-                            <Card.Meta>Продолжительность: {item.duration_in_minute} минут</Card.Meta>
+                            <Card.Meta>Продолжительность: {Math.floor(item.duration_in_minute)} минут</Card.Meta>
                             <Card.Meta>Окончание: {Math.floor(item.event_end_in_minute / 60)}:{item.event_end_in_minute_str}</Card.Meta>
                             <Card.Description>{item.description} ----------------its a description</Card.Description>
                         </Card.Content>
@@ -469,17 +455,17 @@ const App = () => {
         </Card.Group>)
     }
 
-    function eventsCounter(todayEventsLong, i) {
-        let counter = 0;
-        if (todayEventsLong.length > 0){
-            todayEventsLong.forEach( (todayEvents) => {
-                if (todayEvents.visible_hour === i){
-                    counter++;
-                }
-            })
-        }
-        return counter;
-    }
+    // function eventsCounter(todayEventsLong, i) {
+    //     let counter = 0;
+    //     if (todayEventsLong.length > 0){
+    //         todayEventsLong.forEach( (todayEvents) => {
+    //             if (todayEvents.visible_hour === i){
+    //                 counter++;
+    //             }
+    //         })
+    //     }
+    //     return counter;
+    // }
 
     function retMonth() {
         return (<Grid.Row>
@@ -635,7 +621,7 @@ const App = () => {
         if (dateValue.day + i > dateValue.daysInMonth){
             return dateCounter++;
         }else{
-            return dateValue.day + i ;
+            return dateValue.day + i;
         }
     }
 
@@ -865,7 +851,7 @@ const App = () => {
                                         <Grid columns={3}>
                                             <Grid.Column width={15} >
                                                 {fillEventsForDay(todayEventsLong, i)}
-                                                {eventsCounter(todayEventsLong, i)}
+                                                {/*{eventsCounter(todayEventsLong, i)}*/}
                                             </Grid.Column>
 
                                             <Grid.Column width={1} style={{textAlign: 'right'}} verticalAlign='middle'>
@@ -880,18 +866,6 @@ const App = () => {
                 </Grid>
             </Grid>
         );
-    }
-
-    function funcAl() {
-        axios.post('http://127.0.0.1:3020/events/add', {title: 'test',
-            description: 'test-desc',
-            date_creation: '2019-12-11 21:00:00',
-            date_exe: '2019-12-11 21:00:00',
-            duration: 3600,
-            author_id: 86,
-            })
-            .then(res => {console.log(res); console.log(res.data)});
-        console.log('opa');
     }
 
     function selectorView() {
